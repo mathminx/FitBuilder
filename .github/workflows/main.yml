@@ -13,5 +13,5 @@ jobs:
       - uses: akhileshns/heroku-deploy@v3.12.11
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "Enter-Heroku-App-Name"
+          heroku_app_name: "slippery-slope-77172"
           heroku_email: ${{secrets.HEROKU_EMAIL}}
