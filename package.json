@@ -2,6 +2,7 @@
   "name": "project3_mern",
   "version": "0.1.0",
   "private": true,
+  "main": "server/server.js",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -16,6 +17,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "install": "cd server && npm i && cd ../client && npm i",
+    "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
     "lint": "eslint ./"
   },
   "eslintConfig": {
@@ -37,6 +40,7 @@
     ]
   },
   "devDependencies": {
+    "concurrently": "^8.2.0",
     "eslint": "^8.43.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.27.5",
