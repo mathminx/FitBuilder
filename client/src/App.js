@@ -11,6 +11,7 @@ import Footer from './components/footer/index';
 import Header from './components/footer/index';
 import Login from './components/login/index';
 import Signup from './components/signup/index';
+import LoginSignupModal from "./components/login_signup_modal";
 
 
 

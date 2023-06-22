@@ -9,7 +9,7 @@ const programSchema = new Schema({
   workouts: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Workout"
+      ref: "Workout",
     }],
 //   dateCreated: {
 //     type: Date,
