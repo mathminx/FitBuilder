@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 const bcrypt = require("bcrypt");
-const workoutSchema = require('./Workout');
+const programSchema = require('./Program');
 
 const userSchema = new Schema({
   name: {
@@ -20,7 +20,16 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
-  programs: [programSchema],
+    programs: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Program",
+    },
+  ],
+  activeProgram: {
+    type: Schema.Types.ObjectId,
+    ref: "Program",
+  },
 });
 
 // set up pre-save middleware to create password
