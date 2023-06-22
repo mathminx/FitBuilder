@@ -20,7 +20,7 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
-    programs: [
+  programs: [
     {
       type: Schema.Types.ObjectId,
       ref: "Program",

@@ -20,6 +20,8 @@ const typeDefs = gql`
     name: String
     creator: User
     workouts: [Workout]
+    duration: Int
+    daysPerWeek: Int
   }
 
   type Workout {
@@ -45,7 +47,19 @@ const typeDefs = gql`
     me: User
     programs: [Program]
     workouts: [Workout]
-    exercises [Exercise]
+    exercises: [Exercise]
+
+    user(_id: "userId") {
+      _id
+      name
+      programs [
+        _id
+        name
+        duration
+        daysPerWeek
+      ]
+    }
+    program(_id: ID!): Program
   }
 
   type Mutation {
@@ -53,9 +67,9 @@ const typeDefs = gql`
     addUser(username: String, email: String, password: String): Auth
 
 
-    addProgram(name: String!, creator: ID!): Program
+    addProgram(name: String!, creator: ID!, daysPerWeek: Int!, duration: Int!): Program
     removeProgram(programId: ID!): Program
-    updateProgram(programId: ID!, name: String): Program
+    updateProgram(programId: ID!, name: String, dyasPerWeek: Int, duration:Int, workouts): Program
 
     addWorkout(programId: ID!, workout: ID!): Program
     removeWorkout(programId: ID!, workout: ID!): Program

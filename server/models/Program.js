@@ -18,10 +18,14 @@ const programSchema = new Schema({
       ref: "Workout",
     },
   ],
-  //   dateCreated: {
-  //     type: Date,
-  //     default: Date.now,
-  //   },
+  duration: {
+    type: Number,
+    required: true,
+  },
+  daysPerWeek: {
+    type: Number,
+    required: true,
+  },
 });
 
 const Program = model("Program", programSchema);
