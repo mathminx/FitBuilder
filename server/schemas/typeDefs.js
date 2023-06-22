@@ -9,6 +9,8 @@ const typeDefs = gql`
   }
 
   type Workout {
+      _id: ID
+      name: String
   }
 
   type Auth {

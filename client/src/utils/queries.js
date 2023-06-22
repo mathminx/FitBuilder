@@ -2,17 +2,6 @@ import { gql } from "@apollo/client";
 
 // TODO: write requried queries.
 
-//example:
-// export const QUERY_SINGLE_PROFILE = gql`
-//   query singleProfile($profileId: ID!) {
-//     profile(profileId: $profileId) {
-//       _id
-//       name
-//       skills
-//     }
-//   }
-// `;
-
 export const GET_ME = gql`
   query me {
     me {
@@ -20,6 +9,14 @@ export const GET_ME = gql`
       username
       email
       savedWorkouts {
+        _id
+        name
+        exercises {
+          _id
+          name
+          sets
+          reps
+        }
       }
     }
   }
