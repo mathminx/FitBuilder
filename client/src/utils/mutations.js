@@ -27,13 +27,13 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_PROGRAM = gql`
-  mutation AddWorkout {
+  mutation AddProgram {
     # Add your fields and logic for adding a workout
   }
 `;
 
 export const REMOVE_PROGRAM = gql`
-  mutation AddWorkout {
+  mutation RemoveWorkout {
     # Add your fields and logic for adding a workout
   }
 `;
