@@ -1,6 +1,6 @@
 import react from "react";
 import { Card, Col, Row } from "antd";
-const cardColumns = () => (
+const CardColumns = () => (
   <Row gutter={16}>
     <Col span={8}>
       <Card title="Card title" bordered={false}>
@@ -19,4 +19,4 @@ const cardColumns = () => (
     </Col>
   </Row>
 );
-export default cardColumns;
+export default CardColumns;
