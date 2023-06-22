@@ -57,7 +57,7 @@ const resolvers = {
 
     // ToDo: Create resolver for creating/saving a new workout.
     //deleteWorkout:
-    },
-  };
+  },
+};
 
 module.exports = resolvers;
