@@ -143,7 +143,7 @@ const resolvers = {
         const updatedProgram = await Program.findByIdAndUpdate(
           programId,
           { name },
-          { new: true }
+          { new: true },
         );
 
         if (!updatedProgram) {
