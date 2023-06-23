@@ -51,6 +51,12 @@ export const ADD_PROGRAM = gql`
         exercises {
           _id
           name
+          equipment
+          diffculty
+          description
+          sets
+          reps
+          weight
           muscle
       }
       }   
@@ -81,6 +87,12 @@ export const ADD_WORKOUT = gql`
         exercises {
           _id
           name
+          equipment
+          diffculty
+          description
+          sets
+          reps
+          weight
           muscle
         }
       }
@@ -98,23 +110,26 @@ export const REMOVE_WORKOUT = gql`
 `;
 
 export const UPDATE_WORKOUT = gql`
-  mutation UpdateWorkout($title: String!, exerciseId: ID!, $muscle: String!, $reps: Int, $sets: Int, $description: String!) {
-    UpdateWorkout(title: $title, exerciseId: ID!, muscle: $muscle, reps: $reps, sets: $sets, description: $description) {
+  mutation UpdateWorkout($title: String!, $exerciseId: ID!, $muscle: String!, $reps: Int, $sets: Int, $description: String!) {
+    UpdateWorkout(title: $title, exerciseId: $exerciseId, muscle: $muscle, reps: $reps, sets: $sets, description: $description) {
       _id
       title
       exercise {
         _id
         name
-        muscle
-        reps
-        sets
+        equipment
+        diffculty
         description
+        sets
+        reps
+        weight
+        muscle
       }
     }
   }
 `;
 
-//add exercise to workout
+// add exercise to workout
 export const ADD_EXERCISE = gql`
   mutation AddExercise($workoutId: ID!, $exerciseId: ID!, $muscle: String!, $reps: Int, $sets: Int, $description: String!) {
    AddExercise(workoutId: $workoutId, exerciseId: $exerciseId, muscle: $muscle, reps: $reps, sets: $sets, description: $description) {
@@ -123,10 +138,13 @@ export const ADD_EXERCISE = gql`
       exercise {
         _id
         name
-        muscle
-        reps
-        sets
+        equipment
+        diffculty
         description
+        sets
+        reps
+        weight
+        muscle
       }
    }
   }

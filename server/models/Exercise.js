@@ -15,7 +15,7 @@ const exerciseSchema = new Schema({
   difficulty: {
     type: String,
   },
-  instructions: {
+  Description: {
     type: String,
   },
   sets: {

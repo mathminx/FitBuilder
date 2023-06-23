@@ -2,8 +2,16 @@ const { Schema, model } = require("mongoose");
 const Workout = require("./Workout");
 
 const programSchema = new Schema({
-  name: {
+  title: {
     type: String,
+    required: true,
+  },
+  weeks: {
+    type: Number, 
+    required: true, 
+  }, 
+  days: {
+    type: Number, 
     required: true,
   },
   workouts: [
