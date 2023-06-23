@@ -3,7 +3,7 @@ const Workout = require("./Workout");
 const User = require("./User");
 
 const programSchema = new Schema({
-  name: {
+  title: {
     type: String,
     required: true,
   },
