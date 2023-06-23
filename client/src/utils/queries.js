@@ -68,15 +68,15 @@ export const GET_SINGLE_PROGRAM = gql`
 `;
 
 export const GET_SINGLE_WORKOUT = gql`
-  query GetSingleWorkout {
-    workouts {
+  query GetSingleWorkout($workoutId: ID!) {
+    workout(id: $workoutId) {
       _id
       name
       exercises {
         _id
         name
         equipment
-        diffculty
+        difficulty
         description
         sets
         reps
@@ -88,6 +88,22 @@ export const GET_SINGLE_WORKOUT = gql`
 `;
 
 export const GET_SINGLE_EXERCISE = gql`
+  query GetSingleExercise($exercsieId: ID!) {
+    exercises(id: $exerciseId) {
+      _id
+      name
+      equipment
+      diffculty
+      description
+      sets
+      reps
+      weight
+      muscle
+    }
+  }
+`;
+
+export const GET_EXERCISEs = gql`
   query GetSingleExercise {
     exercises {
       _id
