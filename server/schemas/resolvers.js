@@ -16,6 +16,27 @@ const resolvers = {
       }
       throw new Error("You must be logged in to access user-specific data");
     },
+    user: async (_, { _id }) => {
+      try {
+        const user = await User.findById(_id).populate({
+          path: "programs",
+          populate: {
+            path: "workouts",
+            model: "Workout",
+            populate: {
+              path: "exercises",
+              model: "Exercise",
+            },
+          },
+        });
+        if (!user) {
+          throw new Error("No user found with this id");
+        }
+        return user;
+      } catch (error) {
+        throw new Error(`Error retrieving user: ${error.message}`);
+      }
+    },
     programs: async () => {
       try {
         const programs = await Program.find({});
@@ -66,7 +87,6 @@ const resolvers = {
       if (name) {
         query.name = name;
       }
-
       try {
         const program = await Program.findOne(query);
         if (!program) {
@@ -90,13 +110,11 @@ const resolvers = {
             "Unable to locate a user account associated with that email!"
           );
         }
-
         const correctPW = await user.isCorrectPassword(password);
         console.log(`correctPW: ${correctPW}`);
         if (!correctPW) {
           throw new AuthenticationError("Invalid login credentials!");
         }
-
         const token = signToken(user);
         console.log(`logging in user: ${user}`);
         console.log(`logging in token: ${token}`);
@@ -107,7 +125,8 @@ const resolvers = {
       }
     },
     addUser: async (parent, args) => {
-      console.log(args);
+      console.log(`addUser args: ${JSON.stringify(args)}`);
+      console.log(`args: ${args}`);
       try {
         const newUser = await User.create(args);
         console.log(`newUser:${newUser}`);
@@ -122,102 +141,183 @@ const resolvers = {
         throw new Error("An error occurred during new user creation!");
       }
     },
-    addProgram: async (_, { name, creator }) => {
+    addProgram: async (
+      _,
+      { title, creator, daysPerWeek, duration },
+      context
+    ) => {
       try {
-        const program = await new Program({ name, creator });
+        if (!context.user) {
+          throw new Error("You must be logged in to create a program.");
+        }
+        const program = await new Program({
+          title,
+          creator: context.user._id,
+          daysPerWeek,
+          duration,
+        });
         await program.save();
         return program;
       } catch (error) {
-        throw new Error(`There was a problem adding your program: ${error.message}`);
+        throw new Error(
+          `There was a problem adding your program: ${error.message}`
+        );
       }
     },
-    removeProgram: async (_, { programId }) => {
+
+    removeProgram: async (_, { programId }, context) => {
       try {
+        if (!context.user) {
+          throw new Error(
+            "You must be logged in to add a workout to a program."
+          );
+        }
         await Program.findByIdAndRemove(programId);
       } catch (error) {
-        throw new Error(`An error occurred removing the program: ${error.message} `);
+        throw new Error(
+          `An error occurred removing the program: ${error.message} `
+        );
       }
     },
-    updateProgram: async (_, { programId, name }) => {
+    updateProgram: async (
+      _,
+      { programId, title, daysPerWeek, duration, workouts },
+      context
+    ) => {
       try {
+        if (!context.user) {
+          throw new AuthenticationError(
+            "You must be logged in to add a workout to a program."
+          );
+        }
         const updatedProgram = await Program.findByIdAndUpdate(
           programId,
-          { name },
-          { new: true },
+          { title, daysPerWeek, duration, workouts },
+          { new: true }
         );
-
         if (!updatedProgram) {
           throw new Error("No program found with this id");
         }
-
         return updatedProgram;
       } catch (error) {
         throw new Error(`Error updating program: ${error.message}`);
       }
     },
-    addWorkoutToProgram: async (_, { programId, workoutId }) => {
+    addWorkout: async (_, { programId, name }, context) => {
       try {
+        if (!context.user) {
+          throw new AuthenticationError(
+            "You must be logged in to add a workout to a program."
+          );
+        }
+        // Create a new workout
+        const newWorkout = await Workout.create({
+          programId: programId,
+          name: name,
+        });
+        // Find the program and add the new workout
         const program = await Program.findById(programId);
-        program.workouts.push(workoutId);
+        program.workouts.push(newWorkout._id);
         await program.save();
         return program;
       } catch (error) {
-        throw new Error(`There was an error adding the workout: ${error.message}`);
+        throw new Error(
+          `There was an error adding the workout: ${error.message}`
+        );
       }
     },
-    removeWorkoutFromProgram: async (_, { programId, workoutId }) => {
+    removeWorkout: async (_, { programId, workout }, context) => {
       try {
+        if (!context.user) {
+          throw new AuthenticationError(
+            "You must be logged in to add a workout to a program."
+          );
+        }
         const program = await Program.findById(programId);
-        program.workouts.pull(workoutId);
+        program.workouts.pull(workout);
         await program.save();
         return program;
       } catch (error) {
-        throw new Error(`There was an error removing the workout: ${error.message}`);
+        throw new Error(
+          `There was an error removing the workout: ${error.message}`
+        );
       }
     },
-    updateWorkout: async (_, { workoutId, name }) => {
+    updateWorkout: async (_, { workoutId, name }, context) => {
       try {
+        if (!context.user) {
+          throw new AuthenticationError(
+            "You must be logged in to add a workout to a program."
+          );
+        }
         const updatedWorkout = await Workout.findByIdAndUpdate(
           workoutId,
           { name },
-          { new: true });
+          { new: true }
+        );
         return updatedWorkout;
       } catch (error) {
-        throw new Error(`There was an error updating the workout: ${error.message}`);
+        throw new Error(
+          `There was an error updating the workout: ${error.message}`
+        );
       }
     },
-    addExerciseToWorkout: async (_, { workoutId, exerciseId }) => {
+    addExercise: async (_, { workoutId, exercise }, context) => {
       try {
+        if (!context.user) {
+          throw new AuthenticationError(
+            "You must be logged in to add an exercise to a workout."
+          );
+        }
+        // Create a new exercise
+        const newExercise = await Exercise.create(exercise);
+
+        // Find the workout and add the new exercise
         const workout = await Workout.findById(workoutId);
-        workout.exercises.push(exerciseId);
+        workout.exercises.push(newExercise._id);
+        await workout.save();
+
+        // Populate the exercises before returning
+        return Workout.findById(workout._id).populate('exercises');
+      } catch (error) {
+        throw new Error(
+          `There was an error adding the exercise to the workout: ${error.message}`,
+        );
+      }
+    },
+    removeExercise: async (_, { workoutId, exercise }, context) => {
+      try {
+        if (!context.user) {
+          throw new AuthenticationError(
+            "You must be logged in to remove a workout from a program."
+          );
+        }
+        const workout = await Workout.findById(workoutId);
+        workout.exercises.pull(exercise);
         await workout.save();
         return workout;
       } catch (error) {
         throw new Error(
-          `There was an error adding the exercise to the workout: ${error.message}`);
+          `There was an error adding the exercise to the workout: ${error.message}`
+        );
       }
     },
-    removeExerciseFromWorkout: async (_, { workoutId, exerciseId }) => {
+    updateExercise: async (_, args, context) => {
       try {
-        const workout = await Workout.findById(workoutId);
-        workout.exercises.pull(exerciseId);
-        await workout.save();
-        return workout;
-      } catch (error) {
-        throw new Error(
-          `There was an error adding the exercise to the workout: ${error.message}`);
-      }
-    },
-    updateExercise: async (_, args) => {
-      try {
+        if (!context.user) {
+          throw new AuthenticationError(
+            "You must be logged in to add a workout to a program."
+          );
+        }
         const { exerciseId, ...rest } = args;
         return await Exercise.findByIdAndUpdate(
           exerciseId,
           { ...rest },
-          { new: true });
+          { new: true }
+        );
       } catch (error) {
         throw new Error(
-          `There was an error adding the exercise to the workout: ${error.message}`,
+          `There was an error adding the exercise to the workout: ${error.message}`
         );
       }
     },

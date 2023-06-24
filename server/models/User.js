@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const programSchema = require('./Program');
 
 const userSchema = new Schema({
-  name: {
+  username: {
     type: String,
     required: true,
     unique: true,
@@ -49,8 +49,8 @@ userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-userSchema.virtual("workout count").get(function () {
-  return this.workouts.length;
+userSchema.virtual("program count").get(function () {
+  return this.programs.length;
 });
 
 const User = model("User", userSchema);

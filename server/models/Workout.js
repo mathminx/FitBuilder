@@ -1,14 +1,19 @@
 const { Schema, model } = require("mongoose");
-const exerciseSchema = require('./Exercise');
+const Exercise = require('./Exercise');
 const User = require('./User');
 
 const workoutSchema = new Schema({
-  creatorId: {
+  creator: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: "User",
   },
   name: { type: String, required: true },
-  exercises: [exerciseSchema],
+  exercises: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Exercise",
+    },
+  ],
 });
 
 const Workout = model('Workout', workoutSchema);

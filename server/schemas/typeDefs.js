@@ -8,7 +8,7 @@ const typeDefs = gql`
 
   type User {
     _id: ID
-    name: String
+    username: String
     email: String
     password: String
     programs: [Program]
@@ -17,7 +17,7 @@ const typeDefs = gql`
 
   type Program {
     _id: ID
-    name: String
+    title: String
     creator: User
     workouts: [Workout]
     duration: Int
@@ -48,17 +48,7 @@ const typeDefs = gql`
     programs: [Program]
     workouts: [Workout]
     exercises: [Exercise]
-
-    user(_id: "userId") {
-      _id
-      name
-      programs [
-        _id
-        name
-        duration
-        daysPerWeek
-      ]
-    }
+    user(_id: ID!): User
     program(_id: ID!): Program
   }
 
@@ -66,18 +56,56 @@ const typeDefs = gql`
     login(email: String, password: String): Auth
     addUser(username: String, email: String, password: String): Auth
 
-
-    addProgram(name: String!, creator: ID!, daysPerWeek: Int!, duration: Int!): Program
+    addProgram(
+      title: String!
+      creator: ID!
+      daysPerWeek: Int!
+      duration: Int!
+    ): Program
     removeProgram(programId: ID!): Program
-    updateProgram(programId: ID!, name: String, daysPerWeek: Int, duration:Int, workouts): Program
+    updateProgram(
+      programId: ID!
+      title: String
+      daysPerWeek: Int
+      duration: Int
+      workouts: [ID]
+    ): Program
 
-    addWorkout(programId: ID!, workout: ID!): Program
+    addWorkout(programId: ID!, name: String!): Program!
     removeWorkout(programId: ID!, workout: ID!): Program
     updateWorkout(workoutId: ID!, name: String): Workout
 
-    addExercise(workoutId: ID!, exercise: ID!): Workout
+    addExercise(workoutId: ID!, exercise: ExerciseInput!): Workout
     removeExercise(workoutId: ID!, exercise: ID!): Workout
-    updateExercise(exerciseId: ID!, name: String, type: String, equipment: String, difficulty: String, instructions: String, sets: Int, reps: Int, weight: Float, duration: Int): Exercise
+    updateExercise(
+      exerciseId: ID!
+      name: String
+      type: String
+      equipment: String
+      difficulty: String
+      instructions: String
+      sets: Int
+      reps: Int
+      weight: Float
+      duration: Int
+    ): Exercise
+  }
+
+  input WorkoutInput {
+    name: String!
+    exercises: [ID!]!
+  }
+
+  input ExerciseInput {
+    name: String!
+    type: String
+    equipment: String
+    difficulty: String
+    instructions: String
+    sets: Int
+    reps: Int
+    weight: Float
+    duration: Int
   }
 `;
 
