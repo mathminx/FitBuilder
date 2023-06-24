@@ -110,13 +110,11 @@ const resolvers = {
             "Unable to locate a user account associated with that email!"
           );
         }
-
         const correctPW = await user.isCorrectPassword(password);
         console.log(`correctPW: ${correctPW}`);
         if (!correctPW) {
           throw new AuthenticationError("Invalid login credentials!");
         }
-
         const token = signToken(user);
         console.log(`logging in user: ${user}`);
         console.log(`logging in token: ${token}`);
