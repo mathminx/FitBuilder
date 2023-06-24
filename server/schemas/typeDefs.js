@@ -48,17 +48,7 @@ const typeDefs = gql`
     programs: [Program]
     workouts: [Workout]
     exercises: [Exercise]
-
-    user(_id: "userId") {
-      _id
-      name
-      programs [
-        _id
-        name
-        duration
-        daysPerWeek
-      ]
-    }
+    user(_id: ID!): User
     program(_id: ID!): Program
   }
 
@@ -69,7 +59,7 @@ const typeDefs = gql`
 
     addProgram(name: String!, creator: ID!, daysPerWeek: Int!, duration: Int!): Program
     removeProgram(programId: ID!): Program
-    updateProgram(programId: ID!, name: String, daysPerWeek: Int, duration:Int, workouts): Program
+    updateProgram(programId: ID!, name: String, daysPerWeek: Int, duration:Int, workouts: [ID]): Program
 
     addWorkout(programId: ID!, workout: ID!): Program
     removeWorkout(programId: ID!, workout: ID!): Program

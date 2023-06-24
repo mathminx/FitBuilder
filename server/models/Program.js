@@ -16,6 +16,7 @@ const programSchema = new Schema({
     {
       type: Schema.Types.ObjectId,
       ref: "Workout",
+      required: true,
     },
   ],
   duration: {
