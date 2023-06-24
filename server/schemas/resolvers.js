@@ -127,7 +127,8 @@ const resolvers = {
       }
     },
     addUser: async (parent, args) => {
-      console.log(args);
+      console.log(`addUser args: ${JSON.stringify(args)}`);
+      console.log(`args: ${args}`);
       try {
         const newUser = await User.create(args);
         console.log(`newUser:${newUser}`);
