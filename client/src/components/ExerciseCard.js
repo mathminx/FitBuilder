@@ -1,3 +1,4 @@
+import React from 'react';
 import { Card, Typography, Image } from 'antd';
 
 const { Meta } = Card;

@@ -1,3 +1,4 @@
+import React from 'react';
 import { Checkbox, List } from 'antd';
 
 const ExerciseList = ({ exercises, selectedExercises, onExerciseSelect }) => (
