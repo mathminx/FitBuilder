@@ -65,7 +65,7 @@ const typeDefs = gql`
     removeProgram(programId: ID!): Program
     updateProgram(
       programId: ID!
-      name: String
+      title: String
       daysPerWeek: Int
       duration: Int
       workouts: [ID]

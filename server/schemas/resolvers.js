@@ -181,7 +181,7 @@ const resolvers = {
     },
     updateProgram: async (
       _,
-      { programId, name, daysPerWeek, duration, workouts },
+      { programId, title, daysPerWeek, duration, workouts },
       context
     ) => {
       try {
@@ -192,7 +192,7 @@ const resolvers = {
         }
         const updatedProgram = await Program.findByIdAndUpdate(
           programId,
-          { name, daysPerWeek, duration, workouts },
+          { title, daysPerWeek, duration, workouts },
           { new: true }
         );
         if (!updatedProgram) {
@@ -226,7 +226,7 @@ const resolvers = {
         );
       }
     },
-    removeWorkout: async (_, { programId, workoutId }, context) => {
+    removeWorkout: async (_, { programId, workout }, context) => {
       try {
         if (!context.user) {
           throw new AuthenticationError(
@@ -234,7 +234,7 @@ const resolvers = {
           );
         }
         const program = await Program.findById(programId);
-        program.workouts.pull(workoutId);
+        program.workouts.pull(workout);
         await program.save();
         return program;
       } catch (error) {
@@ -285,15 +285,15 @@ const resolvers = {
         );
       }
     },
-    removeExercise: async (_, { workoutId, exerciseId }, context) => {
+    removeExercise: async (_, { workoutId, exercise }, context) => {
       try {
         if (!context.user) {
           throw new AuthenticationError(
-            "You must be logged in to add a workout to a program."
+            "You must be logged in to remove a workout from a program."
           );
         }
         const workout = await Workout.findById(workoutId);
-        workout.exercises.pull(exerciseId);
+        workout.exercises.pull(exercise);
         await workout.save();
         return workout;
       } catch (error) {
