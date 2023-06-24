@@ -42,9 +42,9 @@ export const ADD_PROGRAM = gql`
   mutation AddProgram($userId: ID!, $title: String!, $workouts: [ID]!, $weeks: Int!, $days: Int! ) {
     AddProgram(userId: $userId, title: $title, workouts: $workouts, weeks: $weeks, days: $days) {
       _id
-      title
-      weeks
-      days
+      name
+      duration
+      daysPerWeek
       workouts {
         _id
         name
@@ -58,6 +58,7 @@ export const ADD_PROGRAM = gql`
           reps
           weight
           muscle
+          duration
       }
       }   
     }
@@ -73,14 +74,13 @@ export const REMOVE_PROGRAM = gql`
   }
 `;
 
-// add workout to program
-export const ADD_WORKOUT = gql`
-  mutation AddWorkout ($programId: ID!, $workouts: [ID]!) {
-    addWorkout(programId: $programId, workouts: $workouts) {
+export const UPDATE_PROGRAM = gql`
+  mutation AddProgram($title: String!, $workouts: [ID]!, $weeks: Int!, $days: Int! ) {
+    AddProgram(title: $title, workouts: $workouts, weeks: $weeks, days: $days) {
       _id
-      title
-      weeks
-      days
+      name
+      duration
+      daysPerWeek
       workouts {
         _id
         name
@@ -94,6 +94,35 @@ export const ADD_WORKOUT = gql`
           reps
           weight
           muscle
+          duration
+      }
+      }   
+    }
+  }
+`;
+
+// add workout to program
+export const ADD_WORKOUT = gql`
+  mutation AddWorkout ($programId: ID!, $workouts: [ID]!) {
+    addWorkout(programId: $programId, workouts: $workouts) {
+      _id
+      name
+      duration
+      daysPerWeek
+      workouts {
+        _id
+        name
+        exercises {
+          _id
+          name
+          equipment
+          diffculty
+          description
+          sets
+          reps
+          weight
+          muscle
+          duration
         }
       }
     }
@@ -113,7 +142,7 @@ export const UPDATE_WORKOUT = gql`
   mutation UpdateWorkout($title: String!, $exerciseId: ID!, $muscle: String!, $reps: Int, $sets: Int, $description: String!) {
     UpdateWorkout(title: $title, exerciseId: $exerciseId, muscle: $muscle, reps: $reps, sets: $sets, description: $description) {
       _id
-      title
+      name
       exercise {
         _id
         name
@@ -124,6 +153,7 @@ export const UPDATE_WORKOUT = gql`
         reps
         weight
         muscle
+        duration
       }
     }
   }
@@ -145,6 +175,49 @@ export const ADD_EXERCISE = gql`
         reps
         weight
         muscle
+        duration
+      }
+   }
+  }
+`;
+
+export const UPDATE_EXERCISE = gql`
+  mutation UpdateExercise($exerciseId: ID!, $muscle: String!, $reps: Int, $sets: Int, $description: String!) {
+   UpdateExercise($exerciseId: $exerciseId, muscle: $muscle, reps: $reps, sets: $sets, description: $description) {
+      _id
+      name
+      exercise {
+        _id
+        name
+        equipment
+        diffculty
+        description
+        sets
+        reps
+        weight
+        muscle
+        duration
+      }
+   }
+  }
+`;
+
+export const REMOVE_EXERCISE = gql`
+  mutation UpdateExercise($workoutId: ID!, $exerciseId: ID!, $muscle: String!, $reps: Int, $sets: Int, $description: String!) {
+   UpdateExercise(workoutId: $workoutId, exerciseId: $exerciseId, muscle: $muscle, reps: $reps, sets: $sets, description: $description) {
+      _id
+      name
+      exercise {
+        _id
+        name
+        equipment
+        diffculty
+        description
+        sets
+        reps
+        weight
+        muscle
+        duration
       }
    }
   }

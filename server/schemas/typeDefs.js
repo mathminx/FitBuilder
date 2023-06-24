@@ -69,7 +69,7 @@ const typeDefs = gql`
 
     addProgram(name: String!, creator: ID!, daysPerWeek: Int!, duration: Int!): Program
     removeProgram(programId: ID!): Program
-    updateProgram(programId: ID!, name: String, dyasPerWeek: Int, duration:Int, workouts): Program
+    updateProgram(programId: ID!, name: String, daysPerWeek: Int, duration:Int, workouts): Program
 
     addWorkout(programId: ID!, workout: ID!): Program
     removeWorkout(programId: ID!, workout: ID!): Program
