@@ -3,7 +3,7 @@ const Exercise = require('./Exercise');
 const User = require('./User');
 
 const workoutSchema = new Schema({
-  creatorId: {
+  creator: {
     type: Schema.Types.ObjectId,
     ref: "User",
   },
