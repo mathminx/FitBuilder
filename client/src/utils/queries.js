@@ -10,9 +10,9 @@ export const GET_ME = gql`
       email
       programs {
         _id
-        title
-        weeks
-        days
+        name
+        duration
+        daysPerWeek
         workouts {
           _id
           name
@@ -26,6 +26,7 @@ export const GET_ME = gql`
           reps
           weight
           muscle
+          duration
         }
       }
     }
@@ -61,6 +62,7 @@ export const GET_SINGLE_PROGRAM = gql`
           reps
           weight
           muscle
+          duration
         }
       }
     }
@@ -82,6 +84,7 @@ export const GET_SINGLE_WORKOUT = gql`
         reps
         weight
         muscle
+        duration
       }
     }
   }
@@ -99,11 +102,12 @@ export const GET_SINGLE_EXERCISE = gql`
       reps
       weight
       muscle
+      duration
     }
   }
 `;
 
-export const GET_EXERCISEs = gql`
+export const GET_EXERCISES = gql`
   query GetSingleExercise {
     exercises {
       _id
@@ -115,6 +119,7 @@ export const GET_EXERCISEs = gql`
       reps
       weight
       muscle
+      duration
     }
   }
 `;
