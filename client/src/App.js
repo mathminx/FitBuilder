@@ -4,6 +4,14 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
+
+// todo: import the necessary components.
+
+
+
+
+import LoginSignupModal from "./components/login_signup_modal";
+import Dashboard from "./pages/Dashboard";
 import FitBuildLandingPage from "./pages/landingPage/LandingPage";
 import SimpleNavbar from "./components/navbar/Navbar";
 
@@ -33,10 +41,61 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <SimpleNavbar></SimpleNavbar>
+      <div>
+      <SimpleNavbar></SimpleNavbar>
         <Routes>
-          <Route path="/" element={<FitBuildLandingPage />} />
-        </Routes>
+      <Route
+      path="/dashboard"
+      element= {<Dashboard />}
+      />
+      <Route path="/" element={<FitBuildLandingPage />} />
+      <Route
+      path="/signup"
+      // element= {<SignUp />}
+      />
+      <Route
+      path="/login"
+      // element= {<Login />}
+      />
+      <Route
+      path="/user/:userId"
+      // element= {<UserProfile />}
+      />
+      <Route
+      path="/startworkout/:workoutId"
+      // element = {<StartWorkout />}
+      />
+      <Route
+      path="/viewworkout/:workoutId"
+      // element = {<ViewWorkout />}
+      />
+      <Route
+      path="/programs"
+      // element = {<ViewPrograms />}
+      />
+       <Route
+      path="/programs/:programId"
+      // element = {<ViewSingleProgram />}
+      />
+       <Route
+      path="/createprogram"
+      // element = {<CreateProgram />}
+      />
+      <Route
+      path="/modifyprogram"
+      // element = {<ModifyProgram />}
+      />
+      <Route
+      path="/createworkout"
+      // element = {<CreateWorkout />}
+      />
+       <Route
+      path="/addexercise"
+      // element = {<AddExercise />}
+      />
+      </Routes>
+      
+      </div>
       </Router>
     </ApolloProvider>
   );

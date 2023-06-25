@@ -16,17 +16,18 @@ export const GET_ME = gql`
         workouts {
           _id
           name
-        exercises {
-          _id
-          name
-          equipment
-          diffculty
-          description
-          sets
-          reps
-          weight
-          muscle
-          duration
+          exercises {
+            _id
+            name
+            equipment
+            difficulty
+            description
+            sets
+            reps
+            weight
+            muscle
+            duration
+          }
         }
       }
     }
@@ -40,7 +41,9 @@ export const GET_ALL_PROGRAMS = gql`
       title
       weeks
       days
-    }`;
+    }
+  }
+`;
 
 export const GET_SINGLE_PROGRAM = gql`
   query GetSinglePrograms {
@@ -56,7 +59,7 @@ export const GET_SINGLE_PROGRAM = gql`
           _id
           name
           equipment
-          diffculty
+          difficulty
           description
           sets
           reps
@@ -69,34 +72,13 @@ export const GET_SINGLE_PROGRAM = gql`
   }
 `;
 
-export const GET_SINGLE_WORKOUT = gql`
-  query GetSingleWorkout($workoutId: ID!) {
-    workout(id: $workoutId) {
-      _id
-      name
-      exercises {
-        _id
-        name
-        equipment
-        difficulty
-        description
-        sets
-        reps
-        weight
-        muscle
-        duration
-      }
-    }
-  }
-`;
-
 export const GET_SINGLE_EXERCISE = gql`
-  query GetSingleExercise($exercsieId: ID!) {
+  query GetSingleExercise($exerciseId: ID!) {
     exercises(id: $exerciseId) {
       _id
       name
       equipment
-      diffculty
+      difficulty
       description
       sets
       reps
@@ -108,12 +90,12 @@ export const GET_SINGLE_EXERCISE = gql`
 `;
 
 export const GET_EXERCISES = gql`
-  query GetSingleExercise {
+  query GetExercises {
     exercises {
       _id
       name
       equipment
-      diffculty
+      difficulty
       description
       sets
       reps
