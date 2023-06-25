@@ -32,36 +32,28 @@ export const GET_ME = gql`
 `;
 
 export const GET_ALL_PROGRAMS = gql`
-  query GetAllPrograms {
+  query Programs {
     programs {
       _id
       title
-      weeks
-      days
-    }`;
+      duration
+      daysPerWeek
+    }
+  }
+`;
 
 export const GET_SINGLE_PROGRAM = gql`
-  query GetSinglePrograms {
-    programs {
-      _id
+  query Program($id: ID!) {
+    program(_id: $id) {
+      daysPerWeek
+      duration
       title
-      weeks
-      days
-      workouts {
+      creator {
         _id
+        username
+      }
+      workouts {
         name
-        exercises {
-          _id
-          name
-          equipment
-          diffculty
-          description
-          sets
-          reps
-          weight
-          muscle
-          duration
-        }
       }
     }
   }
@@ -89,7 +81,7 @@ export const GET_SINGLE_WORKOUT = gql`
 `;
 
 export const GET_SINGLE_EXERCISE = gql`
-  query GetSingleExercise($exercsieId: ID!) {
+  query GetSingleExercise($exerciseId: ID!) {
     exercises(id: $exerciseId) {
       _id
       name

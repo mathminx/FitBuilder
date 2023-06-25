@@ -1,22 +1,29 @@
 import React from "react";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { Modal, Button, Form, Input } from "antd";
 import { ADD_USER } from "../../utils/mutations";
 import { LOGIN_USER } from "../../utils/mutations";
 
 const LoginModal = ({ visible, handleOk, handleCancel }) => {
   const [loginUser, { loading, error }] = useMutation(LOGIN_USER);
-  
-    const onFinish = async (values) => {
-      console.log("Success:", values);
-      const { data } = await loginUser({ variables: values });
+
+  const onFinish = async (values) => {
+    console.log(values);
+    const { username, password } = values;
+    try {
+      const { data } = await loginUser({
+        variables: { username, password },
+      });
       console.log(data);
       handleOk();
-    };
+    } catch (err) {
+      console.error("Failed:", err);
+    }
+  };
 
-    const onFinishFailed = (errorInfo) => {
-      console.log("Failed:", errorInfo);
-    };
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
 
   return (
     <Modal
@@ -32,17 +39,36 @@ const LoginModal = ({ visible, handleOk, handleCancel }) => {
         <Form.Item label="Password" name="password">
           <Input.Password />
         </Form.Item>
+
+        <Form.Item>
+          <Button type="primary" htmlType="submit" loading={loading}>
+            Login
+          </Button>
+        </Form.Item>
       </Form>
+
+      {error && <p>There was an error logging in. Please try again.</p>}
     </Modal>
   );
 };
+
+export default LoginModal;
+
 
 const SignupModal = ({ visible, handleOk, handleCancel }) => {
   const [addUser, { loading, error }] = useMutation(ADD_USER);
 
   const onFinish = async (values) => {
     console.log("Success:", values);
-    const { data } = await addUser({ variables: values });
+
+    // Destructure values object into separate variables
+    const { username, email, password } = values;
+
+    // Pass the variables explicitly in the mutation
+    const { data } = await addUser({
+      variables: { username, email, password },
+    });
+
     console.log(data);
     handleOk();
   };
@@ -50,14 +76,13 @@ const SignupModal = ({ visible, handleOk, handleCancel }) => {
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
-
   return (
     <Modal
       title="Signup"
       visible={visible}
       onOk={handleOk}
       onCancel={handleCancel}
-      footer={null} 
+      footer={null}
     >
       <Form
         name="basic"
