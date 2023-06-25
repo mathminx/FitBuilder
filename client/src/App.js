@@ -38,10 +38,65 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
+      <Router>
       <div>
-      <Dashboard>
-      </Dashboard>
+        <Routes>
+      <Route
+      path="/"
+      element= {<Dashboard />}
+      />
+      <Route
+      path="/landingpage"
+      // element= {<LandingPage />}
+      />
+      <Route
+      path="/signup"
+      // element= {<SignUp />}
+      />
+      <Route
+      path="/login"
+      // element= {<Login />}
+      />
+      <Route
+      path="/user/:userId"
+      // element= {<UserProfile />}
+      />
+      <Route
+      path="/startworkout/:workoutId"
+      // element = {<StartWorkout />}
+      />
+      <Route
+      path="/viewworkout/:workoutId"
+      // element = {<ViewWorkout />}
+      />
+      <Route
+      path="/programs"
+      // element = {<ViewPrograms />}
+      />
+       <Route
+      path="/programs/:programId"
+      // element = {<ViewSingleProgram />}
+      />
+       <Route
+      path="/createprogram"
+      // element = {<CreateProgram />}
+      />
+      <Route
+      path="/modifyprogram"
+      // element = {<ModifyProgram />}
+      />
+      <Route
+      path="/createworkout"
+      // element = {<CreateWorkout />}
+      />
+       <Route
+      path="/addexercise"
+      // element = {<AddExercise />}
+      />
+      </Routes>
+      
       </div>
+      </Router>
     </ApolloProvider>
   );
 }
