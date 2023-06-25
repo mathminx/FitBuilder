@@ -7,7 +7,9 @@ import "./App.css";
 import FitBuildLandingPage from "./pages/landingPage/LandingPage";
 import SimpleNavbar from "./components/navbar/Navbar";
 
-// todo: import the necessary components.
+
+import Login from './components/Login';
+import Signup from './components/Signup';
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
