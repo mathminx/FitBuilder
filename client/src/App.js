@@ -5,15 +5,10 @@ import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 
+
 // todo: import the necessary components.
-
-
-import Footer from './components/footer/index';
-import Header from './components/footer/index';
-import Login from './components/login/index';
-import Signup from './components/signup/index';
-import LoginSignupModal from "./components/login_signup_modal";
-
+import Login from './components/Login';
+import Signup from './components/Signup';
 
 
 const authLink = setContext((_, { headers }) => {
