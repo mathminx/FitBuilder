@@ -21,22 +21,17 @@ export const LOGIN_USER = gql`
 `;
 
 export const ADD_USER = gql`
-  mutation AddUser($username: String! 
-    $email: String, 
-    $password: String
-    ) {
-    addUser(username: $username, 
-      email: $email, 
-      password: $password
-      ) {
-        token
-        user {
-          username
-          email
+  mutation AddUser($username: String!, $email: String!, $password: String!) {
+    addUser(username: $username, email: $email, password: $password) {
+      token
+      user {
+        username
+        email
       }
     }
   }
 `;
+
 
 export const ADD_PROGRAM = gql`
   mutation AddProgram($userId: ID!, $title: String!, $workouts: [ID]!, $weeks: Int!, $days: Int! ) {
@@ -159,7 +154,6 @@ export const UPDATE_WORKOUT = gql`
   }
 `;
 
-// add exercise to workout
 export const ADD_EXERCISE = gql`
   mutation AddExercise($workoutId: ID!, $exerciseId: ID!, $muscle: String!, $reps: Int, $sets: Int, $description: String!) {
    AddExercise(workoutId: $workoutId, exerciseId: $exerciseId, muscle: $muscle, reps: $reps, sets: $sets, description: $description) {
