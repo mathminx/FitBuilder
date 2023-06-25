@@ -5,6 +5,7 @@ import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import FitBuildLandingPage from "./pages/landingPage/LandingPage";
+import SimpleNavbar from "./components/navbar/Navbar";
 
 // todo: import the necessary components.
 
@@ -30,6 +31,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
+        <SimpleNavbar></SimpleNavbar>
         <Routes>
           <Route path="/" element={<FitBuildLandingPage />} />
         </Routes>
