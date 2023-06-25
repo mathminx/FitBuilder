@@ -43,7 +43,7 @@ function App() {
         <Routes>
       <Route
       path="/"
-      element= {<Dashboard />}
+      // element= {<Dashboard />}
       />
       <Route
       path="/landingpage"
