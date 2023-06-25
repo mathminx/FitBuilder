@@ -1,12 +1,20 @@
 import React from "react";
-import Footer from "../../components/footer"
-import Header from "../../components/header"
-import Avatar from "../../components/avatar"
-import Tabs from "../../components/tabs"
-import WorkoutTable from "../../components/workoutTable"
+import DashboardHeader from "../../components/DashBoardHeader";
+
+import { Layout, Space } from 'antd';
+const { Header, Footer, Sider, Content } = Layout;
 
 const Dashboard = () => {
     // place components in here
+    return (
+    <>
+    <div>
+        <DashboardHeader>
+            
+        </DashboardHeader>
+    </div>
+    </>
+    )
 }
 
-// export
+export default Dashboard

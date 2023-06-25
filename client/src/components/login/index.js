@@ -4,7 +4,7 @@ import { Button, Checkbox, Form, Input } from 'antd';
 import "./login.css";
 
 const Login = React.FC = () => {
-  const onFinish = (any) => {
+  const onFinish = (values) => {
     console.log('Received values of form: ', values);
   };
 

@@ -3,7 +3,7 @@ import { Button, Modal } from "antd";
 import Login from "../login/index";
 import Signup from "../signup/index";
 
-const LoginSignupModal: React.FC = () => {
+const LoginSignupModal = () => {
   const [modal1Open, setModal1Open] = useState(false);
   const [modal2Open, setModal2Open] = useState(false);
 

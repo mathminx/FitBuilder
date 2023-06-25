@@ -9,10 +9,11 @@ import "./App.css";
 
 
 import Footer from './components/footer/index';
-import Header from './components/footer/index';
+
 import Login from './components/login/index';
 import Signup from './components/signup/index';
 import LoginSignupModal from "./components/login_signup_modal";
+import Dashboard from "./pages/dashboard";
 
 
 
@@ -37,9 +38,10 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <router>
-        <p>Hello World!</p>
-      </router>
+      <div>
+      <Dashboard>
+      </Dashboard>
+      </div>
     </ApolloProvider>
   );
 }
