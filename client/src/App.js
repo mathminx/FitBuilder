@@ -14,8 +14,12 @@ import Login from './components/login/index';
 import Signup from './components/signup/index';
 import LoginSignupModal from "./components/login_signup_modal";
 import Dashboard from "./pages/dashboard";
+import FitBuildLandingPage from "./pages/landingPage/LandingPage";
+import SimpleNavbar from "./components/navbar/Navbar";
 
 
+import Login from './components/Login';
+import Signup from './components/Signup';
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
@@ -40,15 +44,13 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
       <div>
+      <SimpleNavbar></SimpleNavbar>
         <Routes>
       <Route
       path="/"
-      // element= {<Dashboard />}
+      element= {<Dashboard />}
       />
-      <Route
-      path="/landingpage"
-      // element= {<LandingPage />}
-      />
+      <Route path="/" element={<FitBuildLandingPage />} />
       <Route
       path="/signup"
       // element= {<SignUp />}

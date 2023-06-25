@@ -3,7 +3,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // used to go back to dashboard, enter into program 
 import { useQuery } from '@apollo/client';
-import { GET_ME } from '../../utils/queries';
+import { GET_ME } from '../utils/queries';
 
     function ProgramView () {
         const { data } = useQuery(GET_ME); 
