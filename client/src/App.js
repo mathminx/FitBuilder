@@ -4,12 +4,12 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
+import FitBuildLandingPage from "./pages/landingPage/LandingPage";
+import SimpleNavbar from "./components/navbar/Navbar";
 
 
-// todo: import the necessary components.
 import Login from './components/Login';
 import Signup from './components/Signup';
-
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
@@ -32,9 +32,12 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <router>
-        <p>Hello World!</p>
-      </router>
+      <Router>
+        <SimpleNavbar></SimpleNavbar>
+        <Routes>
+          <Route path="/" element={<FitBuildLandingPage />} />
+        </Routes>
+      </Router>
     </ApolloProvider>
   );
 }
