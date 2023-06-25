@@ -8,12 +8,10 @@ import "./App.css";
 // todo: import the necessary components.
 
 
-import Footer from './components/footer/index';
 
-import Login from './components/login/index';
-import Signup from './components/signup/index';
+
 import LoginSignupModal from "./components/login_signup_modal";
-import Dashboard from "./pages/dashboard";
+import Dashboard from "./pages/Dashboard";
 import FitBuildLandingPage from "./pages/landingPage/LandingPage";
 import SimpleNavbar from "./components/navbar/Navbar";
 
@@ -47,7 +45,7 @@ function App() {
       <SimpleNavbar></SimpleNavbar>
         <Routes>
       <Route
-      path="/"
+      path="/dashboard"
       element= {<Dashboard />}
       />
       <Route path="/" element={<FitBuildLandingPage />} />

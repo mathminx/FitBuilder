@@ -1,4 +1,5 @@
 import React from "react";
+import { Link, useParams } from "react-router-dom";
 import {
   EditOutlined,
   EllipsisOutlined,
@@ -17,36 +18,28 @@ import {
   Row,
   Col,
 } from "antd";
+import { useQuery } from "@apollo/client";
+import {
+  GET_SINGLE_PROGRAM,
+  GET_ME,
+  GET_SINGLE_WORKOUT,
+} from "../utils/queries";
 const { Header, Content, Footer } = Layout;
 
 const { Meta } = Card;
 
 const Dashboard = () => {
+  const { loading: loadingMe, data: dataMe } = useQuery(GET_ME);
+  const { loading: loadingSingleProgram, data: dataSingleProgram } =
+    useQuery(GET_SINGLE_PROGRAM);
+
+  // const workouts = data?.singleprogram || []
   // place components in here
   const {
     token: { colorBgContainer },
   } = theme.useToken();
   return (
     <Layout className="layout">
-      <Header
-        style={{
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
-        {" "}
-        <div>
-          actions=
-          {[
-            <Space direction="horizontal" size={850}>
-              <Button type="primary">View All programs</Button>
-              <Row justify="end">
-                <Avatar size={64} icon={<UserOutlined />}/>
-              </Row>
-            </Space>,
-          ]}
-        </div>
-      </Header>
       <Content
         style={{
           padding: "0 50px",
@@ -57,7 +50,17 @@ const Dashboard = () => {
             margin: "16px 0",
           }}
         >
-          <Breadcrumb.Item>Current Program:{/*programname*/}</Breadcrumb.Item>
+          {" "}
+          {loadingSingleProgram ? (
+            <Breadcrumb.Item>Loading....</Breadcrumb.Item>
+          ) : (
+            <Breadcrumb.Item>
+              Current Program:{/*dataSingleProgram.name*/}
+            </Breadcrumb.Item>
+          )}
+          <Link to="/programs">
+            <Breadcrumb.Item>View all Programs</Breadcrumb.Item>
+          </Link>
         </Breadcrumb>
         <div
           className="site-layout-content"
@@ -67,114 +70,58 @@ const Dashboard = () => {
         >
           {" "}
           {/* number of cards changes depending on number of workouts per week in program */}
-          <Card title="Workouts For the Week">
-            <Row>
-              <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
-                <Card
-                  title="Day 1"
-                  style={{
-                    width: 300,
-                  }}
-                  /* Image of workout / program */
-                  cover={
-                    <img
-                      alt="example"
-                      src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                    />
-                  }
-                  actions={[
-                    <Space direction="horizontal">
-                      <Button type="primary">Start</Button>
-                      <Button type="secondary">View</Button>
-                    </Space>,
-                  ]}
-                >
-                  <Meta title="Squat DAY" description="Day of Squats" />
-                </Card>
-              </Col>
-              <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
-                <Card
-                  title="Day 2"
-                  style={{
-                    width: 300,
-                  }}
-                  /* Image of workout / program */
-                  cover={
-                    <img
-                      alt="example"
-                      src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                    />
-                  }
-                  actions={[
-                    <Space direction="horizontal">
-                      <Button type="primary">Start</Button>
-                      <Button type="secondary">View</Button>
-                    </Space>,
-                  ]}
-                >
-                  <Meta title="Chest DAY" description="Day of Chests" />
-                </Card>
-              </Col>
-              <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
-                <Card
-                  title="Day 3"
-                  style={{
-                    width: 300,
-                  }}
-                  /* Image of workout / program */
-                  cover={
-                    <img
-                      alt="example"
-                      src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                    />
-                  }
-                  actions={[
-                    <Space direction="horizontal">
-                      <Button type="primary">Start</Button>
-                      <Button type="secondary">View</Button>
-                    </Space>,
-                  ]}
-                >
-                  <Meta title="Leg DAY" description="Day of Legs" />
-                </Card>
-              </Col>
-              <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
-                <Card
-                  title="Day 4"
-                  style={{
-                    width: 300,
-                  }}
-                  /* Image of workout / program */
-                  cover={
-                    <img
-                      alt="example"
-                      src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                    />
-                  }
-                  actions={[
-                    <Space direction="horizontal">
-                      <Button type="primary">Start</Button>
-                      <Button type="secondary">View</Button>
-                    </Space>,
-                  ]}
-                >
-                  <Meta title="Squat DAY" description="Day of Squats" />
-                </Card>
-              </Col>
-            </Row>
-            <Row justify="end">
-              <Space direction="horizontal">
-                <Button type="secondary">Next Week</Button>
-              </Space>
-            </Row>
-          </Card>
+          {loadingSingleProgram ? (
+            <Card> Loading Workouts </Card>
+          ) : (
+            <Card title="Workouts For the Week">
+              <Row>
+                <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+                  <Card
+                    title="Day 1"
+                    style={{
+                      width: 300,
+                    }}
+                    /* Image of workout / program */
+                    cover={
+                      <img
+                        alt="example"
+                        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                      />
+                    }
+                    actions={[
+                      <Space direction="horizontal">
+                        <Link to="/startworkout/:workoutId">
+                          <Button type="primary">Start</Button>
+                        </Link>
+                        <Link to="/">
+                        <Button type="secondary">View</Button>
+                        </Link>
+                      </Space>,
+                    ]}
+                  >
+                    <Meta title="Squat DAY" description="Day of Squats" />
+                  </Card>
+                </Col>
+              </Row>
+
+              <Row justify="end">
+                <Space direction="horizontal">
+                  <Link to="/">
+                    <Button type="secondary">Next Week</Button>
+                  </Link>
+                </Space>
+              </Row>
+            </Card>
+          )}
         </div>
       </Content>
       <Row justify="center" style={{ marginTop: "20px", marginBottom: "20px" }}>
         <Space direction="vertical">
-          <Button type="primary" size="large">
-            Create Program!
-          </Button>
+          <Link to="/createprogram">
+            <Button type="primary" size="large">
+              Create Program!
+            </Button>
+          </Link>
         </Space>
       </Row>
     </Layout>
@@ -182,3 +129,5 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+// export

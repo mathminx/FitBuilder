@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Modal } from "antd";
 import Login from "../login/index";
-import Signup from "../signup/index";
+
 
 const LoginSignupModal = () => {
   const [modal1Open, setModal1Open] = useState(false);
@@ -33,7 +33,7 @@ const LoginSignupModal = () => {
         onOk={() => setModal2Open(false)}
         onCancel={() => setModal2Open(false)}
       >
-        <Signup /> // Here we include the Signup form
+        {/* <Signup /> // Here we include the Signup form */}
       </Modal>
     </>
   );
