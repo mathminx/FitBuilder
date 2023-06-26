@@ -22,13 +22,3 @@ if ('serviceWorker' in navigator) {
       });
   });
 }
-
-const styles = {
-  root: {
-    height: '100vh',
-    margin: '0px'
-  }
-}
-
-
-export default App;
