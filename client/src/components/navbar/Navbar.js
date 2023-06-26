@@ -5,10 +5,13 @@ import {
   DashboardOutlined,
   LoginOutlined,
   UserAddOutlined,
+  LogoutOutlined
 } from "@ant-design/icons";
 import { LoginModal, SignupModal } from "./LoginSignup";
+import Auth from "../../utils/auth";
 
 const SimpleNavbar = () => {
+
   const [loginVisible, setLoginVisible] = useState(false);
   const [signupVisible, setSignupVisible] = useState(false);
 
@@ -28,6 +31,12 @@ const SimpleNavbar = () => {
     setSignupVisible(false);
   };
 
+  const handleLogout = () => {
+    Auth.logout();
+  };
+
+  
+
   return (
    <>
     <Menu mode="horizontal">
@@ -37,12 +46,20 @@ const SimpleNavbar = () => {
       <Menu.Item key="dashboard" icon={<DashboardOutlined />}>
         Dashboard
       </Menu.Item>
-      <Menu.Item key="login" icon={<LoginOutlined />} onClick={showLoginModal}>
-        Login
-      </Menu.Item>
-      <Menu.Item key="signup" icon={<UserAddOutlined />} onClick={showSignupModal}>
-        Signup
-      </Menu.Item>
+        {Auth.loggedIn() ? (
+          <Menu.Item key="logout" icon={<LogoutOutlined />} onClick={handleLogout}>
+            Logout
+          </Menu.Item>
+        ) : (
+          <>
+            <Menu.Item key="login" icon={<LoginOutlined />} onClick={showLoginModal}>
+              Login
+            </Menu.Item>
+            <Menu.Item key="signup" icon={<UserAddOutlined />} onClick={showSignupModal}>
+              Signup
+            </Menu.Item>
+          </>
+        )}
        </Menu>
       <LoginModal visible={loginVisible} handleOk={hideLoginModal} handleCancel={hideLoginModal} />
       <SignupModal visible={signupVisible} handleOk={hideSignupModal} handleCancel={hideSignupModal} />
