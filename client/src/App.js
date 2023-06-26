@@ -7,10 +7,9 @@ import "./App.css";
 
 
 import LoginSignupModal from "./components/login_signup_modal";
-import Dashboard from "./pages/Dashboard";
 import FitBuildLandingPage from "./pages/landingPage/LandingPage";
 import SimpleNavbar from "./components/navbar/Navbar";
-import Dashboard from "./pages/dashboard";
+import Dashboard from "./pages/dashboard/index";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
