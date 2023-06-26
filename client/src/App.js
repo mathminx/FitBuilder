@@ -1,13 +1,17 @@
 // import statements
 import React from "react";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import FitBuildLandingPage from "./pages/landingPage/LandingPage";
 import SimpleNavbar from "./components/navbar/Navbar";
+import Dashboard from "./pages/dashboard";
 
-// todo: import the necessary components.
+const httpLink = createHttpLink({
+  uri: "/graphql",
+});
+
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
@@ -23,7 +27,7 @@ const authLink = setContext((_, { headers }) => {
 
 
 const client = new ApolloClient({
-  uri: "/graphql",
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 
@@ -34,6 +38,7 @@ function App() {
         <SimpleNavbar></SimpleNavbar>
         <Routes>
           <Route path="/" element={<FitBuildLandingPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </Router>
     </ApolloProvider>
