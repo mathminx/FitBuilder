@@ -81,7 +81,7 @@ const Dashboard = () => {
                 <Row>
                   <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
                     <Card
-                      title="Day 1"
+                      title={workouts.dayNumber}
                       style={{
                         width: 300,
                       }}
