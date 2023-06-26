@@ -1,19 +1,10 @@
-import React from "react";
-import { Link, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
-import {
-  EditOutlined,
-  EllipsisOutlined,
-  SettingOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import React, { useState, useEffect }  from "react";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import {
   Breadcrumb,
   Layout,
-  Menu,
   theme,
   Card,
-  Avatar,
   Button,
   Space,
   Row,
@@ -23,9 +14,8 @@ import { useQuery } from "@apollo/client";
 import {
   GET_SINGLE_PROGRAM,
   GET_ME,
-  GET_SINGLE_WORKOUT,
 } from "../utils/queries";
-const { Header, Content, Footer } = Layout;
+const { Content } = Layout;
 
 const { Meta } = Card;
 
@@ -76,12 +66,10 @@ const Dashboard = () => {
             background: colorBgContainer,
           }}
         >
-          {" "}
+          
           {/* number of cards changes depending on number of workouts per week in program */}
-          {loadingSingleProgram ? (
-  <Card> Loading Workouts </Card>
-) : (
-  dataSingleProgram.workouts.map((workouts) => (
+         
+  {dataSingleProgram.workouts.map((workouts) => (
     <Card key={workouts._id} title="Workouts For the Week">
       <Row>
         <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
@@ -112,8 +100,7 @@ const Dashboard = () => {
         </Col>
       </Row>
     </Card>
-  ))
-)}
+  ))}
 
               <Row justify="end">
                 <Space direction="horizontal">
