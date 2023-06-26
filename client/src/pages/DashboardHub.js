@@ -17,13 +17,27 @@ const Dashboard = () => {
     console.log('button clicked');
      if (Auth.loggedIn()) {
          navigate('/createprogram'); // Redirect to dashboard if logged in.
+     } else {
+      navigate('/')
      }
    };
 
-   const handleStartWorkoutClick = () => {
+   const handleViewPrograms = () => {
     console.log('button clicked');
      if (Auth.loggedIn()) {
-         navigate(`/startworkout/${EventTarget.value}`); // Redirect to dashboard if logged in.
+         navigate('/programs'); // Redirect to dashboard if logged in.
+     } else {
+      navigate('/')
+     }
+   };
+
+   const handleStartWorkoutClick = (event) => {
+    console.log('button clicked');
+     if (Auth.loggedIn()) {
+      const workoutId = event.target.value
+         navigate(`/startworkout/${workoutId}`); // Redirect to dashboard if logged in.
+     } else {
+      navigate('/')
      }
    };
 
@@ -61,9 +75,7 @@ const Dashboard = () => {
               {currentProgram ? currentProgram.name : " No current Program"}
             </Breadcrumb.Item>
           )}
-          <Link to="/programs">
-            <Breadcrumb.Item>View all Programs</Breadcrumb.Item>
-          </Link>
+            <Breadcrumb.Item onClick={handleViewPrograms}>View all Programs</Breadcrumb.Item>
         </Breadcrumb>
         <div
           className="site-layout-content"
