@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Input, Select, Button, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
-import CheckLoggedIn from "../../utils/checkLogin";
+import CheckLoggedIn from "../../utils/AmandaCheckLogin";
 
 const { Option } = Select;
 
