@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Form, Select, Button, Input, Card, Row, Col } from "antd";
 import axios from "axios";
+import { useMutation } from "@apollo/client";
+import { ADD_EXERCISE } from "../../utils/mutations";
 
 const { Option } = Select;
 const { Meta } = Card;
@@ -8,6 +10,39 @@ const { Meta } = Card;
 const ExerciseComponent = () => {
   const [form] = Form.useForm();
   const [exercises, setExercises] = useState([]);
+
+  const [savedExercises, setSavedExercises] = useState([]);
+  const [addExercise, { data }] = useMutation(ADD_EXERCISE);
+
+
+    const handleSaveExercise = (exerciseName) => {
+      // Find the exercise in `exercises` state by the matching id
+      const exerciseToSave = exercises.find(
+        (exercise) => exercise.name === exerciseName
+      );
+
+      // If exercise was found and it has not been saved yet
+      if (exerciseToSave && !savedExercises.find((ex) => ex.name === exerciseName)) {
+        // Save exercise to state
+        setSavedExercises((prevExercises) => [
+          ...prevExercises,
+          exerciseToSave,
+        ]);
+
+        // Call the mutation
+        addExercise({
+          variables: {
+            workoutId: "your_workout_id",
+            exercise: {
+              name: exerciseToSave.name,
+              // include other exercise fields as needed
+            },
+          },
+        }).catch((error) => {
+          console.error("Error occurred while saving the exercise: ", error);
+        });
+      }
+    };
 
   const exerciseTypes = [
     "cardio",
@@ -45,8 +80,9 @@ const ExerciseComponent = () => {
         url: "https://exercises-by-api-ninjas.p.rapidapi.com/v1/exercises",
         params: values,
         headers: {
+          //"X-RapidAPI-Key":process.env.REACT_APP_RAPID_API_KEY,
           "X-RapidAPI-Key":
-            "4acea068f2mshdbcc23c62ee4486p14fc15jsnb7caa4dbd4dc",
+          "4acea068f2mshdbcc23c62ee4486p14fc15jsnb7caa4dbd4dc",
           "X-RapidAPI-Host": "exercises-by-api-ninjas.p.rapidapi.com",
         },
       };
@@ -112,7 +148,18 @@ const ExerciseComponent = () => {
               <p>Target Muscle Group: {exercise.muscle}</p>
               <p>Equipment: {exercise.equipment}</p>
               <p>Difficulty: {exercise.difficulty}</p>
-              <Button type="primary">Add Exercise</Button>
+              {/* <Button type="primary">Add Exercise</Button> */}
+              <Button
+                type="primary"
+                onClick={() => handleSaveExercise(exercise.name)}
+                disabled={
+                  !!savedExercises.find((ex) => ex.name === exercise.name)
+                }
+              >
+                {!!savedExercises.find((ex) => ex.name === exercise.name)
+                  ? "Exercise Saved"
+                  : "Add Exercise"}
+              </Button>
             </Card>
           </Col>
         ))}

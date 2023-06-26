@@ -9,11 +9,11 @@ import FitBuildLandingPage from "./pages/landingPage/LandingPage";
 import SimpleNavbar from "./components/navbar/Navbar";
 import Dashboard from "./pages/dashboard/index";
 import ExerciseComponent from "./pages/addExercises/AddExercises";
+import WorkoutForm from "./pages/createWorkout/WorkoutForm";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
 });
-
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
@@ -26,7 +26,6 @@ const authLink = setContext((_, { headers }) => {
     },
   };
 });
-
 
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
@@ -42,6 +41,8 @@ function App() {
           <Route path="/" element={<FitBuildLandingPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/addexercises" element={<ExerciseComponent />} />
+          {/* <Route path="/programworkouts" element={} /> */}
+          <Route path="/createworkout" element={<WorkoutForm />} />
         </Routes>
       </Router>
     </ApolloProvider>
