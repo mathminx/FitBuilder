@@ -1,18 +1,10 @@
-import React from "react";
-import { Link, useParams } from "react-router-dom";
-import {
-  EditOutlined,
-  EllipsisOutlined,
-  SettingOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import React, { useState, useEffect }  from "react";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import {
   Breadcrumb,
   Layout,
-  Menu,
   theme,
   Card,
-  Avatar,
   Button,
   Space,
   Row,
@@ -22,16 +14,21 @@ import { useQuery } from "@apollo/client";
 import {
   GET_SINGLE_PROGRAM,
   GET_ME,
-  GET_SINGLE_WORKOUT,
 } from "../utils/queries";
-const { Header, Content, Footer } = Layout;
+const { Content } = Layout;
 
 const { Meta } = Card;
 
 const Dashboard = () => {
   const { loading: loadingMe, data: dataMe } = useQuery(GET_ME);
-  const { loading: loadingSingleProgram, data: dataSingleProgram } =
-    useQuery(GET_SINGLE_PROGRAM);
+const [currentProgram, setCurrentProgram] = useState(null);
+
+useEffect(() => {
+  if (!loadingMe && dataMe) {
+    const currentProgram = dataMe.me.programs.find(program => program.current === true);
+    setCurrentProgram(currentProgram);
+  }
+}, [loadingMe, dataMe]);
 
   // const workouts = data?.singleprogram || []
   // place components in here
@@ -50,12 +47,11 @@ const Dashboard = () => {
             margin: "16px 0",
           }}
         >
-          {" "}
-          {loadingSingleProgram ? (
+          {loadingMe ? (
             <Breadcrumb.Item>Loading....</Breadcrumb.Item>
           ) : (
             <Breadcrumb.Item>
-              Current Program:{/*dataSingleProgram.name*/}
+              Current Program:{currentProgram ? currentProgram.name: ' No current Program'}
             </Breadcrumb.Item>
           )}
           <Link to="/programs">
@@ -68,41 +64,46 @@ const Dashboard = () => {
             background: colorBgContainer,
           }}
         >
-          {" "}
+          
           {/* number of cards changes depending on number of workouts per week in program */}
-          {loadingSingleProgram ? (
-            <Card> Loading Workouts </Card>
-          ) : (
-            <Card title="Workouts For the Week">
-              <Row>
-                <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
-                  <Card
-                    title="Day 1"
-                    style={{
-                      width: 300,
-                    }}
-                    /* Image of workout / program */
-                    cover={
-                      <img
-                        alt="example"
-                        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                      />
-                    }
-                    actions={[
-                      <Space direction="horizontal">
-                        <Link to="/startworkout/:workoutId">
-                          <Button type="primary">Start</Button>
-                        </Link>
-                        <Link to="/">
-                        <Button type="secondary">View</Button>
-                        </Link>
-                      </Space>,
-                    ]}
-                  >
-                    <Meta title="Squat DAY" description="Day of Squats" />
-                  </Card>
-                </Col>
-              </Row>
+         
+          {loadingMe || !currentProgram ? (
+    <p>Waiting for workouts...</p>
+) : (
+    currentProgram.workouts.map((workouts) => (
+    <Card key={workouts._id} title="Workouts For the Week">
+      <Row>
+        <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+          <Card
+            title="Day 1"
+            style={{
+              width: 300,
+            }}
+            cover={
+              <img
+                alt="example"
+                src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" 
+              />/* program image */
+            }
+            actions={[
+              <Space direction="horizontal">
+                <Link to={`/startworkout/${workouts._id}`}> 
+                  <Button type="primary">Start</Button>
+                </Link>
+                <Link to="/">
+                  <Button type="secondary">View</Button>
+                </Link>
+              </Space>,
+            ]}
+          >
+            <Meta title={workouts.name} description="Day of Squats" />
+          </Card>
+        </Col>
+      </Row>
+    </Card>
+  ))
+)}
+  
 
               <Row justify="end">
                 <Space direction="horizontal">
@@ -111,8 +112,6 @@ const Dashboard = () => {
                   </Link>
                 </Space>
               </Row>
-            </Card>
-          )}
         </div>
       </Content>
       <Row justify="center" style={{ marginTop: "20px", marginBottom: "20px" }}>

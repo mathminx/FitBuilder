@@ -1,21 +1,19 @@
 // import statements
 import React from "react";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 
-// todo: import the necessary components.
-
-import LoginSignupModal from "./components/LoginSignupModal";
-import Dashboard from "./pages/Dashboard";
-import FitBuildLandingPage from "./pages/LandingPage";
-import SimpleNavbar from "./components/Navbar";
 
 
-import Login from './components/Login';
-import Signup from './components/Signup';
-import Header from "./components/Header"; 
+import FitBuildLandingPage from "./pages/landingPage/LandingPage";
+import SimpleNavbar from "./components/navbar/Navbar";
+import Dashboard from "./pages/DashboardHub"
+
+const httpLink = createHttpLink({
+  uri: "/graphql",
+});
 
 
 const authLink = setContext((_, { headers }) => {
@@ -31,7 +29,7 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const client = new ApolloClient({
-  uri: "/graphql",
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 
@@ -39,59 +37,10 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <div>
-          <Header/>
-        </div>
+      <SimpleNavbar></SimpleNavbar>
         <Routes>
-          <Route
-            path="/dashboard"
-            element= {<Dashboard />}
-          />
-          <Route path="/" element={<FitBuildLandingPage />}/>
-          <Route
-            path="/signup"
-            // element= {<SignUp />}
-          />
-          <Route
-            path="/login"
-            // element= {<Login />}
-          />
-          <Route
-          path="/user/:userId"
-          // element= {<UserProfile />}
-          />
-          <Route
-            path="/startworkout/:workoutId"
-            // element = {<StartWorkout />}
-          />
-          <Route
-            path="/viewworkout/:workoutId"
-            // element = {<ViewWorkout />}
-          />
-            <Route
-            path="/programs"
-          // element = {<ViewPrograms />}
-          />
-          <Route
-            path="/programs/:programId"
-            // element = {<ViewSingleProgram />}
-          />
-          <Route
-            path="/createprogram"
-            // element = {<CreateProgram />}
-          />
-          <Route
-            path="/modifyprogram"
-            // element = {<ModifyProgram />}
-          />
-          <Route
-            path="/createworkout"
-            // element = {<CreateWorkout />}
-          />
-          <Route
-            path="/addexercise"
-            // element = {<AddExercise />}
-          />
+          <Route path="/" element={<FitBuildLandingPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </Router>
     </ApolloProvider>

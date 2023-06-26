@@ -152,6 +152,7 @@ const resolvers = {
         }
         const program = await new Program({
           title,
+          current,
           creator: context.user._id,
           daysPerWeek,
           duration,
@@ -181,7 +182,7 @@ const resolvers = {
     },
     updateProgram: async (
       _,
-      { programId, title, daysPerWeek, duration, workouts },
+      { programId, title, current, daysPerWeek, duration, workouts },
       context
     ) => {
       try {
@@ -192,7 +193,7 @@ const resolvers = {
         }
         const updatedProgram = await Program.findByIdAndUpdate(
           programId,
-          { title, daysPerWeek, duration, workouts },
+          { title, current, daysPerWeek, duration, workouts },
           { new: true }
         );
         if (!updatedProgram) {

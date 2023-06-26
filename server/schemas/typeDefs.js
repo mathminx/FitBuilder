@@ -18,6 +18,7 @@ const typeDefs = gql`
   type Program {
     _id: ID
     title: String
+    current: Boolean
     creator: User
     workouts: [Workout]
     duration: Int
@@ -59,6 +60,7 @@ const typeDefs = gql`
     addProgram(
       title: String!
       creator: ID!
+      current: Boolean!
       daysPerWeek: Int!
       duration: Int!
     ): Program
@@ -66,6 +68,7 @@ const typeDefs = gql`
     updateProgram(
       programId: ID!
       title: String
+      current: Boolean!
       daysPerWeek: Int
       duration: Int
       workouts: [ID]
