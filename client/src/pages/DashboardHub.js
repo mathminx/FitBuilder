@@ -1,34 +1,32 @@
-import React, { useState, useEffect }  from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import {
-  Breadcrumb,
-  Layout,
-  theme,
-  Card,
-  Button,
-  Space,
-  Row,
-  Col,
-} from "antd";
+import { Breadcrumb, Layout, theme, Card, Button, Space, Row, Col } from "antd";
 import { useQuery } from "@apollo/client";
-import {
-  GET_SINGLE_PROGRAM,
-  GET_ME,
-} from "../utils/queries";
+import { GET_SINGLE_PROGRAM, GET_ME } from "../utils/queries";
+import Auth from "../utils/auth"
 const { Content } = Layout;
 
 const { Meta } = Card;
 
 const Dashboard = () => {
   const { loading: loadingMe, data: dataMe } = useQuery(GET_ME);
-const [currentProgram, setCurrentProgram] = useState(null);
+  const [currentProgram, setCurrentProgram] = useState(null);
+  const navigate = useNavigate();
+  const handleCreateProgramClick = () => {
+    console.log('button clicked');
+     if (Auth.loggedIn()) {
+         navigate('/createprogram'); // Redirect to dashboard if logged in.
+     }
+   };
 
-useEffect(() => {
-  if (!loadingMe && dataMe) {
-    const currentProgram = dataMe.me.programs.find(program => program.current === true);
-    setCurrentProgram(currentProgram);
-  }
-}, [loadingMe, dataMe]);
+  useEffect(() => {
+    if (!loadingMe && dataMe) {
+      const currentProgram = dataMe.me.programs.find(
+        (program) => program.current === true
+      );
+      setCurrentProgram(currentProgram);
+    }
+  }, [loadingMe, dataMe]);
 
   // const workouts = data?.singleprogram || []
   // place components in here
@@ -51,7 +49,8 @@ useEffect(() => {
             <Breadcrumb.Item>Loading....</Breadcrumb.Item>
           ) : (
             <Breadcrumb.Item>
-              Current Program:{currentProgram ? currentProgram.name: ' No current Program'}
+              Current Program:
+              {currentProgram ? currentProgram.name : " No current Program"}
             </Breadcrumb.Item>
           )}
           <Link to="/programs">
@@ -64,63 +63,59 @@ useEffect(() => {
             background: colorBgContainer,
           }}
         >
-          
           {/* number of cards changes depending on number of workouts per week in program */}
-         
-          {loadingMe || !currentProgram ? (
-    <p>Waiting for workouts...</p>
-) : (
-    currentProgram.workouts.map((workouts) => (
-    <Card key={workouts._id} title="Workouts For the Week">
-      <Row>
-        <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
-          <Card
-            title="Day 1"
-            style={{
-              width: 300,
-            }}
-            cover={
-              <img
-                alt="example"
-                src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" 
-              />/* program image */
-            }
-            actions={[
-              <Space direction="horizontal">
-                <Link to={`/startworkout/${workouts._id}`}> 
-                  <Button type="primary">Start</Button>
-                </Link>
-                <Link to="/">
-                  <Button type="secondary">View</Button>
-                </Link>
-              </Space>,
-            ]}
-          >
-            <Meta title={workouts.name} description="Day of Squats" />
-          </Card>
-        </Col>
-      </Row>
-    </Card>
-  ))
-)}
-  
 
-              <Row justify="end">
-                <Space direction="horizontal">
-                  <Link to="/">
-                    <Button type="secondary">Next Week</Button>
-                  </Link>
-                </Space>
-              </Row>
+          {loadingMe || !currentProgram ? (
+            <p>Waiting for workouts...</p>
+          ) : (
+            currentProgram.workouts.map((workouts) => (
+              <Card key={workouts._id} title="Workouts For the Week">
+                <Row>
+                  <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+                    <Card
+                      title="Day 1"
+                      style={{
+                        width: 300,
+                      }}
+                      cover={
+                        <img
+                          alt="example"
+                          src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                        /> /* program image */
+                      }
+                      actions={[
+                        <Space direction="horizontal">
+                          <Link to={`/startworkout/${workouts._id}`}>
+                            <Button type="primary">Start</Button>
+                          </Link>
+                          <Link to="/">
+                            <Button type="secondary">View</Button>
+                          </Link>
+                        </Space>,
+                      ]}
+                    >
+                      <Meta title={workouts.name} description="Day of Squats" />
+                    </Card>
+                  </Col>
+                </Row>
+              </Card>
+            ))
+          )}
+
+          <Row justify="end">
+            <Space direction="horizontal">
+              <Link to="/">
+                <Button type="secondary">Next Week</Button>
+              </Link>
+            </Space>
+          </Row>
         </div>
       </Content>
       <Row justify="center" style={{ marginTop: "20px", marginBottom: "20px" }}>
         <Space direction="vertical">
-          <Link to="/createprogram">
-            <Button type="primary" size="large">
+            <Button type="primary" size="large" onClick={handleCreateProgramClick}>
               Create Program!
             </Button>
-          </Link>
         </Space>
       </Row>
     </Layout>
