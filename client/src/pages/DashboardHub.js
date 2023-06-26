@@ -21,15 +21,14 @@ const { Meta } = Card;
 
 const Dashboard = () => {
   const { loading: loadingMe, data: dataMe } = useQuery(GET_ME);
-  const { loading: loadingSingleProgram, data: dataSingleProgram } =
-    useQuery(GET_SINGLE_PROGRAM);
-  const { currentProgram, setCurrentProgram } = useState({})
+const [currentProgram, setCurrentProgram] = useState(null);
 
-  useEffect(() => {
-    if (dataSingleProgram.current) {
-      setCurrentProgram(dataSingleProgram)
-    }
-  })
+useEffect(() => {
+  if (!loadingMe && dataMe) {
+    const currentProgram = dataMe.me.programs.find(program => program.current === true);
+    setCurrentProgram(currentProgram);
+  }
+}, [loadingMe, dataMe]);
 
   // const workouts = data?.singleprogram || []
   // place components in here
@@ -48,12 +47,11 @@ const Dashboard = () => {
             margin: "16px 0",
           }}
         >
-          {" "}
-          {loadingSingleProgram ? (
+          {loadingMe ? (
             <Breadcrumb.Item>Loading....</Breadcrumb.Item>
           ) : (
             <Breadcrumb.Item>
-              Current Program:{/*currentProgram.name*/}
+              Current Program:{currentProgram ? currentProgram.name: ' No current Program'}
             </Breadcrumb.Item>
           )}
           <Link to="/programs">
@@ -69,7 +67,10 @@ const Dashboard = () => {
           
           {/* number of cards changes depending on number of workouts per week in program */}
          
-  {dataSingleProgram.workouts.map((workouts) => (
+          {loadingMe || !currentProgram ? (
+    <p>Waiting for workouts...</p>
+) : (
+    currentProgram.workouts.map((workouts) => (
     <Card key={workouts._id} title="Workouts For the Week">
       <Row>
         <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
@@ -100,7 +101,9 @@ const Dashboard = () => {
         </Col>
       </Row>
     </Card>
-  ))}
+  ))
+)}
+  
 
               <Row justify="end">
                 <Space direction="horizontal">

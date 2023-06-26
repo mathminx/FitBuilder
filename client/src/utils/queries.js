@@ -16,6 +16,7 @@ export const GET_ME = gql`
           _id
           name
           dayNumber
+          complete
           exercises {
             _id
             name
@@ -52,8 +53,10 @@ export const GET_ALL_PROGRAMS = gql`
       duration
       daysPerWeek
       workouts {
-        name
-        dayNumber
+        _id
+          name
+          dayNumber
+          complete
         exercises {
           _id
           name
