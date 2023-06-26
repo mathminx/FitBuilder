@@ -2,19 +2,18 @@ import React from 'react';
 import { Form, Input, Select, Button, Upload} from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { Link, Redirect } from 'react-router-dom';
-import {ExerciseList} from './ExerciseList'
-import Auth from ''
+import {ExerciseList} from './ExerciseList';
+import CheckedLoggedIn from '.CheckLoggedIn';
 
 const { Option } = Select;
 
 const WorkoutForm = () => {
-const isLoggedIn = Auth.isLoggedIn();
+const isLoggedIn = CheckLoggedIn();
 
   if (!isLoggedIn) {
    
     return <Redirect to="/Dashboard" />;
   }
-
 
   return (
   <><Form>
