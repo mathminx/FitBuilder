@@ -3,37 +3,41 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: 89vh;
   padding: 20px;
   box-sizing: border-box;
   text-align: center;
+  overflow:hidden;
+  margin: 0px;
 }
 
 .welcomeMessage {
   font-size: 2.5em;
   font-weight: bold;
-  color: #4caf50; /* green */
+  color: #193381; /* blue */
   margin-bottom: 20px;
 }
 
 .appDescription {
   font-size: 1.2em;
-  color: #616161; /* gray */
+  color: #193381; /* blue */
   margin-bottom: 40px;
   max-width: 600px;
 }
 
 .getStartedButton {
-  font-size: 1em;
+  font-size: 25px;
+  font-weight:bold;
   padding: 10px 20px;
-  color: #ffffff; /* white */
-  background-color: #4caf50; /* green */
-  border: none;
+  color: white; /* white */
+  background-color: #fa6d35; /* orange */
+  border: solid 3px;
+  border-color:#193381;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 .getStartedButton:hover {
-  background-color: #388e3c; /* darker green */
+  background-color: #34c23b; /* darker green */
 }

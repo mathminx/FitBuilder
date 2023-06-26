@@ -7,17 +7,16 @@ import "./App.css";
 
 // todo: import the necessary components.
 
-
-
-
-import LoginSignupModal from "./components/login_signup_modal";
+import LoginSignupModal from "./components/LoginSignupModal";
 import Dashboard from "./pages/Dashboard";
-import FitBuildLandingPage from "./pages/landingPage/LandingPage";
-import SimpleNavbar from "./components/navbar/Navbar";
+import FitBuildLandingPage from "./pages/LandingPage";
+import SimpleNavbar from "./components/Navbar";
 
 
 import Login from './components/Login';
 import Signup from './components/Signup';
+import Header from "./components/Header"; 
+
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
@@ -31,7 +30,6 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-
 const client = new ApolloClient({
   uri: "/graphql",
   cache: new InMemoryCache(),
@@ -41,64 +39,64 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-      <div>
-      <SimpleNavbar></SimpleNavbar>
+        <div>
+          <Header/>
+        </div>
         <Routes>
-      <Route
-      path="/dashboard"
-      element= {<Dashboard />}
-      />
-      <Route path="/" element={<FitBuildLandingPage />} />
-      <Route
-      path="/signup"
-      // element= {<SignUp />}
-      />
-      <Route
-      path="/login"
-      // element= {<Login />}
-      />
-      <Route
-      path="/user/:userId"
-      // element= {<UserProfile />}
-      />
-      <Route
-      path="/startworkout/:workoutId"
-      // element = {<StartWorkout />}
-      />
-      <Route
-      path="/viewworkout/:workoutId"
-      // element = {<ViewWorkout />}
-      />
-      <Route
-      path="/programs"
-      // element = {<ViewPrograms />}
-      />
-       <Route
-      path="/programs/:programId"
-      // element = {<ViewSingleProgram />}
-      />
-       <Route
-      path="/createprogram"
-      // element = {<CreateProgram />}
-      />
-      <Route
-      path="/modifyprogram"
-      // element = {<ModifyProgram />}
-      />
-      <Route
-      path="/createworkout"
-      // element = {<CreateWorkout />}
-      />
-       <Route
-      path="/addexercise"
-      // element = {<AddExercise />}
-      />
-      </Routes>
-      
-      </div>
+          <Route
+            path="/dashboard"
+            element= {<Dashboard />}
+          />
+          <Route path="/" element={<FitBuildLandingPage />}/>
+          <Route
+            path="/signup"
+            // element= {<SignUp />}
+          />
+          <Route
+            path="/login"
+            // element= {<Login />}
+          />
+          <Route
+          path="/user/:userId"
+          // element= {<UserProfile />}
+          />
+          <Route
+            path="/startworkout/:workoutId"
+            // element = {<StartWorkout />}
+          />
+          <Route
+            path="/viewworkout/:workoutId"
+            // element = {<ViewWorkout />}
+          />
+            <Route
+            path="/programs"
+          // element = {<ViewPrograms />}
+          />
+          <Route
+            path="/programs/:programId"
+            // element = {<ViewSingleProgram />}
+          />
+          <Route
+            path="/createprogram"
+            // element = {<CreateProgram />}
+          />
+          <Route
+            path="/modifyprogram"
+            // element = {<ModifyProgram />}
+          />
+          <Route
+            path="/createworkout"
+            // element = {<CreateWorkout />}
+          />
+          <Route
+            path="/addexercise"
+            // element = {<AddExercise />}
+          />
+        </Routes>
       </Router>
     </ApolloProvider>
   );
 }
 
 export default App;
+
