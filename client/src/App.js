@@ -7,10 +7,11 @@ import "./App.css";
 
 import FitBuildLandingPage from "./pages/landingPage/LandingPage";
 import SimpleNavbar from "./components/navbar/Navbar";
-import Dashboard from "./pages/dashboard/index";
+import Dashboard from "./pages/DashboardHub";
 import ExerciseComponent from "./pages/addExercises/AddExercises";
 import WorkoutForm from "./pages/createWorkout/WorkoutForm";
 import ProgramPage from "./pages/programPage/ProgramPage";
+import CreateProgram from "./pages/addProgram/AddProgramForm";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -42,7 +43,7 @@ function App() {
           <Route path="/" element={<FitBuildLandingPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/addexercises" element={<ExerciseComponent />} />
-          {/* <Route path="/programworkouts" element={} /> */}
+          <Route path="/createprogram" element={<CreateProgram />} />
           <Route path="/createworkout" element={<WorkoutForm />} />
           <Route path="/program" element={<ProgramPage/>} />
         </Routes>

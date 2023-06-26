@@ -33,24 +33,6 @@ export const ADD_PROGRAM = gql`
       current
       duration
       daysPerWeek
-      workouts {
-        _id
-          name
-          dayNumber
-          complete
-        exercises {
-          _id
-          name
-          equipment
-          diffculty
-          description
-          sets
-          reps
-          weight
-          muscle
-          duration
-      }
-      }   
     }
   }
 `;
