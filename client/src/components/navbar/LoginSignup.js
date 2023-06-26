@@ -3,6 +3,7 @@ import { useMutation } from "@apollo/client";
 import { Modal, Button, Form, Input } from "antd";
 import { ADD_USER } from "../../utils/mutations";
 import { LOGIN_USER } from "../../utils/mutations";
+import auth from "../../utils/Auth";
 
 const LoginModal = ({ visible, handleOk, handleCancel }) => {
   const [loginUser, { loading, error }] = useMutation(LOGIN_USER);
@@ -69,7 +70,15 @@ const SignupModal = ({ visible, handleOk, handleCancel }) => {
       variables: { username, email, password },
     });
 
+    if (!data) {
+        throw new Error("something went wrong with the GraphQl server!");
+    }
+    
     console.log(data);
+
+
+
+
     handleOk();
   };
 
