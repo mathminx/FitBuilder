@@ -12,10 +12,18 @@ const Dashboard = () => {
   const { loading: loadingMe, data: dataMe } = useQuery(GET_ME);
   const [currentProgram, setCurrentProgram] = useState(null);
   const navigate = useNavigate();
+
   const handleCreateProgramClick = () => {
     console.log('button clicked');
      if (Auth.loggedIn()) {
          navigate('/createprogram'); // Redirect to dashboard if logged in.
+     }
+   };
+
+   const handleStartWorkoutClick = () => {
+    console.log('button clicked');
+     if (Auth.loggedIn()) {
+         navigate(`/startworkout/${EventTarget.value}`); // Redirect to dashboard if logged in.
      }
    };
 
@@ -85,9 +93,7 @@ const Dashboard = () => {
                       }
                       actions={[
                         <Space direction="horizontal">
-                          <Link to={`/startworkout/${workouts._id}`}>
-                            <Button type="primary">Start</Button>
-                          </Link>
+                            <Button type="primary" onClick={handleStartWorkoutClick} value={workouts._id}>Start</Button>
                           <Link to="/">
                             <Button type="secondary">View</Button>
                           </Link>
