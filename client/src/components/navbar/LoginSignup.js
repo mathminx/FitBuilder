@@ -22,7 +22,7 @@ const LoginModal = ({ visible, handleOk, handleCancel }) => {
       console.log(user);
       Auth.login(token);
       handleOk();
-      navigate("/dashboard"); // I do not know why, but my attempts to log in redirect me after a few seconds back to the root?
+      navigate("/dashboard"); 
     } catch (error) {
       console.error("Attempt to log in failed:", error);
     }
@@ -62,13 +62,11 @@ const LoginModal = ({ visible, handleOk, handleCancel }) => {
 
 export default LoginModal;
 
-
 const SignupModal = ({ visible, handleOk, handleCancel }) => {
   const navigate = useNavigate();
   const [addUser, { loading, error }] = useMutation(ADD_USER);
 
   const onFinish = async (values) => {
-    //console.log("Success:", values);
 
 try {
   const { username, email, password } = values;
@@ -84,7 +82,7 @@ try {
   console.log(user);
   Auth.login(token);
   handleOk();
-  navigate("/dashboard"); // I do not know why, but my attempts to log in redirect me after a few seconds back to the root?
+  navigate("/dashboard");
 } catch (error) {
       throw new Error(`An error occurred while creating a new user or signing JWT token, ${error}`);
     }   

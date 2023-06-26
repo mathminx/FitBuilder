@@ -35,8 +35,6 @@ const SimpleNavbar = () => {
     Auth.logout();
   };
 
-  
-
   return (
    <>
     <Menu mode="horizontal">
