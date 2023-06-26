@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/client";
 import { Modal, Button, Form, Input } from "antd";
 import { ADD_USER } from "../../utils/mutations";
 import { LOGIN_USER } from "../../utils/mutations";
-import auth from "../../utils/Auth";
+import Auth from "../../utils/auth";
 
 const LoginModal = ({ visible, handleOk, handleCancel }) => {
   const [loginUser, { loading, error }] = useMutation(LOGIN_USER);
@@ -16,9 +16,12 @@ const LoginModal = ({ visible, handleOk, handleCancel }) => {
         variables: { username, password },
       });
       console.log(data);
+      const { token, user } = data.loginUser;
+      console.log(user);
+      Auth.login(token);
       handleOk();
-    } catch (err) {
-      console.error("Failed:", err);
+    } catch (error) {
+      console.error("Attempt to log in failed:", error);
     }
   };
 
@@ -60,7 +63,9 @@ const SignupModal = ({ visible, handleOk, handleCancel }) => {
   const [addUser, { loading, error }] = useMutation(ADD_USER);
 
   const onFinish = async (values) => {
-    console.log("Success:", values);
+    //console.log("Success:", values);
+
+try {
 
     // Destructure values object into separate variables
     const { username, email, password } = values;
@@ -69,16 +74,16 @@ const SignupModal = ({ visible, handleOk, handleCancel }) => {
     const { data } = await addUser({
       variables: { username, email, password },
     });
-
     if (!data) {
         throw new Error("something went wrong with the GraphQl server!");
     }
-    
     console.log(data);
-
-
-
-
+    const { token, user } = data.addUser;
+    console.log(user);
+    Auth.login(token);
+} catch (error) {
+    throw new Error(`An error occurred while creating a new user or signing JWT token, ${error}`);
+}
     handleOk();
   };
 
