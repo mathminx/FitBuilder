@@ -35,6 +35,7 @@ const LoginModal = ({ visible, handleOk, handleCancel }) => {
       visible={visible}
       onOk={handleOk}
       onCancel={handleCancel}
+      footer={null}
     >
       <Form onFinish={onFinish} onFinishFailed={onFinishFailed}>
         <Form.Item label="Username" name="username">
