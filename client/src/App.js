@@ -12,6 +12,7 @@ import ExerciseComponent from "./pages/addExercises/AddExercises";
 import WorkoutForm from "./pages/createWorkout/WorkoutForm";
 import ProgramPage from "./pages/programPage/ProgramPage";
 import CreateProgram from "./pages/addProgram/AddProgramForm";
+import AmandaWorkoutForm from "./pages/createWorkout/AmandaWorkoutForm";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -45,7 +46,8 @@ function App() {
           <Route path="/addexercises" element={<ExerciseComponent />} />
           <Route path="/createprogram" element={<CreateProgram />} />
           <Route path="/createworkout" element={<WorkoutForm />} />
-          <Route path="/program" element={<ProgramPage/>} />
+          {/* <Route path="/createworkout" element={<AmandaWorkoutForm />} /> */}
+          <Route path="/program" element={<ProgramPage />} />
         </Routes>
       </Router>
     </ApolloProvider>
