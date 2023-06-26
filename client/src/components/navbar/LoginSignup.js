@@ -12,17 +12,33 @@ const LoginModal = ({ visible, handleOk, handleCancel }) => {
 
   const onFinish = async (values) => {
     console.log(values);
-    const { username, password } = values;
+    const { email, password } = values;
     try {
       const { data } = await loginUser({
-        variables: { username, password },
+        variables: { email, password },
       });
       console.log(data);
-      const { token, user } = data.loginUser;
+      const { token, user } = data.login;
       console.log(user);
-      Auth.login(token);
-      handleOk();
-      navigate("/dashboard"); 
+
+      try {
+        Auth.login(token);
+      } catch (error) {
+        console.error("Error during Auth.login:", error);
+      }
+
+      try {
+        handleOk();
+      } catch (error) {
+        console.error("Error during handleOk:", error);
+      }
+
+      try {
+        navigate("/dashboard");
+      } catch (error) {
+        console.error("Error during navigate:", error);
+      }
+    
     } catch (error) {
       console.error("Attempt to log in failed:", error);
     }
@@ -41,7 +57,7 @@ const LoginModal = ({ visible, handleOk, handleCancel }) => {
       footer={null}
     >
       <Form onFinish={onFinish} onFinishFailed={onFinishFailed}>
-        <Form.Item label="Username" name="username">
+        <Form.Item label="email " name="email">
           <Input />
         </Form.Item>
         <Form.Item label="Password" name="password">
