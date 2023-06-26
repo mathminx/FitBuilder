@@ -3,7 +3,7 @@ import { Form, Input, Select, Button, Upload} from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { Link, Redirect } from 'react-router-dom';
 import {ExerciseList} from './ExerciseList';
-import CheckedLoggedIn from '.CheckLoggedIn';
+import CheckLoggedIn from './CheckLogin';
 
 const { Option } = Select;
 

@@ -1,6 +1,6 @@
 import jwtDecode from 'jwt-decode';
 
-function checkLoggedIn() {
+function CheckLoggedIn() {
   // Retrieve the token from local storage or wherever it is stored
   const token = localStorage.getItem('token');
 
@@ -28,3 +28,5 @@ function checkLoggedIn() {
   // No token found, user is not logged in
   return false;
 }
+
+export default CheckLoggedIn;
