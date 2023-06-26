@@ -4,8 +4,10 @@ import { Modal, Button, Form, Input } from "antd";
 import { ADD_USER } from "../../utils/mutations";
 import { LOGIN_USER } from "../../utils/mutations";
 import Auth from "../../utils/auth";
+import { useNavigate } from "react-router-dom";
 
 const LoginModal = ({ visible, handleOk, handleCancel }) => {
+  const navigate = useNavigate();
   const [loginUser, { loading, error }] = useMutation(LOGIN_USER);
 
   const onFinish = async (values) => {
@@ -20,6 +22,7 @@ const LoginModal = ({ visible, handleOk, handleCancel }) => {
       console.log(user);
       Auth.login(token);
       handleOk();
+      navigate("/dashboard"); // I do not know why, but my attempts to log in redirect me after a few seconds back to the root?
     } catch (error) {
       console.error("Attempt to log in failed:", error);
     }
@@ -61,31 +64,30 @@ export default LoginModal;
 
 
 const SignupModal = ({ visible, handleOk, handleCancel }) => {
+  const navigate = useNavigate();
   const [addUser, { loading, error }] = useMutation(ADD_USER);
 
   const onFinish = async (values) => {
     //console.log("Success:", values);
 
 try {
+  const { username, email, password } = values;
 
-    // Destructure values object into separate variables
-    const { username, email, password } = values;
-
-    // Pass the variables explicitly in the mutation
-    const { data } = await addUser({
-      variables: { username, email, password },
-    });
-    if (!data) {
-        throw new Error("something went wrong with the GraphQl server!");
-    }
-    console.log(data);
-    const { token, user } = data.addUser;
-    console.log(user);
-    Auth.login(token);
+  const { data } = await addUser({
+    variables: { username, email, password },
+  });
+  if (!data) {
+    throw new Error("something went wrong with the GraphQl server!");
+  }
+  console.log(data);
+  const { token, user } = data.addUser;
+  console.log(user);
+  Auth.login(token);
+  handleOk();
+  navigate("/dashboard"); // I do not know why, but my attempts to log in redirect me after a few seconds back to the root?
 } catch (error) {
-    throw new Error(`An error occurred while creating a new user or signing JWT token, ${error}`);
-}
-    handleOk();
+      throw new Error(`An error occurred while creating a new user or signing JWT token, ${error}`);
+    }   
   };
 
   const onFinishFailed = (errorInfo) => {
