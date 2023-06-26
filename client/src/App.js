@@ -9,7 +9,7 @@ import "./App.css";
 
 import FitBuildLandingPage from "./pages/landingPage/LandingPage";
 import SimpleNavbar from "./components/navbar/Navbar";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/DashboardHub"
 
 const httpLink = createHttpLink({
   uri: "/graphql",

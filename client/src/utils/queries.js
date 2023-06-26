@@ -41,17 +41,16 @@ export const GET_ALL_PROGRAMS = gql`
       title
       weeks
       days
-    }`;
+    }
+  }`;
 
-export const GET_SINGLE_PROGRAM = gql`
+  export const GET_SINGLE_PROGRAM = gql`
   query Program($id: ID!) {
     program(_id: $id) {
-      daysPerWeek
-      duration
       title
       current
       duration
-      daysperWeek
+      daysPerWeek
       workouts {
         name
         dayNumber
