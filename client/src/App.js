@@ -5,11 +5,10 @@ import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 
-
-import LoginSignupModal from "./components/login_signup_modal";
 import FitBuildLandingPage from "./pages/landingPage/LandingPage";
 import SimpleNavbar from "./components/navbar/Navbar";
 import Dashboard from "./pages/dashboard/index";
+import ExerciseComponent from "./pages/addExercises/AddExercises";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -38,10 +37,11 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-      <SimpleNavbar></SimpleNavbar>
+        <SimpleNavbar></SimpleNavbar>
         <Routes>
           <Route path="/" element={<FitBuildLandingPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/addexercises" element={<ExerciseComponent />} />
         </Routes>
       </Router>
     </ApolloProvider>
