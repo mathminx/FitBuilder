@@ -1,8 +1,9 @@
 import React from 'react';
-import { Form, Input, Select, Button} from 'antd';
+import { Form, Input, Select, Button, Upload} from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import {ExerciseList} from './ExerciseList'
+import Auth from ''
 
 const { Option } = Select;
 
@@ -35,19 +36,18 @@ const isLoggedIn = Auth.isLoggedIn();
           <Option value="high">High</Option>
         </Select>
       </Form.Item>
-      <ExerciseList></>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Save
-          </Button>
-        </Form.Item>
-        <Form.Item>
-          <Link to="/add-workout">Add a workout program</Link>
-        </Form.Item>
-      </Form><Form.Item>
+      <ExerciseList></ExerciseList>
+        {/* Remaining form items */}
+      </Form>
+      <Form.Item>
+        <Link to="/add-workout">Add a workout program</Link>
+      </Form.Item>
+      <Form.Item>
         <Link to="./Dashboard">Back to Dashboard</Link>
-      </Form.Item></>
+      </Form.Item>
+    </>
+  );
+};
 
-);
-}
 export default WorkoutForm;
+

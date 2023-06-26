@@ -1,10 +1,16 @@
 import React from "react";
 import "./LandingPage.css";
+import { useNavigate } from "react-router-dom";
+import Auth from "../../utils/auth"
 
 const FitBuildLandingPage = () => {
+  const navigate = useNavigate();
 
   const handleStartClick = () => {
    console.log('button clicked');
+    if (Auth.loggedIn()) {
+        navigate('/dashboard'); // Redirect to dashboard if logged in.
+    }
   };
 
   return (
