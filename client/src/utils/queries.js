@@ -11,11 +11,13 @@ export const GET_ME = gql`
       programs {
         _id
         name
+        current
         duration
         daysPerWeek
         workouts {
           _id
           name
+          dayNumber
           exercises {
             _id
             name
@@ -39,8 +41,9 @@ export const GET_ALL_PROGRAMS = gql`
     programs {
       _id
       title
-      weeks
-      days
+      current
+      duration
+      daysPerWeek
     }
   }
 `;
@@ -50,11 +53,13 @@ export const GET_SINGLE_PROGRAM = gql`
     programs {
       _id
       title
-      weeks
-      days
+      current
+      duration
+      daysperWeek
       workouts {
         _id
         name
+        dayNumber
         exercises {
           _id
           name

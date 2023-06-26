@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import {
   EditOutlined,
   EllipsisOutlined,
@@ -32,6 +33,13 @@ const Dashboard = () => {
   const { loading: loadingMe, data: dataMe } = useQuery(GET_ME);
   const { loading: loadingSingleProgram, data: dataSingleProgram } =
     useQuery(GET_SINGLE_PROGRAM);
+  const { currentProgram, setCurrentProgram } = useState({})
+
+  useEffect(() => {
+    if (dataSingleProgram.current) {
+      setCurrentProgram(dataSingleProgram)
+    }
+  })
 
   // const workouts = data?.singleprogram || []
   // place components in here
@@ -55,7 +63,7 @@ const Dashboard = () => {
             <Breadcrumb.Item>Loading....</Breadcrumb.Item>
           ) : (
             <Breadcrumb.Item>
-              Current Program:{/*dataSingleProgram.name*/}
+              Current Program:{/*currentProgram.name*/}
             </Breadcrumb.Item>
           )}
           <Link to="/programs">
@@ -71,38 +79,41 @@ const Dashboard = () => {
           {" "}
           {/* number of cards changes depending on number of workouts per week in program */}
           {loadingSingleProgram ? (
-            <Card> Loading Workouts </Card>
-          ) : (
-            <Card title="Workouts For the Week">
-              <Row>
-                <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
-                  <Card
-                    title="Day 1"
-                    style={{
-                      width: 300,
-                    }}
-                    /* Image of workout / program */
-                    cover={
-                      <img
-                        alt="example"
-                        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                      />
-                    }
-                    actions={[
-                      <Space direction="horizontal">
-                        <Link to="/startworkout/:workoutId">
-                          <Button type="primary">Start</Button>
-                        </Link>
-                        <Link to="/">
-                        <Button type="secondary">View</Button>
-                        </Link>
-                      </Space>,
-                    ]}
-                  >
-                    <Meta title="Squat DAY" description="Day of Squats" />
-                  </Card>
-                </Col>
-              </Row>
+  <Card> Loading Workouts </Card>
+) : (
+  dataSingleProgram.workouts.map((workouts) => (
+    <Card key={workouts._id} title="Workouts For the Week">
+      <Row>
+        <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+          <Card
+            title="Day 1"
+            style={{
+              width: 300,
+            }}
+            cover={
+              <img
+                alt="example"
+                src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" 
+              />/* program image */
+            }
+            actions={[
+              <Space direction="horizontal">
+                <Link to={`/startworkout/${workouts._id}`}> 
+                  <Button type="primary">Start</Button>
+                </Link>
+                <Link to="/">
+                  <Button type="secondary">View</Button>
+                </Link>
+              </Space>,
+            ]}
+          >
+            <Meta title={workouts.name} description="Day of Squats" />
+          </Card>
+        </Col>
+      </Row>
+    </Card>
+  ))
+)}
 
               <Row justify="end">
                 <Space direction="horizontal">
@@ -111,8 +122,6 @@ const Dashboard = () => {
                   </Link>
                 </Space>
               </Row>
-            </Card>
-          )}
         </div>
       </Content>
       <Row justify="center" style={{ marginTop: "20px", marginBottom: "20px" }}>
