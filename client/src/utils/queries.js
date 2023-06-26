@@ -1,7 +1,5 @@
 import { gql } from "@apollo/client";
 
-// TODO: write requried queries.
-
 export const GET_ME = gql`
   query me {
     me {
@@ -37,27 +35,24 @@ export const GET_ME = gql`
 `;
 
 export const GET_ALL_PROGRAMS = gql`
-  query GetAllPrograms {
+  query Programs {
     programs {
       _id
       title
-      current
-      duration
-      daysPerWeek
-    }
-  }
-`;
+      weeks
+      days
+    }`;
 
 export const GET_SINGLE_PROGRAM = gql`
-  query GetSinglePrograms {
-    programs {
-      _id
+  query Program($id: ID!) {
+    program(_id: $id) {
+      daysPerWeek
+      duration
       title
       current
       duration
       daysperWeek
       workouts {
-        _id
         name
         dayNumber
         exercises {
