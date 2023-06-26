@@ -47,24 +47,28 @@ const ViewPrograms = () => {
         { loadingMe || !allPrograms ? (
         <div>Waiting for Programs</div>
         ) : (
+            allPrograms.map((program) => (
       <Card
+      key={program._id}
     style={{ width: 300 }}
     cover={
+        /* program picture */
       <img
         alt="example"
         src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
       />
     }
     actions={[
-        <Button type="primary" onClick={handleViewSinglePrograms}>View</Button>
+        <Button type="primary" onClick={() => handleViewSinglePrograms(program._id)}>View Program</Button>
     ]}
   >
     <Meta
       avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />}
-      title="program"
-      description="This is the description"
+      title={program.title}
+      description={program.description}
     />
   </Card>
+            ))
         )}
       </Col>
     </Row>
