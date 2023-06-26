@@ -29,12 +29,15 @@ export const ADD_PROGRAM = gql`
   mutation AddProgram($userId: ID!, $title: String!, $workouts: [ID]!, $weeks: Int!, $days: Int! ) {
     AddProgram(userId: $userId, title: $title, workouts: $workouts, weeks: $weeks, days: $days) {
       _id
-      name
+      title
+      current
       duration
       daysPerWeek
       workouts {
         _id
-        name
+          name
+          dayNumber
+          complete
         exercises {
           _id
           name
@@ -69,13 +72,15 @@ export const UPDATE_PROGRAM = gql`
     $days: Int!
   ) {
     AddProgram(title: $title, workouts: $workouts, weeks: $weeks, days: $days) {
-      _id
-      name
+      title
+      current
       duration
       daysPerWeek
       workouts {
         _id
-        name
+          name
+          dayNumber
+          complete
         exercises {
           _id
           name
@@ -98,12 +103,15 @@ export const ADD_WORKOUT = gql`
   mutation AddWorkout($programId: ID!, $workouts: [ID]!) {
     addWorkout(programId: $programId, workouts: $workouts) {
       _id
-      name
+      title
+      current
       duration
       daysPerWeek
       workouts {
         _id
         name
+        dayNumber
+        complete
         exercises {
           _id
           name
@@ -149,6 +157,8 @@ export const UPDATE_WORKOUT = gql`
     ) {
       _id
       name
+      dayNumber
+      complete
       exercise {
         _id
         name
