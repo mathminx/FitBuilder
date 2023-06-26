@@ -36,7 +36,7 @@ const Dashboard = () => {
   const { currentProgram, setCurrentProgram } = useState({})
 
   useEffect(() => {
-    if (dataSingleProgram) {
+    if (dataSingleProgram.current) {
       setCurrentProgram(dataSingleProgram)
     }
   })

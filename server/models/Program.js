@@ -7,6 +7,10 @@ const programSchema = new Schema({
     type: String,
     required: true,
   },
+  current: {
+    type: Boolean,
+    required: true,
+  },
   creator: {
     type: Schema.Types.ObjectId,
     ref: "User",
