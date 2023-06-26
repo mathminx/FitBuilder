@@ -40,7 +40,7 @@ export const GET_ALL_PROGRAMS = gql`
   query GetAllPrograms {
     programs {
       _id
-      name
+      title
       current
       duration
       daysPerWeek
@@ -53,7 +53,8 @@ export const GET_SINGLE_PROGRAM = gql`
     programs {
       _id
       title
-      weeks
+      current
+      duration
       daysperWeek
       workouts {
         _id
