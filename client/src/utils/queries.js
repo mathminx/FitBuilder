@@ -73,18 +73,18 @@ export const GET_SINGLE_PROGRAM = gql`
 `;
 
 export const GET_SINGLE_EXERCISE = gql`
-  query GetSingleExercise($exerciseId: ID!) {
-    exercises(id: $exerciseId) {
+  query Exercise($id: ID!) {
+    exercise(_id: $id) {
       _id
-      name
-      equipment
       difficulty
-      description
-      sets
-      reps
-      weight
-      muscle
       duration
+      equipment
+      instructions
+      name
+      reps
+      sets
+      type
+      weight
     }
   }
 `;
@@ -106,6 +106,27 @@ export const GET_EXERCISES = gql`
   }
 `;
 
+export const GET_WORKOUTS = gql`
+  query Workouts {
+    workouts {
+      _id
+      name
+      exercises {
+        _id
+        difficulty
+        duration
+        equipment
+        instructions
+        name
+        reps
+        sets
+        type
+        weight
+      }
+    }
+  }
+`;
+
 export const GET_WORKOUT = gql`
   query GetWorkout($id: ID!) {
     workout(id: $id) {
@@ -116,3 +137,4 @@ export const GET_WORKOUT = gql`
     }
   }
 `;
+

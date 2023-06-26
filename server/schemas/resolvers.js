@@ -65,6 +65,19 @@ const resolvers = {
         );
       }
     },
+    workout: async (_, { _id }) => {
+      try {
+        const workout = await Workout.findById(_id);
+        if (!workout) {
+          throw new Error("No workout found with this id!");
+        }
+        return workout;
+      } catch (error) {
+        throw new Error(
+          `Something went wrong fetching the workout data: ${error.message}`
+        );
+      }
+    },
     exercises: async () => {
       try {
         const exercises = await Exercise.find({});
@@ -73,6 +86,19 @@ const resolvers = {
           throw new Error("No exercises saved to db!");
         }
         return exercises;
+      } catch (error) {
+        throw new Error(
+          `Something went wrong fetching the exercise data: ${error.message}`
+        );
+      }
+    },
+    exercise: async (_, { _id }) => {
+      try {
+        const exercise = await Exercise.findById(_id);
+        if (!exercise) {
+          throw new Error("No exercise found with this id!");
+        }
+        return exercise;
       } catch (error) {
         throw new Error(
           `Something went wrong fetching the exercise data: ${error.message}`
@@ -165,7 +191,6 @@ const resolvers = {
         );
       }
     },
-
     removeProgram: async (_, { programId }, context) => {
       try {
         if (!context.user) {
@@ -279,10 +304,10 @@ const resolvers = {
         await workout.save();
 
         // Populate the exercises before returning
-        return Workout.findById(workout._id).populate('exercises');
+        return Workout.findById(workout._id).populate("exercises");
       } catch (error) {
         throw new Error(
-          `There was an error adding the exercise to the workout: ${error.message}`,
+          `There was an error adding the exercise to the workout: ${error.message}`
         );
       }
     },
