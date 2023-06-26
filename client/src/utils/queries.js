@@ -105,3 +105,14 @@ export const GET_EXERCISES = gql`
     }
   }
 `;
+
+export const GET_WORKOUT = gql`
+  query GetWorkout($id: ID!) {
+    workout(id: $id) {
+      id
+      name
+      duration
+      intensity
+    }
+  }
+`;
