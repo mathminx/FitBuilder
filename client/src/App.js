@@ -7,10 +7,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import "./App.css";
 
-
-
 import FitBuildLandingPage from "./pages/landingPage/LandingPage";
-import SimpleNavbar from "./components/navbar/Navbar";
 import Dashboard from "./pages/DashboardHub"
 import ViewPrograms from "./pages/ViewPrograms";
 
