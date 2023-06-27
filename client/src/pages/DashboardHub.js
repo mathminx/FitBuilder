@@ -210,7 +210,7 @@ const Dashboard = () => {
     console.log('button clicked');
      if (Auth.loggedIn()) {
       const workoutId = event.target.value
-         navigate(`/startworkout/${workoutId}`); // Redirect to dashboard if logged in.
+         navigate(`/startworkout`); // Redirect to dashboard if logged in.
      } else {
       navigate('/')
      }
@@ -263,7 +263,9 @@ const Dashboard = () => {
           )}
 
           {loadingMe || !currentProgram ? (
-            <p>Waiting for workouts...</p>
+            <Row justify="center">
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}/>
+            </Row>
           ) : (
             <>
               {currentProgram.workouts
@@ -318,7 +320,7 @@ const Dashboard = () => {
               />
             </>
           )}
-
+</Row>
           <Row justify="end">
             <Space direction="horizontal">
               <Link to="/">

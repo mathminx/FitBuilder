@@ -8,12 +8,15 @@ import Footer from "./components/Footer";
 import "./App.css";
 
 import FitBuildLandingPage from "./pages/landingPage/LandingPage";
-import Dashboard from "./pages/DashboardHub";
 import ExerciseComponent from "./pages/addExercises/AddExercises";
 import WorkoutForm from "./pages/createWorkout/WorkoutForm";
 import ProgramPage from "./pages/programPage/ProgramPage";
 import CreateProgram from "./pages/addProgram/AddProgramForm";
+import Dashboard from "./pages/DashboardHub"
 import ViewPrograms from "./pages/ViewPrograms";
+import StartWorkout from "./pages/StartWorkout";
+import SaveWorkout from "./pages/FinishWorkout";
+import SarahDashboard from "./pages/SarahDashboard";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -40,17 +43,20 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <Header/>
-          <Routes>
-            <Route path="/" element={<FitBuildLandingPage />} />
-            <Route path="/createprogram" element={<CreateProgram />} />
-            <Route path="/createworkout/:programId" element={<WorkoutForm />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/addexercises/:workoutId" element={<ExerciseComponent />} />
-            <Route path="/viewallprograms" element={<ViewPrograms/>}></Route>
-            <Route path="/programs/:programId" element={<ProgramPage />} />
-          </Routes>
-        <Footer/>
+        <Header />
+        <Routes>
+          <Route path="/" element={<FitBuildLandingPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/viewallprograms" element={<ViewPrograms />}></Route>
+          <Route path="/createprogram" element={<CreateProgram />} />
+          <Route path="/createworkout/:programId" element={<WorkoutForm />} />
+          <Route path="/addexercises/:workoutId" element={<ExerciseComponent />}/>
+          <Route path="/programs/:programId" element={<ProgramPage />} />
+          <Route path="/startworkout" element={<StartWorkout />}></Route>
+          <Route path="/saveworkout" element={<SaveWorkout />}></Route>
+          <Route path="/sarahdashboard" element={<SarahDashboard />}></Route>
+        </Routes>
+        <Footer />
       </Router>
     </ApolloProvider>
   );
