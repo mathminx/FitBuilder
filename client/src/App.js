@@ -8,18 +8,12 @@ import Footer from "./components/Footer";
 import "./App.css";
 
 import FitBuildLandingPage from "./pages/landingPage/LandingPage";
-<<<<<<< HEAD
-import SimpleNavbar from "./components/navbar/Navbar";
 import Dashboard from "./pages/DashboardHub";
 import ExerciseComponent from "./pages/addExercises/AddExercises";
 import WorkoutForm from "./pages/createWorkout/WorkoutForm";
 import ProgramPage from "./pages/programPage/ProgramPage";
 import CreateProgram from "./pages/addProgram/AddProgramForm";
-import AmandaWorkoutForm from "./pages/createWorkout/AmandaWorkoutForm";
-=======
-import Dashboard from "./pages/DashboardHub"
 import ViewPrograms from "./pages/ViewPrograms";
->>>>>>> jonson/viewPrograms
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -46,27 +40,17 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-<<<<<<< HEAD
-        <SimpleNavbar></SimpleNavbar>
-        <Routes>
-          <Route path="/" element={<FitBuildLandingPage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/createprogram" element={<CreateProgram />} />
-          {/* <Route path="/viewprograms" element={< />} /> */}
-          <Route path="/createworkout" element={<WorkoutForm />} />
-          <Route path="/addexercises" element={<ExerciseComponent />} />
-          {/* <Route path="/createworkout" element={<AmandaWorkoutForm />} /> */}
-          <Route path="/program" element={<ProgramPage />} />
-        </Routes>
-=======
         <Header/>
           <Routes>
             <Route path="/" element={<FitBuildLandingPage />} />
+            <Route path="/createprogram" element={<CreateProgram />} />
+            <Route path="/createworkout" element={<WorkoutForm />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/addexercises" element={<ExerciseComponent />} />
             <Route path="/viewallprograms" element={<ViewPrograms/>}></Route>
+            <Route path="/program" element={<ProgramPage />} />
           </Routes>
         <Footer/>
->>>>>>> jonson/viewPrograms
       </Router>
     </ApolloProvider>
   );
