@@ -173,6 +173,7 @@ import {
   Descriptions,
   Typography,
   Pagination,
+  Empty
 } from "antd";
 import { useQuery } from "@apollo/client";
 import { GET_SINGLE_PROGRAM, GET_ME } from "../utils/queries";
@@ -189,32 +190,32 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   const handleCreateProgramClick = () => {
-    console.log('button clicked');
-     if (Auth.loggedIn()) {
-         navigate('/createprogram'); // Redirect to dashboard if logged in.
-     } else {
-      navigate('/')
-     }
-   };
+    console.log("button clicked");
+    if (Auth.loggedIn()) {
+      navigate("/createprogram"); // Redirect to dashboard if logged in.
+    } else {
+      navigate("/");
+    }
+  };
 
-   const handleViewPrograms = () => {
-    console.log('button clicked');
-     if (Auth.loggedIn()) {
-         navigate('/viewallprograms'); // Redirect to dashboard if logged in.
-     } else {
-      navigate('/')
-     }
-   };
+  const handleViewPrograms = () => {
+    console.log("button clicked");
+    if (Auth.loggedIn()) {
+      navigate("/viewallprograms"); // Redirect to dashboard if logged in.
+    } else {
+      navigate("/");
+    }
+  };
 
-   const handleStartWorkoutClick = (event) => {
-    console.log('button clicked');
-     if (Auth.loggedIn()) {
-      const workoutId = event.target.value
-         navigate(`/startworkout`); // Redirect to dashboard if logged in.
-     } else {
-      navigate('/')
-     }
-   };
+  const handleStartWorkoutClick = (event) => {
+    console.log("button clicked");
+    if (Auth.loggedIn()) {
+      const workoutId = event.target.value;
+      navigate(`/startworkout`); // Redirect to dashboard if logged in.
+    } else {
+      navigate("/");
+    }
+  };
 
   useEffect(() => {
     if (!loadingMe && dataMe) {
@@ -238,9 +239,10 @@ const Dashboard = () => {
               {currentProgram ? currentProgram.title : " No Active Program"}
             </Breadcrumb.Item>
           )}
-            <Breadcrumb.Item onClick={handleViewPrograms}>View All Programs</Breadcrumb.Item>
+          <Breadcrumb.Item onClick={handleViewPrograms}>
+            View All Programs
+          </Breadcrumb.Item>
         </Breadcrumb>
-
         <div
           className="site-layout-content"
           style={{ background: colorBgContainer }}
@@ -264,7 +266,7 @@ const Dashboard = () => {
 
           {loadingMe || !currentProgram ? (
             <Row justify="center">
-            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}/>
+              <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
             </Row>
           ) : (
             <>
@@ -320,7 +322,8 @@ const Dashboard = () => {
               />
             </>
           )}
-</Row>
+        </div>
+        <Row justify="end">
           <Row justify="end">
             <Space direction="horizontal">
               <Link to="/">
@@ -328,14 +331,19 @@ const Dashboard = () => {
               </Link>
             </Space>
           </Row>
-        </div>
+        </Row>{" "}
+       
       </Content>
 
       <Row justify="center" style={{ marginTop: "20px", marginBottom: "20px" }}>
         <Space direction="vertical">
-            <Button type="primary" size="large" onClick={handleCreateProgramClick}>
-              Create Program!
-            </Button>
+          <Button
+            type="primary"
+            size="large"
+            onClick={handleCreateProgramClick}
+          >
+            Create Program!
+          </Button>
         </Space>
       </Row>
     </Layout>
@@ -343,4 +351,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-

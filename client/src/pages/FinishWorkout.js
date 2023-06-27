@@ -18,7 +18,6 @@ import {
 import { useQuery } from "@apollo/client";
 import { GET_SINGLE_PROGRAM, GET_ME } from "../utils/queries";
 import Auth from "../utils/auth";
-import { set } from "mongoose";
 const { Content } = Layout;
 const { TextArea } = Input;
 
