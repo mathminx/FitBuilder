@@ -167,23 +167,37 @@ const resolvers = {
         throw new Error("An error occurred during new user creation!");
       }
     },
+    setActiveProgram: async (parent, { userId, programId }, context) => {
+      const user = await User.findByIdAndUpdate(
+        userId,
+        { activeProgram: programId },
+        { new: true }
+      );
+      return user;
+    },
     addProgram: async (
       _,
-      { title, creator, current, daysPerWeek, duration },
+      { title, daysPerWeek, duration, description },
       context
     ) => {
       try {
         if (!context.user) {
           throw new Error("You must be logged in to create a program.");
         }
-        const program = await new Program({
+        const program = new Program({
           title,
-          current,
           creator: context.user._id,
           daysPerWeek,
           duration,
+          description,
         });
         await program.save();
+
+        // get user from context
+        const user = await User.findById(context.user._id);
+        user.programs.push(program);
+        await user.save();
+
         return program;
       } catch (error) {
         throw new Error(

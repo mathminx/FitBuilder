@@ -25,14 +25,25 @@ export const ADD_USER = gql`
   }
 `;
 
+// export const ADD_PROGRAM = gql`
+//   mutation AddProgram($userId: ID!, $title: String!, $workouts: [ID]!, $weeks: Int!, $days: Int! ) {
+//     AddProgram(userId: $userId, title: $title, workouts: $workouts, weeks: $weeks, days: $days) {
+//       _id
+//       title
+//       current
+//       duration
+//       daysPerWeek
+//     }
+//   }
+// `;
+
 export const ADD_PROGRAM = gql`
-  mutation AddProgram($userId: ID!, $title: String!, $workouts: [ID]!, $weeks: Int!, $days: Int! ) {
-    AddProgram(userId: $userId, title: $title, workouts: $workouts, weeks: $weeks, days: $days) {
+  mutation AddProgram($title: String!, $daysPerWeek: Int!, $duration: Int!) {
+    addProgram(title: $title, daysPerWeek: $daysPerWeek, duration: $duration) {
       _id
       title
-      current
-      duration
       daysPerWeek
+      duration
     }
   }
 `;

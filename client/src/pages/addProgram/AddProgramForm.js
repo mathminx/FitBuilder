@@ -20,17 +20,16 @@ const CreateProgram = () => {
       navigate("/");
     }
 
-  // We will need to replace the user id with its actual value, but I am not sure how to do that right now...
-  const handleFormSubmit = async () => {
+    const handleFormSubmit = async () => {
     try {
-      await addProgram({
-        variables: { userId: "yourUserId", title, workouts: [], weeks, days },
-      });
-      navigate("/programs");
+        await addProgram({
+        variables: { title, daysPerWeek: days, duration: weeks, description },
+        });
+        navigate("/programs");
     } catch (error) {
-      console.error("Error occurred during the mutation:", error);
+        console.error("Error occurred during the mutation:", error);
     }
-  };
+    };
 
   return (
     <div

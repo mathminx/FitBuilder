@@ -15,18 +15,27 @@ import {
   GET_SINGLE_PROGRAM,
   GET_ME,
 } from "../utils/queries";
+import Auth from "../utils/auth";
 const { Content } = Layout;
 
 const { Meta } = Card;
 
 const Dashboard = () => {
-  const { loading: loadingMe, data: dataMe } = useQuery(GET_ME);
+const { loading: loadingMe, data: dataMe } = useQuery(GET_ME);
 const [currentProgram, setCurrentProgram] = useState(null);
+
+  const navigate = useNavigate();
+
+  if (!Auth.loggedIn()) {
+    navigate("/");
+  }
 
 useEffect(() => {
   if (!loadingMe && dataMe) {
-    const currentProgram = dataMe.me.programs.find(program => program.current === true);
-    setCurrentProgram(currentProgram);
+    // We actually only want to track the active program on the user using a single id. This avoids some of the confusion around multiple programs being treated as current.
+    // const currentProgram = dataMe.me.programs.find(program => program.current === true);
+    // setCurrentProgram(currentProgram);
+    setCurrentProgram(dataMe.me.activeProgram);
   }
 }, [loadingMe, dataMe]);
 
@@ -103,7 +112,6 @@ useEffect(() => {
     </Card>
   ))
 )}
-  
 
               <Row justify="end">
                 <Space direction="horizontal">
@@ -129,4 +137,3 @@ useEffect(() => {
 
 export default Dashboard;
 
-// export

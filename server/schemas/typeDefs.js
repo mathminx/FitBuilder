@@ -58,14 +58,15 @@ const typeDefs = gql`
   type Mutation {
     login(email: String, password: String): Auth
     addUser(username: String, email: String, password: String): Auth
+    setActiveProgram(userId: ID!, programId: ID!): User
 
     addProgram(
       title: String!
-      creator: ID!
-      current: Boolean!
       daysPerWeek: Int!
       duration: Int!
-    ): Program
+      description: String!
+    ): Program!
+
     removeProgram(programId: ID!): Program
     updateProgram(
       programId: ID!
