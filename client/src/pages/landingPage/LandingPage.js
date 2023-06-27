@@ -15,6 +15,7 @@ const FitBuildLandingPage = () => {
 
   return (
     <div className="landingPageContainer">
+      <img src={process.env.PUBLIC_URL + 'runner.png'} style={styles.imageStyle}/>
       <h1 className="welcomeMessage">Welcome to FitBuild!</h1>
       <p className="appDescription">
         Create your own personalized workout plans, track your progress, and
@@ -26,5 +27,11 @@ const FitBuildLandingPage = () => {
     </div>
   );
 };
+
+const styles = {
+  imageStyle: {
+    height: '30%',
+  }
+}
 
 export default FitBuildLandingPage;

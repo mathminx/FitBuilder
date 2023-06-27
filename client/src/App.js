@@ -3,6 +3,8 @@ import React from "react";
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 import "./App.css";
 
 
@@ -38,11 +40,12 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-      <SimpleNavbar></SimpleNavbar>
-        <Routes>
-          <Route path="/" element={<FitBuildLandingPage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-        </Routes>
+        <Header/>
+          <Routes>
+            <Route path="/" element={<FitBuildLandingPage />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Routes>
+        <Footer/>
       </Router>
     </ApolloProvider>
   );
