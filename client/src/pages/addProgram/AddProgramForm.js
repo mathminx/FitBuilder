@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Form, Input, InputNumber, Button } from "antd";
-import { useMutation, gql } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import { ADD_PROGRAM } from "../../utils/mutations";
+import Auth from "../../utils/auth";
 
 const { TextArea } = Input;
 
@@ -14,6 +15,10 @@ const CreateProgram = () => {
 
   const [addProgram, { loading, error }] = useMutation(ADD_PROGRAM);
   const navigate = useNavigate();
+
+    if (!Auth.loggedIn()) {
+      navigate("/");
+    }
 
   // We will need to replace the user id with its actual value, but I am not sure how to do that right now...
   const handleFormSubmit = async () => {

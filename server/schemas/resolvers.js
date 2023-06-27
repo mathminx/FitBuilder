@@ -169,7 +169,7 @@ const resolvers = {
     },
     addProgram: async (
       _,
-      { title, creator, daysPerWeek, duration },
+      { title, creator, current, daysPerWeek, duration },
       context
     ) => {
       try {

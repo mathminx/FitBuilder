@@ -8,7 +8,7 @@ const { Option } = Select;
 const WorkoutForm = () => {
   const navigate = useNavigate();
   
-  if (!Auth.loggedIn) {
+  if (!Auth.loggedIn()) {
     navigate("/");
   }
 
