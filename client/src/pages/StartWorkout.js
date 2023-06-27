@@ -55,10 +55,12 @@ function StartWorkout() {
     }
   }
 
+  const progressBarValue = (currentExercises.findIndex(ex => ex.id === usersCurrentExercise + 1 ) /(currentExercises.length / 100))
+
   return (
     <>
       <Row>
-        <Progress percent={10} />
+        <Progress percent={progressBarValue} />
       </Row>
       <Row justify="center">
       <Space direction="vertical" size={16}>
