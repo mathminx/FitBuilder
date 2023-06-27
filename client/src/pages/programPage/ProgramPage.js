@@ -151,7 +151,7 @@
 
 
 import React, { useState } from "react";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery, useLazyQuery, gql } from "@apollo/client";
 import { Card, Modal, Button, Descriptions, Row, Col, Typography } from "antd";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -174,7 +174,30 @@ const GET_SINGLE_PROGRAM = gql`
   }
 `;
 
+const GET_WORKOUT = gql`
+  query Workout($id: ID!) {
+    workout(_id: $id) {
+      _id
+      name
+      exercises {
+        _id
+        name
+        type
+        equipment
+        difficulty
+        instructions
+        sets
+        reps
+        weight
+        duration
+      }
+    }
+  }
+`;
+
 const ProgramPage = () => {
+  const [getWorkout, { loading: workoutLoading, data: workoutData }] =
+    useLazyQuery(GET_WORKOUT);
   const [selectedWorkout, setSelectedWorkout] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { programId } = useParams();
@@ -194,6 +217,7 @@ const ProgramPage = () => {
 
   const handleOpenModal = (workout) => {
     setSelectedWorkout(workout);
+    getWorkout({ variables: { id: workout._id } });
     setIsModalVisible(true);
   };
 
@@ -271,13 +295,13 @@ const ProgramPage = () => {
       </Button>
 
       <Modal visible={isModalVisible} onCancel={handleCloseModal} footer={null}>
-        {selectedWorkout && (
-          <>
-            <Title level={2}>{selectedWorkout.name}</Title>
-            <p>Day Number: {selectedWorkout.dayNumber}</p>
-            <p>Complete: {selectedWorkout.complete.toString()}</p>
+        {workoutLoading && <p>Loading workout...</p>}
 
-            {selectedWorkout.exercises.map((exercise) => (
+        {workoutData && workoutData.workout && (
+          <>
+            <Title level={2}>{workoutData.workout.name}</Title>
+
+            {workoutData.workout.exercises.map((exercise) => (
               <Card
                 key={exercise._id}
                 title={exercise.name}
@@ -299,7 +323,7 @@ const ProgramPage = () => {
 
             <Button
               type="danger"
-              onClick={() => handleDeleteWorkout(selectedWorkout._id)}
+              onClick={() => handleDeleteWorkout(workoutData.workout._id)}
             >
               Delete Workout
             </Button>
