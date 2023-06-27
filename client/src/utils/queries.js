@@ -1,34 +1,60 @@
 import { gql } from "@apollo/client";
 
+// export const GET_ME = gql`
+//   query me {
+//     me {
+//       _id
+//       username
+//       email
+//       programs {
+//         _id
+//         name
+//         current
+//         duration
+//         daysPerWeek
+//         workouts {
+//           _id
+//           name
+//           dayNumber
+//           complete
+//           exercises {
+//             _id
+//             name
+//             equipment
+//             difficulty
+//             description
+//             sets
+//             reps
+//             weight
+//             muscle
+//             duration
+//           }
+//         }
+//       }
+//       activeProgram {
+//         _id
+//         title
+//         workouts {
+//           _id
+//           name
+//         }
+//       }
+//     }
+//   }
+// `;
+
 export const GET_ME = gql`
   query me {
     me {
       _id
       username
       email
-      programs {
+      activeProgram {
         _id
-        name
-        current
-        duration
-        daysPerWeek
+        title
         workouts {
           _id
           name
-          dayNumber
-          complete
-          exercises {
-            _id
-            name
-            equipment
-            difficulty
-            description
-            sets
-            reps
-            weight
-            muscle
-            duration
-          }
         }
       }
     }

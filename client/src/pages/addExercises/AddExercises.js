@@ -69,36 +69,6 @@ const ExerciseComponent = () => {
     closeModal();
   };
 
-  // I shouldn't need this any longer, but I am keeping it just in case...
-  // const handleSaveExercise = (exerciseName) => {
-  //   // Find the exercise in `exercises` state by the matching id
-  //   const exerciseToSave = exercises.find(
-  //     (exercise) => exercise.name === exerciseName
-  //   );
-
-  //   // If exercise was found and it has not been saved yet
-  //   if (
-  //     exerciseToSave &&
-  //     !savedExercises.find((ex) => ex.name === exerciseName)
-  //   ) {
-  //     // Save exercise to state
-  //     setSavedExercises((prevExercises) => [...prevExercises, exerciseToSave]);
-
-  //     // Call the mutation
-  //     addExercise({
-  //       variables: {
-  //         workoutId: "your_workout_id",
-  //         exercise: {
-  //           name: exerciseToSave.name,
-  //           // include other exercise fields as needed
-  //         },
-  //       },
-  //     }).catch((error) => {
-  //       console.error("Error occurred while saving the exercise: ", error);
-  //     });
-  //   }
-  // };
-
   const exerciseTypes = [
     "cardio",
     "olympic_weightlifting",
@@ -135,9 +105,9 @@ const ExerciseComponent = () => {
         url: "https://exercises-by-api-ninjas.p.rapidapi.com/v1/exercises",
         params: values,
         headers: {
-          //"X-RapidAPI-Key":process.env.REACT_APP_RAPID_API_KEY,
-          "X-RapidAPI-Key":
-            "4acea068f2mshdbcc23c62ee4486p14fc15jsnb7caa4dbd4dc",
+          "X-RapidAPI-Key":process.env.REACT_APP_RAPID_API_KEY,
+          // "X-RapidAPI-Key":
+          //   "4acea068f2mshdbcc23c62ee4486p14fc15jsnb7caa4dbd4dc",
           "X-RapidAPI-Host": "exercises-by-api-ninjas.p.rapidapi.com",
         },
       };
