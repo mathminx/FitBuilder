@@ -18,11 +18,10 @@ const ViewPrograms = () => {
   const [allPrograms, setAllPrograms] = useState(null);
   const navigate = useNavigate();
 
-  const handleViewSinglePrograms = (event) => {
+  const handleViewSinglePrograms = (programId) => {
     console.log('button clicked');
      if (Auth.loggedIn()) {
-        const programId = event.target.value;
-         navigate(`/programs/${programId}`); // Redirect to dashboard if logged in.
+         navigate(`/programs/${programId}`); // Redirect to dashboard if not logged in.
      } else {
       navigate('/')
      }

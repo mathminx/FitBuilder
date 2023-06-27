@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Card, Modal, Button, Descriptions, Row, Col, Typography } from "antd";
+import { useParams } from "react-router-dom";
 
 const { Title } = Typography;
 
@@ -26,6 +27,7 @@ const EXERCISES = [
 const ProgramPage = () => {
   const [selectedWorkout, setSelectedWorkout] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const { programId } = useParams();
 
   const handleOpenModal = (workout) => {
     setSelectedWorkout(workout);

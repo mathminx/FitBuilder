@@ -25,7 +25,7 @@ const CreateProgram = () => {
         await addProgram({
         variables: { title, daysPerWeek: days, duration: weeks, description },
         });
-        navigate("/programs");
+        navigate("/viewallprograms");
     } catch (error) {
         console.error("Error occurred during the mutation:", error);
     }

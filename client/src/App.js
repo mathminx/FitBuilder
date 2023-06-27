@@ -48,7 +48,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/addexercises" element={<ExerciseComponent />} />
             <Route path="/viewallprograms" element={<ViewPrograms/>}></Route>
-            <Route path="/program" element={<ProgramPage />} />
+            <Route path="/programs/:programId" element={<ProgramPage />} />
           </Routes>
         <Footer/>
       </Router>
