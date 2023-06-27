@@ -9,6 +9,8 @@ import {
   Space,
   Row,
   Col,
+  Descriptions,
+  Typography
 } from "antd";
 import { useQuery } from "@apollo/client";
 import {
@@ -17,6 +19,7 @@ import {
 } from "../utils/queries";
 import Auth from "../utils/auth";
 const { Content } = Layout;
+const { Title, Text } = Typography;
 
 const { Meta } = Card;
 
@@ -60,7 +63,8 @@ useEffect(() => {
             <Breadcrumb.Item>Loading....</Breadcrumb.Item>
           ) : (
             <Breadcrumb.Item>
-              Current Program:{currentProgram ? currentProgram.name: ' No Active Program'}
+              Current Program:{" "}
+              {currentProgram ? currentProgram.title : " No Active Program"}
             </Breadcrumb.Item>
           )}
           <Link to="/programs">
@@ -73,53 +77,69 @@ useEffect(() => {
             background: colorBgContainer,
           }}
         >
-          
-          {/* number of cards changes depending on number of workouts per week in program */}
-         
-          {loadingMe || !currentProgram ? (
-    <p>Waiting for workouts...</p>
-) : (
-    currentProgram.workouts.map((workouts) => (
-    <Card key={workouts._id} title="Workouts For the Week">
-      <Row>
-        <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
-          <Card
-            title="Day 1"
-            style={{
-              width: 300,
-            }}
-            cover={
-              <img
-                alt="example"
-                src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" 
-              />/* program image */
-            }
-            actions={[
-              <Space direction="horizontal">
-                <Link to={`/startworkout/${workouts._id}`}> 
-                  <Button type="primary">Start</Button>
-                </Link>
-                <Link to="/">
-                  <Button type="secondary">View</Button>
-                </Link>
-              </Space>,
-            ]}
-          >
-            <Meta title={workouts.name} description="Day of Squats" />
-          </Card>
-        </Col>
-      </Row>
-    </Card>
-  ))
-)}
+          {!loadingMe && currentProgram && (
+            <Layout>
+              <Space direction="vertical">
+                <Title level={3}>Program Info</Title>
+                <Text strong>Program title: </Text>
+                <Text>{currentProgram.title}</Text>
+                <Text strong>Duration (weeks): </Text>
+                <Text>{currentProgram.duration}</Text>
+                <Text strong>Days per week: </Text>
+                <Text>{currentProgram.daysPerWeek}</Text>
+                <Text strong>Description: </Text>
+                <Text>{currentProgram.description}</Text>
+                <br></br>
+              </Space>
+            </Layout>
+          )}
 
-              <Row justify="end">
-                <Space direction="horizontal">
-                  <Link to="/">
-                    <Button type="secondary">Next Week</Button>
-                  </Link>
-                </Space>
-              </Row>
+          {/* number of cards changes depending on number of workouts per week in program */}
+
+          {loadingMe || !currentProgram ? (
+            <p>Waiting for workouts...</p>
+          ) : (
+            currentProgram.workouts.map((workouts) => (
+              <Card key={workouts._id} title="Workouts For the Week">
+                <Row>
+                  <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+                    <Card
+                      title="Day 1"
+                      style={{
+                        width: 300,
+                      }}
+                      cover={
+                        <img
+                          alt="example"
+                          src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                        /> /* program image */
+                      }
+                      actions={[
+                        <Space direction="horizontal">
+                          <Link to={`/startworkout/${workouts._id}`}>
+                            <Button type="primary">Start</Button>
+                          </Link>
+                          <Link to="/">
+                            <Button type="secondary">View</Button>
+                          </Link>
+                        </Space>,
+                      ]}
+                    >
+                      <Meta title={workouts.name} description="Day of Squats" />
+                    </Card>
+                  </Col>
+                </Row>
+              </Card>
+            ))
+          )}
+
+          <Row justify="end">
+            <Space direction="horizontal">
+              <Link to="/">
+                <Button type="secondary">Next Week</Button>
+              </Link>
+            </Space>
+          </Row>
         </div>
       </Content>
       <Row justify="center" style={{ marginTop: "20px", marginBottom: "20px" }}>
