@@ -7,10 +7,11 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import "./App.css";
 
-
-
 import FitBuildLandingPage from "./pages/landingPage/LandingPage";
-import SimpleNavbar from "./components/navbar/Navbar";
+import ExerciseComponent from "./pages/addExercises/AddExercises";
+import WorkoutForm from "./pages/createWorkout/WorkoutForm";
+import ProgramPage from "./pages/programPage/ProgramPage";
+import CreateProgram from "./pages/addProgram/AddProgramForm";
 import Dashboard from "./pages/DashboardHub"
 import ViewPrograms from "./pages/ViewPrograms";
 import StartWorkout from "./pages/StartWorkout";
@@ -20,7 +21,6 @@ import SarahDashboard from "./pages/SarahDashboard";
 const httpLink = createHttpLink({
   uri: "/graphql",
 });
-
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
@@ -34,7 +34,6 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
@@ -44,19 +43,24 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <Header/>
-          <Routes>
-            <Route path="/" element={<FitBuildLandingPage />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/viewallprograms" element={<ViewPrograms/>}></Route>
-            <Route path="/startworkout" element={<StartWorkout/>}></Route>
-            <Route path="/saveworkout" element={<SaveWorkout/>}></Route>
-            <Route path="/sarahdashboard" element={<SarahDashboard/>}></Route>
-          </Routes>
-        <Footer/>
+        <Header />
+        <Routes>
+          <Route path="/" element={<FitBuildLandingPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/viewallprograms" element={<ViewPrograms />}></Route>
+          <Route path="/createprogram" element={<CreateProgram />} />
+          <Route path="/createworkout/:programId" element={<WorkoutForm />} />
+          <Route path="/addexercises/:workoutId" element={<ExerciseComponent />}/>
+          <Route path="/programs/:programId" element={<ProgramPage />} />
+          <Route path="/startworkout" element={<StartWorkout />}></Route>
+          <Route path="/saveworkout" element={<SaveWorkout />}></Route>
+          <Route path="/sarahdashboard" element={<SarahDashboard />}></Route>
+        </Routes>
+        <Footer />
       </Router>
     </ApolloProvider>
   );
 }
+
 
 export default App;

@@ -25,35 +25,30 @@ export const ADD_USER = gql`
   }
 `;
 
+// export const ADD_PROGRAM = gql`
+//   mutation AddProgram($userId: ID!, $title: String!, $workouts: [ID]!, $weeks: Int!, $days: Int! ) {
+//     AddProgram(userId: $userId, title: $title, workouts: $workouts, weeks: $weeks, days: $days) {
+//       _id
+//       title
+//       current
+//       duration
+//       daysPerWeek
+//     }
+//   }
+// `;
+
 export const ADD_PROGRAM = gql`
-  mutation AddProgram($userId: ID!, $title: String!, $workouts: [ID]!, $weeks: Int!, $days: Int! ) {
-    AddProgram(userId: $userId, title: $title, workouts: $workouts, weeks: $weeks, days: $days) {
+  mutation AddProgram($title: String!, $daysPerWeek: Int!, $duration: Int!, $description: String) {
+    addProgram(title: $title, daysPerWeek: $daysPerWeek, duration: $duration, description: $description) {
       _id
       title
-      current
-      duration
       daysPerWeek
-      workouts {
-        _id
-          name
-          dayNumber
-          complete
-        exercises {
-          _id
-          name
-          equipment
-          diffculty
-          description
-          sets
-          reps
-          weight
-          muscle
-          duration
-      }
-      }   
+      duration
+      description
     }
   }
 `;
+
 
 export const REMOVE_PROGRAM = gql`
   mutation RemoveProgram($programId: ID!) {
@@ -99,31 +94,46 @@ export const UPDATE_PROGRAM = gql`
 `;
 
 // add workout to program
+// export const ADD_WORKOUT = gql`
+//   mutation AddWorkout($programId: ID!, $workouts: [ID]!) {
+//     addWorkout(programId: $programId, workouts: $workouts) {
+//       _id
+//       title
+//       current
+//       duration
+//       daysPerWeek
+//       workouts {
+//         _id
+//         name
+//         dayNumber
+//         complete
+//         exercises {
+//           _id
+//           name
+//           equipment
+//           diffculty
+//           description
+//           sets
+//           reps
+//           weight
+//           muscle
+//           duration
+//         }
+//       }
+//     }
+//   }
+// `;
+
 export const ADD_WORKOUT = gql`
-  mutation AddWorkout($programId: ID!, $workouts: [ID]!) {
-    addWorkout(programId: $programId, workouts: $workouts) {
+  mutation AddWorkout($programId: ID!, $name: String!) {
+    addWorkout(programId: $programId, name: $name) {
       _id
       title
-      current
       duration
       daysPerWeek
       workouts {
         _id
         name
-        dayNumber
-        complete
-        exercises {
-          _id
-          name
-          equipment
-          diffculty
-          description
-          sets
-          reps
-          weight
-          muscle
-          duration
-        }
       }
     }
   }
@@ -176,34 +186,20 @@ export const UPDATE_WORKOUT = gql`
 `;
 
 export const ADD_EXERCISE = gql`
-  mutation AddExercise(
-    $workoutId: ID!
-    $exerciseId: ID!
-    $muscle: String!
-    $reps: Int
-    $sets: Int
-    $description: String!
-  ) {
-    AddExercise(
-      workoutId: $workoutId
-      exerciseId: $exerciseId
-      muscle: $muscle
-      reps: $reps
-      sets: $sets
-      description: $description
-    ) {
+  mutation AddExercise($workoutId: ID!, $exercise: ExerciseInput!) {
+    addExercise(workoutId: $workoutId, exercise: $exercise) {
       _id
       name
-      exercise {
+      exercises {
         _id
         name
+        type
         equipment
-        diffculty
-        description
+        difficulty
+        instructions
         sets
         reps
         weight
-        muscle
         duration
       }
     }

@@ -7,10 +7,6 @@ const programSchema = new Schema({
     type: String,
     required: true,
   },
-  current: {
-    type: Boolean,
-    required: true,
-  },
   creator: {
     type: Schema.Types.ObjectId,
     ref: "User",
@@ -30,6 +26,10 @@ const programSchema = new Schema({
   daysPerWeek: {
     type: Number,
     required: true,
+  },
+  description: {
+    type: String,
+    required: false,
   },
 });
 

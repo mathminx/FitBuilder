@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Breadcrumb, Layout, theme, Card, Button, Space, Avatar, Col, Divider, Row  } from "antd";
 import { useQuery } from "@apollo/client";
-import { GET_SINGLE_PROGRAM, GET_ME } from "../utils/queries";
+import { GET_ME } from "../utils/queries";
 import Auth from "../utils/auth"
 const { Content } = Layout;
 
@@ -14,15 +14,14 @@ const style = {
   };
 
 const ViewPrograms = () => {
-    const { loading: loadingMe, data: dataMe } = useQuery(GET_ME);
+  const { loading: loadingMe, data: dataMe } = useQuery(GET_ME);
   const [allPrograms, setAllPrograms] = useState(null);
   const navigate = useNavigate();
 
-  const handleViewSinglePrograms = (event) => {
+  const handleViewSinglePrograms = (programId) => {
     console.log('button clicked');
      if (Auth.loggedIn()) {
-        const programId = event.target.value;
-         navigate(`/programs/${programId}`); // Redirect to dashboard if logged in.
+         navigate(`/programs/${programId}`); // Redirect to dashboard if not logged in.
      } else {
       navigate('/')
      }
@@ -30,12 +29,12 @@ const ViewPrograms = () => {
 
    useEffect(() => {
     if (!loadingMe && dataMe) {
-      setAllPrograms(dataMe.program);
+      setAllPrograms(dataMe.me.programs);
     }
   }, [loadingMe, dataMe]);
     return (
         <>
-         <Divider orientation="left">Users Programs</Divider>
+         <Divider orientation="left">User Programs</Divider>
     <Row gutter={16} justify="center">
       <Col className="gutter-row" span={6}>
       <div style={style} >All Programs</div>
@@ -45,7 +44,7 @@ const ViewPrograms = () => {
     <Row gutter={16} justify="center">
       <Col className="gutter-row" span={6}>
         { loadingMe || !allPrograms ? (
-        <div>Waiting for Programs</div>
+        <div>Loading Programs</div>
         ) : (
             allPrograms.map((program) => (
       <Card

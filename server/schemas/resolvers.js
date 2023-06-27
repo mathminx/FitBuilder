@@ -8,7 +8,9 @@ const resolvers = {
       if (context.user) {
         const user = await User.findOne({
           $or: [{ _id: context.user._id }, { username: context.user.username }],
-        });
+        })
+          .populate("activeProgram")
+          .populate("programs");
         if (!user) {
           throw new Error("Unable to find an associated user");
         }
@@ -65,6 +67,19 @@ const resolvers = {
         );
       }
     },
+    workout: async (_, { _id }) => {
+      try {
+        const workout = await Workout.findById(_id).populate("exercises");
+        if (!workout) {
+          throw new Error("No workout found with this id!");
+        }
+        return workout;
+      } catch (error) {
+        throw new Error(
+          `Something went wrong fetching the workout data: ${error.message}`
+        );
+      }
+    },
     exercises: async () => {
       try {
         const exercises = await Exercise.find({});
@@ -73,6 +88,19 @@ const resolvers = {
           throw new Error("No exercises saved to db!");
         }
         return exercises;
+      } catch (error) {
+        throw new Error(
+          `Something went wrong fetching the exercise data: ${error.message}`
+        );
+      }
+    },
+    exercise: async (_, { _id }) => {
+      try {
+        const exercise = await Exercise.findById(_id);
+        if (!exercise) {
+          throw new Error("No exercise found with this id!");
+        }
+        return exercise;
       } catch (error) {
         throw new Error(
           `Something went wrong fetching the exercise data: ${error.message}`
@@ -88,7 +116,7 @@ const resolvers = {
         query.name = name;
       }
       try {
-        const program = await Program.findOne(query);
+        const program = await Program.findOne(query).populate('workouts');
         if (!program) {
           throw new Error("No program with this id/name");
         }
@@ -141,23 +169,43 @@ const resolvers = {
         throw new Error("An error occurred during new user creation!");
       }
     },
+    setActiveProgram: async (parent, { userId, programId }, context) => {
+      const user = await User.findByIdAndUpdate(
+        userId,
+        { activeProgram: programId },
+        { new: true }
+      );
+      return user;
+    },
     addProgram: async (
       _,
-      { title, creator, daysPerWeek, duration },
+      { title, daysPerWeek, duration, description },
       context
     ) => {
       try {
         if (!context.user) {
           throw new Error("You must be logged in to create a program.");
         }
-        const program = await new Program({
+        const program = new Program({
           title,
-          current,
           creator: context.user._id,
           daysPerWeek,
           duration,
+          description,
         });
         await program.save();
+
+        // get user from context
+        const user = await User.findById(context.user._id);
+        user.programs.push(program);
+
+        // If there is no active program, set the new one as active
+        if (!user.activeProgram) {
+          user.activeProgram = program._id;
+        }
+
+        await user.save();
+
         return program;
       } catch (error) {
         throw new Error(
@@ -165,7 +213,6 @@ const resolvers = {
         );
       }
     },
-
     removeProgram: async (_, { programId }, context) => {
       try {
         if (!context.user) {
@@ -211,15 +258,28 @@ const resolvers = {
             "You must be logged in to add a workout to a program."
           );
         }
+
+        const program = await Program.findById(programId);
+
+        if (!program) {
+          throw new Error("Program not found");
+        }
+
         // Create a new workout
         const newWorkout = await Workout.create({
           programId: programId,
           name: name,
         });
-        // Find the program and add the new workout
-        const program = await Program.findById(programId);
+
+        if (!newWorkout) {
+          throw new Error("Workout could not be created");
+        }
+
+        // Add the new workout to the program
         program.workouts.push(newWorkout._id);
+
         await program.save();
+
         return program;
       } catch (error) {
         throw new Error(
@@ -279,10 +339,10 @@ const resolvers = {
         await workout.save();
 
         // Populate the exercises before returning
-        return Workout.findById(workout._id).populate('exercises');
+        return Workout.findById(workout._id).populate("exercises");
       } catch (error) {
         throw new Error(
-          `There was an error adding the exercise to the workout: ${error.message}`,
+          `There was an error adding the exercise to the workout: ${error.message}`
         );
       }
     },

@@ -1,39 +1,52 @@
 import { gql } from "@apollo/client";
 
+// export const GET_ME = gql`
+//   query me {
+//     me {
+//       _id
+//       username
+//       email
+//       activeProgram {
+//         _id
+//         title
+//         workouts {
+//           _id
+//           name
+//         }
+//         duration
+//         daysPerWeek
+//         description
+//       }
+//     }
+//   }
+// `;
+
 export const GET_ME = gql`
   query me {
     me {
       _id
       username
       email
-      programs {
+      activeProgram {
         _id
-        name
-        current
-        duration
-        daysPerWeek
+        title
         workouts {
           _id
           name
-          dayNumber
-          complete
-          exercises {
-            _id
-            name
-            equipment
-            difficulty
-            description
-            sets
-            reps
-            weight
-            muscle
-            duration
-          }
         }
+        duration
+        daysPerWeek
+        description
+      }
+      programs {
+        _id
+        title
+        description
       }
     }
   }
 `;
+
 
 export const GET_ALL_PROGRAMS = gql`
   query Programs {
@@ -43,20 +56,18 @@ export const GET_ALL_PROGRAMS = gql`
       weeks
       days
     }
-  }`;
+  }
+`;
 
-  export const GET_SINGLE_PROGRAM = gql`
+export const GET_SINGLE_PROGRAM = gql`
   query Program($id: ID!) {
     program(_id: $id) {
       title
-      current
       duration
       daysPerWeek
       workouts {
         _id
-          name
-          dayNumber
-          complete
+        name
         exercises {
           _id
           name
@@ -75,18 +86,18 @@ export const GET_ALL_PROGRAMS = gql`
 `;
 
 export const GET_SINGLE_EXERCISE = gql`
-  query GetSingleExercise($exerciseId: ID!) {
-    exercises(id: $exerciseId) {
+  query Exercise($id: ID!) {
+    exercise(_id: $id) {
       _id
-      name
-      equipment
       difficulty
-      description
-      sets
-      reps
-      weight
-      muscle
       duration
+      equipment
+      instructions
+      name
+      reps
+      sets
+      type
+      weight
     }
   }
 `;
@@ -104,6 +115,38 @@ export const GET_EXERCISES = gql`
       weight
       muscle
       duration
+    }
+  }
+`;
+
+export const GET_WORKOUTS = gql`
+  query Workouts {
+    workouts {
+      _id
+      name
+      exercises {
+        _id
+        difficulty
+        duration
+        equipment
+        instructions
+        name
+        reps
+        sets
+        type
+        weight
+      }
+    }
+  }
+`;
+
+export const GET_WORKOUT = gql`
+  query GetWorkout($id: ID!) {
+    workout(id: $id) {
+      id
+      name
+      duration
+      intensity
     }
   }
 `;
