@@ -38,15 +38,17 @@ export const ADD_USER = gql`
 // `;
 
 export const ADD_PROGRAM = gql`
-  mutation AddProgram($title: String!, $daysPerWeek: Int!, $duration: Int!) {
-    addProgram(title: $title, daysPerWeek: $daysPerWeek, duration: $duration) {
+  mutation AddProgram($title: String!, $daysPerWeek: Int!, $duration: Int!, $description: String) {
+    addProgram(title: $title, daysPerWeek: $daysPerWeek, duration: $duration, description: $description) {
       _id
       title
       daysPerWeek
       duration
+      description
     }
   }
 `;
+
 
 export const REMOVE_PROGRAM = gql`
   mutation RemoveProgram($programId: ID!) {

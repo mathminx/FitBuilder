@@ -18,11 +18,11 @@ const typeDefs = gql`
   type Program {
     _id: ID
     title: String
-    current: Boolean
     creator: User
     workouts: [Workout]
     duration: Int
     daysPerWeek: Int
+    description: String
   }
 
   type Workout {
@@ -64,7 +64,7 @@ const typeDefs = gql`
       title: String!
       daysPerWeek: Int!
       duration: Int!
-      description: String!
+      description: String
     ): Program!
 
     removeProgram(programId: ID!): Program

@@ -27,6 +27,10 @@ const programSchema = new Schema({
     type: Number,
     required: true,
   },
+  description: {
+    type: String,
+    required: false,
+  },
 });
 
 const Program = model("Program", programSchema);
