@@ -8,7 +8,7 @@ const { Content } = Layout;
 
 const { Meta } = Card;
 
-const Dashboard = () => {
+const SarahDashboard = () => {
   const { loading: loadingMe, data: dataMe } = useQuery(GET_ME);
   const [currentProgram, setCurrentProgram] = useState(null);
   const navigate = useNavigate();
@@ -67,14 +67,10 @@ const Dashboard = () => {
             margin: "16px 0",
           }}
         >
-          {loadingMe ? (
-            <Breadcrumb.Item>Loading....</Breadcrumb.Item>
-          ) : (
             <Breadcrumb.Item>
               Current Program:
               {currentProgram ? currentProgram.name : " No current Program"}
             </Breadcrumb.Item>
-          )}
             <Breadcrumb.Item onClick={handleViewPrograms}>View all Programs</Breadcrumb.Item>
         </Breadcrumb>
         <div
@@ -85,17 +81,11 @@ const Dashboard = () => {
         >
           {/* number of cards changes depending on number of workouts per week in program */}
           <Row>
-          {loadingMe || !currentProgram ? (
-            <Row justify="center">
-            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}/>
-            </Row>
-          ) : (
-            currentProgram.workouts.map((workouts) => (
-              <Card key={workouts._id} title="Workouts For the Week">
+              <Card title="Workouts For the Week">
                 <Row>
                   <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
                     <Card
-                      title={workouts.dayNumber}
+                      title={"hi"}
                       style={{
                         width: 300,
                       }}
@@ -107,21 +97,19 @@ const Dashboard = () => {
                       }
                       actions={[
                         <Space direction="horizontal">
-                            <Button type="primary" onClick={handleStartWorkoutClick} value={workouts._id}>Start</Button>
+                            <Button type="primary" onClick={handleStartWorkoutClick}>Start</Button>
                           <Link to="/">
                             <Button type="secondary">View</Button>
                           </Link>
                         </Space>,
                       ]}
                     >
-                      <Meta title={workouts.name} description="Day of Squats" />
+                      <Meta title={"Squat Day"} description="Day of Squats" />
                     </Card>
                   </Col>
                 </Row>
               </Card>
-            ))
-          )}
-</Row>
+        </Row>
           <Row justify="end">
             <Space direction="horizontal">
               <Link to="/">
@@ -142,6 +130,6 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default SarahDashboard;
 
 // export
