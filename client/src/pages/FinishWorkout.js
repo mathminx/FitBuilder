@@ -54,7 +54,7 @@ function SaveWorkout() {
           />
         </Space>
       </Row>
-{/* Notes section */}
+      {/* Notes section */}
       <Row justify="center">
         <h2>Notes?</h2>
         <TextArea rows={4} />
