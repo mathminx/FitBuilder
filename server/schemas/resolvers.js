@@ -69,7 +69,7 @@ const resolvers = {
     },
     workout: async (_, { _id }) => {
       try {
-        const workout = await Workout.findById(_id);
+        const workout = await Workout.findById(_id).populate("exercises");
         if (!workout) {
           throw new Error("No workout found with this id!");
         }

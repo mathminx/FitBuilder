@@ -170,7 +170,15 @@ const ProgramPage = () => {
                 title={exercise.name}
                 style={{ marginBottom: "20px" }}
               >
-                <p>Description: {exercise.description}</p>
+                <p>Type: {exercise.type}</p>
+                <p>Equipment: {exercise.equipment}</p>
+                <p>Difficulty: {exercise.difficulty}</p>
+                <p>Instructions: {exercise.instructions}</p>
+                <p>Sets: {exercise.sets}</p>
+                <p>Reps: {exercise.reps}</p>
+                <p>Weight: {exercise.weight}</p>
+                <p>Duration: {exercise.duration}</p>
+
                 <Button onClick={() => handleEditExercise(exercise._id)}>
                   Edit Exercise
                 </Button>
