@@ -1,14 +1,29 @@
-import React from 'react';
-import { Link } from 'react-router-dom'; // used to go back to dashboard
-import { useQuery } from '@apollo/client';
-import { GET_ME } from '../utils/queries';
+import React, { useState, useEffect } from "react";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { Breadcrumb, Layout, theme, Card, Button, Space, Row, Col, Progress } from "antd";
+import { useQuery } from "@apollo/client";
+import { GET_SINGLE_PROGRAM, GET_ME } from "../utils/queries";
+import Auth from "../utils/auth";
+const { Content } = Layout;
 
-    function startWorkout () {
-        const { data } = useQuery(GET_ME); // used to query user data to start specific workout
-    }
+const { Meta } = Card;
 
-    return (
-        <>
-        {/* */}
-        </>
-      );
+function StartWorkout() {
+  const { loading: loadingMe, data: dataMe } = useQuery(GET_ME);
+  const [currentProgram, setCurrentProgram] = useState(null);
+  const navigate = useNavigate();
+
+  return (
+    <>
+    <Row >
+    <Progress percent={10}/>
+    </Row>
+      <Row gutter={[8, 16]}>
+        <Col span={8} />
+        <Col span={8} />
+        <Col span={8} />
+      </Row>
+    </>
+  );
+}
+export default StartWorkout;

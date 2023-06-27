@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { Breadcrumb, Layout, theme, Card, Button, Space, Row, Col } from "antd";
+import { Breadcrumb, Layout, theme, Card, Button, Space, Row, Col, Empty } from "antd";
 import { useQuery } from "@apollo/client";
 import { GET_SINGLE_PROGRAM, GET_ME } from "../utils/queries";
 import Auth from "../utils/auth"
@@ -35,7 +35,7 @@ const Dashboard = () => {
     console.log('button clicked');
      if (Auth.loggedIn()) {
       const workoutId = event.target.value
-         navigate(`/startworkout/${workoutId}`); // Redirect to dashboard if logged in.
+         navigate(`/startworkout`); // Redirect to dashboard if logged in.
      } else {
       navigate('/')
      }
@@ -86,7 +86,9 @@ const Dashboard = () => {
           {/* number of cards changes depending on number of workouts per week in program */}
 
           {loadingMe || !currentProgram ? (
-            <p>Waiting for workouts...</p>
+            <Row justify="center">
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}/>
+            </Row>
           ) : (
             currentProgram.workouts.map((workouts) => (
               <Card key={workouts._id} title="Workouts For the Week">
