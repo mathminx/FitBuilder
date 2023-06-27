@@ -8,7 +8,9 @@ const resolvers = {
       if (context.user) {
         const user = await User.findOne({
           $or: [{ _id: context.user._id }, { username: context.user.username }],
-        }).populate("activeProgram").populate("programs");
+        })
+          .populate("activeProgram")
+          .populate("programs");
         if (!user) {
           throw new Error("Unable to find an associated user");
         }
@@ -114,7 +116,7 @@ const resolvers = {
         query.name = name;
       }
       try {
-        const program = await Program.findOne(query);
+        const program = await Program.findOne(query).populate('workouts');
         if (!program) {
           throw new Error("No program with this id/name");
         }
@@ -256,15 +258,28 @@ const resolvers = {
             "You must be logged in to add a workout to a program."
           );
         }
+
+        const program = await Program.findById(programId);
+
+        if (!program) {
+          throw new Error("Program not found");
+        }
+
         // Create a new workout
         const newWorkout = await Workout.create({
           programId: programId,
           name: name,
         });
-        // Find the program and add the new workout
-        const program = await Program.findById(programId);
+
+        if (!newWorkout) {
+          throw new Error("Workout could not be created");
+        }
+
+        // Add the new workout to the program
         program.workouts.push(newWorkout._id);
+
         await program.save();
+
         return program;
       } catch (error) {
         throw new Error(

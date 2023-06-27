@@ -256,8 +256,8 @@ const ProgramPage = () => {
         {program.workouts?.map((workout) => (
           <Col span={8} key={workout._id}>
             <Card title={workout.name}>
-              <p>Day Number: {workout.dayNumber}</p>
-              <p>Complete: {workout.complete.toString()}</p>
+              {/* <p>Day Number: {workout.dayNumber}</p> */}
+              {/* <p>Complete: {workout.complete.toString()}</p> */}
               <Button type="primary" onClick={() => handleOpenModal(workout)}>
                 View Details
               </Button>

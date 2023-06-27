@@ -94,31 +94,46 @@ export const UPDATE_PROGRAM = gql`
 `;
 
 // add workout to program
+// export const ADD_WORKOUT = gql`
+//   mutation AddWorkout($programId: ID!, $workouts: [ID]!) {
+//     addWorkout(programId: $programId, workouts: $workouts) {
+//       _id
+//       title
+//       current
+//       duration
+//       daysPerWeek
+//       workouts {
+//         _id
+//         name
+//         dayNumber
+//         complete
+//         exercises {
+//           _id
+//           name
+//           equipment
+//           diffculty
+//           description
+//           sets
+//           reps
+//           weight
+//           muscle
+//           duration
+//         }
+//       }
+//     }
+//   }
+// `;
+
 export const ADD_WORKOUT = gql`
-  mutation AddWorkout($programId: ID!, $workouts: [ID]!) {
-    addWorkout(programId: $programId, workouts: $workouts) {
+  mutation AddWorkout($programId: ID!, $name: String!) {
+    addWorkout(programId: $programId, name: $name) {
       _id
       title
-      current
       duration
       daysPerWeek
       workouts {
         _id
         name
-        dayNumber
-        complete
-        exercises {
-          _id
-          name
-          equipment
-          diffculty
-          description
-          sets
-          reps
-          weight
-          muscle
-          duration
-        }
       }
     }
   }

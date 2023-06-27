@@ -8,10 +8,10 @@ const workoutSchema = new Schema({
     ref: "User",
   },
   name: { type: String, required: true },
-  dayNumber: { type: Number, required: true },
+  dayNumber: { type: Number, required: false },
   complete: {
     type: Boolean,
-    required: true,
+    default: false,
   },
   exercises: [
     {
