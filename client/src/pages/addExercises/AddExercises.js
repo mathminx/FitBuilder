@@ -3,6 +3,9 @@ import { Form, Select, Button, Input, Card, Row, Col, Modal, InputNumber } from 
 import axios from "axios";
 import { useMutation } from "@apollo/client";
 import { ADD_EXERCISE } from "../../utils/mutations";
+import { useParams, useNavigate } from "react-router-dom";
+import Auth from "../../utils/auth";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
 const { Meta } = Card;
@@ -10,6 +13,7 @@ const { Meta } = Card;
 const ExerciseComponent = () => {
   const [form] = Form.useForm();
   const [exercises, setExercises] = useState([]);
+  const { workoutId } = useParams();
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -17,6 +21,14 @@ const ExerciseComponent = () => {
 
   const [savedExercises, setSavedExercises] = useState([]);
   const [addExercise, { data }] = useMutation(ADD_EXERCISE);
+  const navigate = useNavigate();
+
+  // The authentication is messing with the build and causes the api call to immediately error.
+  // if (Auth.loggedIn()) {
+  //   navigate(`/programs/${workoutId}`); // Redirect to dashboard if logged in.
+  // } else {
+  //   navigate("/");
+  // }
 
   // Function to open modal
   const showModal = (exerciseName) => {
@@ -51,10 +63,14 @@ const ExerciseComponent = () => {
 
       addExercise({
         variables: {
-          workoutId: "your_workout_id",
+          workoutId: workoutId,
           exercise: {
             name: exerciseToSave.name,
             // include other exercise fields as needed
+            type: exerciseToSave.type,
+            instructions: exerciseToSave.instructions,
+            equipment: exerciseToSave.equipment,
+            difficulty: exerciseToSave.difficulty,
             sets: values.sets,
             reps: values.reps,
             weight: values.weight,
@@ -119,8 +135,15 @@ const ExerciseComponent = () => {
     }
   };
 
+  const handleGoBack = () => {
+    navigate(-1); // This navigates to the previous page
+  };
+
   return (
     <>
+      <Button icon={<ArrowLeftOutlined />} onClick={handleGoBack}>
+        Go Back
+      </Button>
       <Form
         form={form}
         name="exerciseSearch"
@@ -204,7 +227,7 @@ const ExerciseComponent = () => {
           <Form.Item label="Reps" name="reps" rules={[{ required: true }]}>
             <InputNumber min={1} />
           </Form.Item>
-          <Form.Item label="Weight" name="weight" rules={[{ required: true }]}>
+          <Form.Item label="Weight (lbs)" name="weight" rules={[{ required: true }]}>
             <InputNumber min={1} />
           </Form.Item>
           <Form.Item

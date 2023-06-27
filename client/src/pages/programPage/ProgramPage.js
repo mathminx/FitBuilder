@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery, useLazyQuery, gql } from "@apollo/client";
 import { Card, Modal, Button, Descriptions, Row, Col, Typography } from "antd";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Auth from "../../utils/auth";
 
 
 const { Title } = Typography;
@@ -52,6 +53,18 @@ const ProgramPage = () => {
   const { programId } = useParams();
   const navigate = useNavigate();
 
+  // I am getting mixed up with this and will need to come back to it.
+  // const navigateToDashboard = () => {
+  //   if (Auth.loggedIn()) {
+  //     navigate("/dashboard"); // Redirect to dashboard if logged in.
+  //   } else {
+  //     navigate("/");
+  //   }
+  // };
+
+  //   useEffect(() => {
+  //     navigateToDashboard();
+  //   }, []);
 
   // Fetch the program data
   const { loading, error, data } = useQuery(GET_SINGLE_PROGRAM, {

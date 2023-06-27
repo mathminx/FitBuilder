@@ -186,34 +186,20 @@ export const UPDATE_WORKOUT = gql`
 `;
 
 export const ADD_EXERCISE = gql`
-  mutation AddExercise(
-    $workoutId: ID!
-    $exerciseId: ID!
-    $muscle: String!
-    $reps: Int
-    $sets: Int
-    $description: String!
-  ) {
-    AddExercise(
-      workoutId: $workoutId
-      exerciseId: $exerciseId
-      muscle: $muscle
-      reps: $reps
-      sets: $sets
-      description: $description
-    ) {
+  mutation AddExercise($workoutId: ID!, $exercise: ExerciseInput!) {
+    addExercise(workoutId: $workoutId, exercise: $exercise) {
       _id
       name
-      exercise {
+      exercises {
         _id
         name
+        type
         equipment
-        diffculty
-        description
+        difficulty
+        instructions
         sets
         reps
         weight
-        muscle
         duration
       }
     }
