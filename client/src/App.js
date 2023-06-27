@@ -44,7 +44,7 @@ function App() {
           <Routes>
             <Route path="/" element={<FitBuildLandingPage />} />
             <Route path="/createprogram" element={<CreateProgram />} />
-            <Route path="/createworkout" element={<WorkoutForm />} />
+            <Route path="/createworkout/:programId" element={<WorkoutForm />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/addexercises" element={<ExerciseComponent />} />
             <Route path="/viewallprograms" element={<ViewPrograms/>}></Route>

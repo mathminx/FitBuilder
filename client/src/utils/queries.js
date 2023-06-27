@@ -63,14 +63,11 @@ export const GET_SINGLE_PROGRAM = gql`
   query Program($id: ID!) {
     program(_id: $id) {
       title
-      current
       duration
       daysPerWeek
       workouts {
         _id
         name
-        dayNumber
-        complete
         exercises {
           _id
           name
