@@ -196,6 +196,12 @@ const resolvers = {
         // get user from context
         const user = await User.findById(context.user._id);
         user.programs.push(program);
+
+        // If there is no active program, set the new one as active
+        if (!user.activeProgram) {
+          user.activeProgram = program._id;
+        }
+
         await user.save();
 
         return program;

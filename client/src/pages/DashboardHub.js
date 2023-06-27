@@ -60,11 +60,11 @@ useEffect(() => {
             <Breadcrumb.Item>Loading....</Breadcrumb.Item>
           ) : (
             <Breadcrumb.Item>
-              Current Program:{currentProgram ? currentProgram.name: ' No current Program'}
+              Current Program:{currentProgram ? currentProgram.name: ' No Active Program'}
             </Breadcrumb.Item>
           )}
           <Link to="/programs">
-            <Breadcrumb.Item>View all Programs</Breadcrumb.Item>
+            <Breadcrumb.Item>View All Programs</Breadcrumb.Item>
           </Link>
         </Breadcrumb>
         <div
