@@ -186,12 +186,35 @@ const Dashboard = () => {
   const { loading: loadingMe, data: dataMe } = useQuery(GET_ME);
   const [currentProgram, setCurrentProgram] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-
   const navigate = useNavigate();
 
-  if (!Auth.loggedIn()) {
-    navigate("/");
-  }
+  const handleCreateProgramClick = () => {
+    console.log('button clicked');
+     if (Auth.loggedIn()) {
+         navigate('/createprogram'); // Redirect to dashboard if logged in.
+     } else {
+      navigate('/')
+     }
+   };
+
+   const handleViewPrograms = () => {
+    console.log('button clicked');
+     if (Auth.loggedIn()) {
+         navigate('/viewallprograms'); // Redirect to dashboard if logged in.
+     } else {
+      navigate('/')
+     }
+   };
+
+   const handleStartWorkoutClick = (event) => {
+    console.log('button clicked');
+     if (Auth.loggedIn()) {
+      const workoutId = event.target.value
+         navigate(`/startworkout/${workoutId}`); // Redirect to dashboard if logged in.
+     } else {
+      navigate('/')
+     }
+   };
 
   useEffect(() => {
     if (!loadingMe && dataMe) {
@@ -215,9 +238,7 @@ const Dashboard = () => {
               {currentProgram ? currentProgram.title : " No Active Program"}
             </Breadcrumb.Item>
           )}
-          <Link to="/programs">
-            <Breadcrumb.Item>View All Programs</Breadcrumb.Item>
-          </Link>
+            <Breadcrumb.Item onClick={handleViewPrograms}>View All Programs</Breadcrumb.Item>
         </Breadcrumb>
 
         <div
@@ -310,11 +331,9 @@ const Dashboard = () => {
 
       <Row justify="center" style={{ marginTop: "20px", marginBottom: "20px" }}>
         <Space direction="vertical">
-          <Link to="/createprogram">
-            <Button type="primary" size="large">
+            <Button type="primary" size="large" onClick={handleCreateProgramClick}>
               Create Program!
             </Button>
-          </Link>
         </Space>
       </Row>
     </Layout>

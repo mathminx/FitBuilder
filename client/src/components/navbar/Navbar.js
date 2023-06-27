@@ -11,6 +11,7 @@ import { LoginModal, SignupModal } from "./LoginSignup";
 import Auth from "../../utils/auth";
 import { useNavigate } from "react-router-dom";
 import { Alert, Space } from "antd";
+import "./Navbar.css";
 
 const WarningComponent = () => (
   <Space
@@ -67,7 +68,7 @@ const takeToDashboard = () => {
   return (
     <>
       {showWarning && <WarningComponent />}
-      <Menu mode="horizontal">
+      <Menu mode="horizontal" style={styles.menuStyle}>
         <Menu.Item key="home" icon={<HomeOutlined />} onClick={takeHome}>
           Home
         </Menu.Item>
@@ -118,5 +119,12 @@ const takeToDashboard = () => {
     </>
   );
 };
+
+const styles = {
+  menuStyle: {
+    background: '#193381',
+    color: 'white',
+  }
+}
 
 export default SimpleNavbar;
