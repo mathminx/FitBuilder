@@ -45,6 +45,7 @@ function App() {
           <Routes>
             <Route path="/" element={<FitBuildLandingPage />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/viewallprograms" element={<ViewPrograms/>}></Route>
           </Routes>
         <Footer/>
       </Router>
