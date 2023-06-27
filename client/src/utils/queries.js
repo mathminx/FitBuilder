@@ -6,31 +6,6 @@ import { gql } from "@apollo/client";
 //       _id
 //       username
 //       email
-//       programs {
-//         _id
-//         name
-//         current
-//         duration
-//         daysPerWeek
-//         workouts {
-//           _id
-//           name
-//           dayNumber
-//           complete
-//           exercises {
-//             _id
-//             name
-//             equipment
-//             difficulty
-//             description
-//             sets
-//             reps
-//             weight
-//             muscle
-//             duration
-//           }
-//         }
-//       }
 //       activeProgram {
 //         _id
 //         title
@@ -38,6 +13,9 @@ import { gql } from "@apollo/client";
 //           _id
 //           name
 //         }
+//         duration
+//         daysPerWeek
+//         description
 //       }
 //     }
 //   }
@@ -60,9 +38,15 @@ export const GET_ME = gql`
         daysPerWeek
         description
       }
+      programs {
+        _id
+        title
+        description
+      }
     }
   }
 `;
+
 
 export const GET_ALL_PROGRAMS = gql`
   query Programs {

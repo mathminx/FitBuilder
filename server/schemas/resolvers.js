@@ -8,7 +8,7 @@ const resolvers = {
       if (context.user) {
         const user = await User.findOne({
           $or: [{ _id: context.user._id }, { username: context.user.username }],
-        }).populate("activeProgram");
+        }).populate("activeProgram").populate("programs");
         if (!user) {
           throw new Error("Unable to find an associated user");
         }

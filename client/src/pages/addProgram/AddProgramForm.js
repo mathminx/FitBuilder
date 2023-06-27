@@ -75,7 +75,7 @@ const CreateProgram = () => {
           <Form.Item>
             <Button
               style={{ marginLeft: "10px" }}
-              onClick={() => navigate("/programs")}
+              onClick={() => navigate("/viewallprograms")}
             >
               Cancel
             </Button>
