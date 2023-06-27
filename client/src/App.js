@@ -12,6 +12,7 @@ import "./App.css";
 import FitBuildLandingPage from "./pages/landingPage/LandingPage";
 import SimpleNavbar from "./components/navbar/Navbar";
 import Dashboard from "./pages/DashboardHub"
+import ViewPrograms from "./pages/ViewPrograms";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -44,6 +45,7 @@ function App() {
           <Routes>
             <Route path="/" element={<FitBuildLandingPage />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/viewallprograms" element={<ViewPrograms/>}></Route>
           </Routes>
         <Footer/>
       </Router>
