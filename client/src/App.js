@@ -15,6 +15,7 @@ import Dashboard from "./pages/DashboardHub"
 import ViewPrograms from "./pages/ViewPrograms";
 import StartWorkout from "./pages/StartWorkout";
 import SaveWorkout from "./pages/FinishWorkout";
+import SarahDashboard from "./pages/SarahDashboard";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -50,6 +51,7 @@ function App() {
             <Route path="/viewallprograms" element={<ViewPrograms/>}></Route>
             <Route path="/startworkout" element={<StartWorkout/>}></Route>
             <Route path="/saveworkout" element={<SaveWorkout/>}></Route>
+            <Route path="/sarahdashboard" element={<SarahDashboard/>}></Route>
           </Routes>
         <Footer/>
       </Router>
