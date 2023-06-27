@@ -14,6 +14,7 @@ import SimpleNavbar from "./components/navbar/Navbar";
 import Dashboard from "./pages/DashboardHub"
 import ViewPrograms from "./pages/ViewPrograms";
 import StartWorkout from "./pages/StartWorkout";
+import SaveWorkout from "./pages/FinishWorkout";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -48,6 +49,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/viewallprograms" element={<ViewPrograms/>}></Route>
             <Route path="/startworkout" element={<StartWorkout/>}></Route>
+            <Route path="/saveworkout" element={<SaveWorkout/>}></Route>
           </Routes>
         <Footer/>
       </Router>

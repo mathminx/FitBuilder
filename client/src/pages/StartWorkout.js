@@ -11,7 +11,8 @@ import {
   Col,
   Progress,
   InputNumber,
-  Divider
+  Divider, 
+  Empty
 } from "antd";
 import { useQuery } from "@apollo/client";
 import { GET_SINGLE_PROGRAM, GET_ME } from "../utils/queries";
@@ -56,7 +57,7 @@ function StartWorkout() {
   }
 
   const progressBarValue = (currentExercises.findIndex(ex => ex.id === usersCurrentExercise + 1 ) /(currentExercises.length / 100))
-
+ // still need to addtheexercise to user data
   return (
     <>
       <Row>
