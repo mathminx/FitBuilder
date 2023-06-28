@@ -249,6 +249,23 @@ export const ADD_EXERCISE = gql`
 //   }
 // `;
 
+export const UPDATE_EXERCISE = gql`
+  mutation UpdateExercise($exerciseId: ID!, $name: String, $type: String, $equipment: String, $difficulty: String, $instructions: String, $sets: Int, $reps: Int, $weight: Float, $duration: Int ) {
+    updateExercise(exerciseId: $exerciseId, name: $name, type: $type, equipment: $equipment, difficulty: $difficulty, instructions: $instructions, sets: $sets, reps: $reps, weight: $weight, duration: $duration) {
+      _id
+      difficulty
+      duration
+      equipment
+      instructions
+      name
+      reps
+      sets
+      type
+      weight
+    }
+  }
+`;
+
 export const REMOVE_EXERCISE = gql`
   mutation RemoveExercise($workoutId: ID!, $exercise: ID!) {
     removeExercise(workoutId: $workoutId, exercise: $exercise) {

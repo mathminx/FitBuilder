@@ -119,6 +119,9 @@ const ProgramPage = () => {
 
   const handleEditExercise = (exerciseId) => {
     console.log("Editing exercise: ", exerciseId);
+    if ( exerciseId) {
+      navigate(`/modifyexercise/${exerciseId}`);
+    }
   };
 
   const handleRemoveExercise = async (exerciseId) => {

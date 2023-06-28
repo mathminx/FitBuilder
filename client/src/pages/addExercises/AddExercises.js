@@ -10,7 +10,7 @@ import { ArrowLeftOutlined } from "@ant-design/icons";
 const { Option } = Select;
 const { Meta } = Card;
 
-const ExerciseComponent = () => {
+const ModifyExerciseComponent = () => {
   const [form] = Form.useForm();
   const [exercises, setExercises] = useState([]);
   const { workoutId } = useParams();
@@ -252,4 +252,4 @@ const ExerciseComponent = () => {
   );
 };
 
-export default ExerciseComponent;
+export default ModifyExerciseComponent;

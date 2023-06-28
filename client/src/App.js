@@ -18,6 +18,8 @@ import ViewPrograms from "./pages/ViewPrograms";
 import StartWorkout from "./pages/StartWorkout";
 import SaveWorkout from "./pages/FinishWorkout";
 import SarahDashboard from "./pages/SarahDashboard";
+// import ModifyExerciseComponent from "./pages/addExercises/AddExercises";
+import EditExercise from "./pages/addExercises/EditExercise";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -53,6 +55,7 @@ function App() {
           <Route path="/modifyprogram/:programId" element={<ModifyProgram />} />
           <Route path="/createworkout/:programId" element={<WorkoutForm />} />
           <Route path="/addexercises/:workoutId" element={<ExerciseComponent />}/>
+          <Route path="/modifyexercise/:exerciseId" element={<EditExercise />}/>
           <Route path="/programs/:programId" element={<ProgramPage />} />
           <Route path="/startworkout" element={<StartWorkout />}></Route>
           <Route path="/saveworkout" element={<SaveWorkout />}></Route>
