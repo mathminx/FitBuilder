@@ -33,10 +33,12 @@ function StartWorkout() {
   };
 
   useEffect(() => {
-    if(!loadingMe && dataMe) {
-        
+    if (!loadingMe && dataMe) {
+        let firstWorkout = dataMe.me.activeProgram.workouts[0];
+        let firstExercise = firstWorkout.exercises[0];
+        console.log(firstExercise);
     }
-  }, [loadingMe, dataMe])
+}, [loadingMe, dataMe]);
 
   const onNextExercise = () => {
     console.log('next button clicked')
