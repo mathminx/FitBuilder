@@ -73,18 +73,11 @@ const ProgramPage = () => {
   const { programId } = useParams();
   const navigate = useNavigate();
 
-  // I am getting mixed up with this and will need to come back to it.
-  // const navigateToDashboard = () => {
-  //   if (Auth.loggedIn()) {
-  //     navigate("/dashboard"); // Redirect to dashboard if logged in.
-  //   } else {
-  //     navigate("/");
-  //   }
-  // };
-
-  //   useEffect(() => {
-  //     navigateToDashboard();
-  //   }, []);
+  useEffect(() => {
+    if (!Auth.loggedIn()) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   // Fetch the program data
   const { loading, error, data, refetch } = useQuery(GET_SINGLE_PROGRAM, {

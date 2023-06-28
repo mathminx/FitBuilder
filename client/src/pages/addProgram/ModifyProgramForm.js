@@ -38,9 +38,11 @@ const {
   const [updateProgram, { loading, error }] = useMutation(UPDATE_PROGRAM);
   const navigate = useNavigate();
 
-    if (!Auth.loggedIn()) {
-      navigate("/");
-    }
+    useEffect(() => {
+      if (!Auth.loggedIn()) {
+        navigate("/");
+      }
+    }, [navigate]);
 
     if (queryLoading) return <p>Loading...</p>;
     if (queryError) return <p>Error! {queryError.message}</p>;

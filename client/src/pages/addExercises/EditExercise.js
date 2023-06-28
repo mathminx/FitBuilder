@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { Form, Input, InputNumber, Button, Select, message } from "antd";
 import { GET_SINGLE_EXERCISE } from "../../utils/queries";
@@ -11,12 +11,19 @@ const { Option } = Select;
 
 const EditExercise = () => {
   const { exerciseId } = useParams();
-  console.log(exerciseId )
+  console.log(exerciseId);
+  
   const { data, loading, error } = useQuery(GET_SINGLE_EXERCISE, {
     variables: { id: exerciseId },
   });
   const [updateExercise] = useMutation(UPDATE_EXERCISE);
   const navigate = useNavigate();
+
+    useEffect(() => {
+      if (!Auth.loggedIn()) {
+        navigate("/");
+      }
+    }, [navigate]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;

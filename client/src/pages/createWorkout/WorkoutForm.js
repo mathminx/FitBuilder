@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form, Input, Select, Button, InputNumber } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
 import Auth from "../../utils/auth"
@@ -14,9 +14,11 @@ const WorkoutForm = () => {
   const navigate = useNavigate();
   const { programId } = useParams();
 
-  if (!Auth.loggedIn()) {
-    navigate("/");
-  }
+  useEffect(() => {
+    if (!Auth.loggedIn()) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   const [addWorkout] = useMutation(ADD_WORKOUT, {
     onCompleted: () => navigate(`/programs/${programId}`),

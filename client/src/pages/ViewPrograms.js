@@ -18,6 +18,12 @@ const ViewPrograms = () => {
   const [allPrograms, setAllPrograms] = useState(null);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!Auth.loggedIn()) {
+      navigate("/");
+    }
+  }, [navigate]);
+
   const handleViewSinglePrograms = (programId) => {
     console.log('button clicked');
      if (Auth.loggedIn()) {

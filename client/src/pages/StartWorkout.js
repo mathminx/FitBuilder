@@ -27,6 +27,12 @@ function StartWorkout() {
   const [usersCurrentExercise, setUsersCurrentExercise] = useState(null);
   const navigate = useNavigate();
 
+    useEffect(() => {
+      if (!Auth.loggedIn()) {
+        navigate("/");
+      }
+    }, [navigate]);
+
   const onChange = (number) => {
     console.log('changed', number);
   };

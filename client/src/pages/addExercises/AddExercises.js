@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Select, Button, Input, Card, Row, Col, Modal, InputNumber } from "antd";
 import axios from "axios";
 import { useMutation } from "@apollo/client";
@@ -23,12 +23,11 @@ const ModifyExerciseComponent = () => {
   const [addExercise, { data }] = useMutation(ADD_EXERCISE);
   const navigate = useNavigate();
 
-  // The authentication is messing with the build and causes the api call to immediately error.
-  // if (Auth.loggedIn()) {
-  //   navigate(`/programs/${workoutId}`); // Redirect to dashboard if logged in.
-  // } else {
-  //   navigate("/");
-  // }
+  useEffect(() => {
+    if (!Auth.loggedIn()) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   // Function to open modal
   const showModal = (exerciseName) => {

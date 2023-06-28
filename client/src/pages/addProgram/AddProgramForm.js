@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Input, InputNumber, Button } from "antd";
 import { useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
@@ -16,9 +16,11 @@ const CreateProgram = () => {
   const [addProgram, { loading, error }] = useMutation(ADD_PROGRAM);
   const navigate = useNavigate();
 
+  useEffect(() => {
     if (!Auth.loggedIn()) {
       navigate("/");
     }
+  }, [navigate]);
 
     const handleFormSubmit = async () => {
     try {

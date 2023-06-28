@@ -24,6 +24,14 @@ const { TextArea } = Input;
 const { Meta } = Card;
 
 function SaveWorkout() {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+      if (!Auth.loggedIn()) {
+        navigate("/");
+      }
+    }, [navigate]);
+
   const onChange = (value) => {
     console.log("changed", value);
   };

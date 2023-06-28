@@ -28,6 +28,12 @@ const Dashboard = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!Auth.loggedIn()) {
+      navigate("/");
+    }
+  }, [navigate]);
+
   const handleCreateProgramClick = () => {
     console.log("button clicked");
     if (Auth.loggedIn()) {
