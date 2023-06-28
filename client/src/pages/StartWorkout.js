@@ -15,7 +15,7 @@ import {
   Empty
 } from "antd";
 import { useQuery } from "@apollo/client";
-import { GET_SINGLE_PROGRAM, GET_ME } from "../utils/queries";
+import { GET_SINGLE_EXERCISE, GET_ME } from "../utils/queries";
 import Auth from "../utils/auth";
 const { Content } = Layout;
 
@@ -23,6 +23,7 @@ const { Meta } = Card;
 
 function StartWorkout() {
   const { loading: loadingMe, data: dataMe } = useQuery(GET_ME);
+  const { loading: loadingExercise, data: dataExercise } = useQuery(GET_SINGLE_EXERCISE);
   const [currentExercises, setCurrentExercises] = useState([]);
   const [usersCurrentExercise, setUsersCurrentExercise] = useState(null);
   const navigate = useNavigate();
@@ -33,10 +34,7 @@ function StartWorkout() {
 
   useEffect(() => {
     if(!loadingMe && dataMe) {
-        const currentExercises = dataMe.me.program_id.workouts_id.exercise
-            setCurrentExercises(currentExercises)
-            console.log(currentExercises)
-            setUsersCurrentExercise(currentExercises[0])
+        
     }
   }, [loadingMe, dataMe])
 

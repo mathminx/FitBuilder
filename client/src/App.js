@@ -52,7 +52,7 @@ function App() {
           <Route path="/createworkout/:programId" element={<WorkoutForm />} />
           <Route path="/addexercises/:workoutId" element={<ExerciseComponent />}/>
           <Route path="/programs/:programId" element={<ProgramPage />} />
-          <Route path="/startworkout" element={<StartWorkout />}></Route>
+          <Route path="/startworkout/:workoutId" element={<StartWorkout />}></Route>
           <Route path="/saveworkout" element={<SaveWorkout />}></Route>
           <Route path="/sarahdashboard" element={<SarahDashboard />}></Route>
         </Routes>
