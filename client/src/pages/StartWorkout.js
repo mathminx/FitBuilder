@@ -41,20 +41,20 @@ function StartWorkout() {
     }
 }, [loadingMe, dataMe]);
 
-  const onNextExercise = () => {
+const onNextExercise = () => {
     console.log('next button clicked')
     if (Auth.loggedIn()) {
-        const currentIndex = currentExercises.findIndex(ex => ex.id === usersCurrentExercise.id);
-        if (currentIndex !== -1 && currentIndex < currentExercises.length -1) {
-            setUsersCurrentExercise(currentExercises[currentIndex +1]);
+        // Flatten exercises from all workouts into one array
+        let allExercises = dataMe.me.activeProgram.workouts.flatMap(workout => workout.exercises);
+        const currentIndex = allExercises.findIndex(ex => ex.id === usersCurrentExercise.id);
+        if (currentIndex !== -1 && currentIndex < allExercises.length - 1) {
+            setUsersCurrentExercise(allExercises[currentIndex + 1]);
         }
-        else if (currentIndex > currentExercises.length -1) {
+        else if (currentIndex >= allExercises.length - 1) {
             navigate('/')
         }
-    } else {
-        navigate('/')
     }
-  }
+};
 
   const progressBarValue = (currentExercises.findIndex(ex => ex.id === usersCurrentExercise + 1 ) /(currentExercises.length / 100))
  // still need to addtheexercise to user data
@@ -64,7 +64,11 @@ function StartWorkout() {
         <Progress percent={progressBarValue} />
       </Row>
       <Row justify="center">
-        
+      <Row justify="center">
+      <Button type="primary" size="large" onClick={onNextExercise}>
+        Next
+      </Button>
+      </Row>
       <Space direction="vertical" size={16}>
       {loadingMe || !usersCurrentExercise ? (
             <Card title={'loading... exercise'} extra={<a href="#">More</a>} style={{ width: 500}}>
@@ -72,17 +76,17 @@ function StartWorkout() {
           </Card>
           ) : 
         (
-    <Card title={`Exercise: ${usersCurrentExercise.name}`} extra={<a href="#">More</a>} style={{ width: 500}}>
-      <p>{`${usersCurrentExercise.description}`} It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
+    <Card title={usersCurrentExercise.name} extra={<a href="#">More</a>} style={{ width: 500}}>
+      <p>{`${usersCurrentExercise.instructions}`} </p>
     </Card>
         )}
     </Space>
     </Row>
     <Divider type="horizontal"></Divider>
-      <Row gutter={[8, 16]} justify="space-evenly">
+      <Row gutter={[8, 16]} justify="center">
         <Col span={8}>
           <div>Sets</div>
-        </Col>
+        </Col> 
         <Col span={8}>
           <div>Reps</div>
         </Col>
@@ -99,11 +103,12 @@ function StartWorkout() {
             </Row>
           ) : 
         ( Array.from({length: usersCurrentExercise.sets}, (_, i) => i + 1).map((setNumber) => (
-      <Row  key={setNumber} gutter={[8, 16]} justify="space-evenly">
-        <Col span={8}>
+      <Row  key={setNumber} gutter={[8, 16]} justify="center">
+        <Col span={6}>
+        <div key={setNumber}>{setNumber}</div>
           <div justify="center"></div>
         </Col>
-       <Col span={8}>
+       <Col span={4}>
           <Space>
             <InputNumber
               size="large"
@@ -134,11 +139,11 @@ function StartWorkout() {
       </Row>
       <Divider type="horizontal"></Divider>
       {/* Next exercise button, on press sets next exercise in array to curretn state */}
-      <Row justify="center">
+      {/* <Row justify="center">
       <Button type="primary" size="large" onClick={onNextExercise}>
         Next
       </Button>
-      </Row>
+      </Row> */}
     </>
   );
 }
