@@ -177,6 +177,23 @@ const resolvers = {
       );
       return user;
     },
+    updateActiveProgram: async (_, { userId, programId }, context) => {
+      console.log(`userId: ${userId}`);
+      console.log(`programId: ${programId}`);
+      try {
+        // Find the user by ID
+        const user = await User.findOneAndUpdate(
+          { _id: userId },
+          { activeProgram: programId },
+          { new: true }
+        ).populate("activeProgram");
+
+        return user;
+      } catch (err) {
+        console.log(err);
+        throw new Error("Failed to update active program.");
+      }
+    },
     addProgram: async (
       _,
       { title, daysPerWeek, duration, description },

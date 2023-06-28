@@ -49,7 +49,6 @@ export const ADD_PROGRAM = gql`
   }
 `;
 
-
 export const REMOVE_PROGRAM = gql`
   mutation RemoveProgram($programId: ID!, $userId: ID!) {
     removeProgram(programId: $programId, userId: $userId) {
@@ -88,6 +87,17 @@ export const UPDATE_PROGRAM = gql`
           muscle
           duration
         }
+      }
+    }
+  }
+`;
+
+export const UPDATE_ACTIVE_PROGRAM = gql`
+  mutation UpdateActiveProgram($userId: ID!, $programId: ID!) {
+    updateActiveProgram(userId: $userId, programId: $programId) {
+      activeProgram {
+        title
+        description
       }
     }
   }

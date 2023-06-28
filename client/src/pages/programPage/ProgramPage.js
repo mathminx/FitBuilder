@@ -8,6 +8,8 @@ import { REMOVE_EXERCISE, REMOVE_PROGRAM } from "../../utils/mutations";
 import { REMOVE_WORKOUT } from "../../utils/mutations";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { GET_ME } from "../../utils/queries";
+import { UPDATE_ACTIVE_PROGRAM } from "../../utils/mutations";
+
 
 const { Title } = Typography;
 
@@ -65,6 +67,7 @@ const ProgramPage = () => {
     error: userError,
     data: userData,
   } = useQuery(GET_ME);
+  const [updateActiveProgram] = useMutation(UPDATE_ACTIVE_PROGRAM);
   const [selectedWorkout, setSelectedWorkout] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { programId } = useParams();
@@ -161,6 +164,20 @@ const ProgramPage = () => {
   };
 
   const handleActiveProgram = () => {
+    console.log("Attempting to switch to new active program!");
+    updateActiveProgram({
+      variables: {
+        userId: userData?.me._id, // Assuming you have `userData` available from your query
+        programId: programId,
+      },
+      refetchQueries: [{ query: GET_ME }], // Refetch the `me` query to get updated user data
+    })
+      .then(() => {
+        console.log("Active program updated successfully.");
+      })
+      .catch((error) => {
+        console.error("Failed to update active program:", error);
+      });
     console.log("Switching to new active program!");
   };
 
@@ -263,7 +280,7 @@ const ProgramPage = () => {
       </Button>
 
       <Button type="primary" onClick={handleActiveProgram}>
-        Switch Active Program
+        Update Active Program
       </Button>
 
       <br></br>
