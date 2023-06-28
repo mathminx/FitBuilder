@@ -171,7 +171,18 @@ const ProgramPage = () => {
               {/* <p>Day Number: {workout.dayNumber}</p> */}
               {/* <p>Complete: {workout.complete.toString()}</p> */}
               <Button type="primary" onClick={() => handleOpenModal(workout)}>
-                View Details
+                View Exercises
+              </Button>
+              <Button
+                type="danger"
+                onClick={() => handleDeleteWorkout(workout._id)}
+                style={{
+                  borderStyle: "dashed",
+                  borderWidth: "1px",
+                  borderColor: "#000000",
+                }}
+              >
+                Delete Workout
               </Button>
             </Card>
           </Col>
