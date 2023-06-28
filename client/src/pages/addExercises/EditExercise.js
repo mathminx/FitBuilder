@@ -1,26 +1,37 @@
 import React from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { Form, Input, InputNumber, Button, Select, message } from "antd";
-import { GET_SINGLE_EXERCISE, UPDATE_EXERCISE } from "../../utils/queries";
+import { GET_SINGLE_EXERCISE } from "../../utils/queries";
+import { UPDATE_EXERCISE } from "../../utils/mutations";
+import { useNavigate, useParams } from "react-router-dom";
+import Auth from "../../utils/auth";
 
 
 const { Option } = Select;
 
-const EditExercise = ({ exerciseId }) => {
+const EditExercise = () => {
+  const { exerciseId } = useParams();
+  console.log(exerciseId )
   const { data, loading, error } = useQuery(GET_SINGLE_EXERCISE, {
     variables: { id: exerciseId },
   });
   const [updateExercise] = useMutation(UPDATE_EXERCISE);
+  const navigate = useNavigate();
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
+
+  // if (!Auth.loggedIn()) {
+  //   navigate("/");
+  // }
 
   const exercise = data?.exercise;
 
   const onFinish = async (values) => {
     try {
-        await updateExercise({ variables: { id: exerciseId, ...values } });
+        await updateExercise({ variables: { exerciseId: exerciseId, ...values } });
         message.success('Exercise updated successfully!');
+        navigate(-1);
     } catch (error) {
         console.error('Error:', error);
         message.error(`Error updating exercise: ${error.message}`);
@@ -49,7 +60,7 @@ const EditExercise = ({ exerciseId }) => {
       <Form.Item
         label="Difficulty"
         name="difficulty"
-        rules={[{ required: true }]}
+        rules={[{ required: false }]}
       >
         <Select>
           <Option value="beginner">Beginner</Option>
@@ -61,27 +72,34 @@ const EditExercise = ({ exerciseId }) => {
       <Form.Item
         label="Instructions"
         name="instructions"
-        rules={[{ required: true }]}
+        rules={[{ required: false }]}
       >
         <Input.TextArea />
       </Form.Item>
 
-      <Form.Item label="Sets" name="sets" rules={[{ required: true }]}>
+      <Form.Item label="Sets" name="sets" rules={[{ required: false }]}>
         <InputNumber min={1} />
       </Form.Item>
 
-      <Form.Item label="Reps" name="reps" rules={[{ required: true }]}>
+      <Form.Item label="Reps" name="reps" rules={[{ required: false }]}>
         <InputNumber min={1} />
       </Form.Item>
 
-      <Form.Item label="Weight" name="weight" rules={[{ required: true }]}>
+      <Form.Item label="Weight" name="weight" rules={[{ required: false }]}>
         <InputNumber min={0} step={0.1} />
       </Form.Item>
 
-      <Form.Item label="Duration" name="duration" rules={[{ required: true }]}>
+      <Form.Item label="Duration (minutes)" name="duration" rules={[{ required: false }]}>
         <InputNumber min={1} />
       </Form.Item>
-
+      <Form.Item>
+        <Button
+          style={{ marginLeft: "0px" }}
+          onClick={() => navigate(-1)}
+        >
+          Cancel
+        </Button>
+      </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">
           Save
