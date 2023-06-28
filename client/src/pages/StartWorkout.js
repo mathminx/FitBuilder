@@ -41,19 +41,26 @@ function StartWorkout() {
     }
 }, [loadingMe, dataMe]);
 
+useEffect(() => {
+    console.log('usersCurrentExercise has changed:', usersCurrentExercise);
+}, [usersCurrentExercise]);
+
 const onNextExercise = () => {
     console.log('next button clicked')
-    if (Auth.loggedIn()) {
         // Flatten exercises from all the exercisinto one array
         let allExercises = dataMe.me.activeProgram.workouts.flatMap(workout => workout.exercises);
-        const currentIndex = allExercises.findIndex(ex => ex.id === usersCurrentExercise.id);
+        let currentIndex = allExercises.findIndex(ex => ex.id === usersCurrentExercise.id);
+        console.log('allExercises:', allExercises);
+        console.log('currentIndex:', currentIndex);
+        console.log('usersCurrentExercise has changed:', usersCurrentExercise);
         if (currentIndex !== -1 && currentIndex < allExercises.length - 1) {
             setUsersCurrentExercise(allExercises[currentIndex + 1]);
         }
-        else if (currentIndex >= allExercises.length - 1) {
-            navigate('/FinishWorkout')
+        else if (currentIndex === allExercises.length - 1) {
+            setUsersCurrentExercise(allExercises[currentIndex]);
+        } else {
+            navigate('/')
         }
-    }
 };
 
   const progressBarValue = (currentExercises.findIndex(ex => ex.id === usersCurrentExercise + 1 ) /(currentExercises.length / 100))
