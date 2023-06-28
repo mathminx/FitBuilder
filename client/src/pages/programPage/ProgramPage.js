@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Auth from "../../utils/auth";
 import { REMOVE_EXERCISE } from "../../utils/mutations";
 import { REMOVE_WORKOUT } from "../../utils/mutations";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 
 const { Title } = Typography;
 
@@ -157,6 +158,13 @@ const ProgramPage = () => {
   return (
     <>
       <Title level={2}>Program Details</Title>
+      <Button
+        type="primary"
+        onClick={() => navigate("/viewallprograms")}
+        style={{ marginBottom: "20px" }}
+      >
+      <ArrowLeftOutlined /> Return to All Programs
+      </Button>
       <Button
         type="danger"
         onClick={handleDeleteProgram}
