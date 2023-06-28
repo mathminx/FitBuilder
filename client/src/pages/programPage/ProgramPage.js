@@ -279,7 +279,11 @@ const ProgramPage = () => {
         Add New Workout
       </Button>
 
-      <Button type="primary" onClick={handleActiveProgram}>
+      <Button
+        type="primary"
+        onClick={handleActiveProgram}
+        disabled={userData?.me?.activeProgram?._id === programId}
+      >
         Update Active Program
       </Button>
 
