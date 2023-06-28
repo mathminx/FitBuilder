@@ -9,8 +9,19 @@ const resolvers = {
         const user = await User.findOne({
           $or: [{ _id: context.user._id }, { username: context.user.username }],
         })
-          .populate("activeProgram")
+          .populate({
+            path: "activeProgram",
+            populate: {
+              path: "workouts",
+              model: "Workout", // this should be your Workout model name
+              populate: {
+                path: "exercises",
+                model: "Exercise", // this should be your Exercise model name
+              },
+            },
+          })
           .populate("programs");
+
         if (!user) {
           throw new Error("Unable to find an associated user");
         }
@@ -116,7 +127,7 @@ const resolvers = {
         query.name = name;
       }
       try {
-        const program = await Program.findOne(query).populate('workouts');
+        const program = await Program.findOne(query).populate("workouts");
         if (!program) {
           throw new Error("No program with this id/name");
         }
@@ -241,11 +252,15 @@ const resolvers = {
           throw new Error("User not found");
         }
 
-        await User.findByIdAndUpdate(userId, { $pull: { programs: programId } });
-        
+        await User.findByIdAndUpdate(userId, {
+          $pull: { programs: programId },
+        });
+
         await Program.findByIdAndRemove(programId);
       } catch (error) {
-        throw new Error(`An error occurred removing the program: ${error.message} `);
+        throw new Error(
+          `An error occurred removing the program: ${error.message} `
+        );
       }
     },
     updateProgram: async (

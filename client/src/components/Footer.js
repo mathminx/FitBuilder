@@ -2,10 +2,10 @@ import React from 'react';
 
 const styles = {
   footerStyle: {
-    position: "fixed", // Fix position
-    left: "0", // Align left
-    bottom: "0", // Align bottom
-    width: "100%", // Take full width
+    position: "fixed", 
+    left: "0", 
+    bottom: "0", 
+    width: "100%", 
     display: "flex",
     justifyContent: "center",
     alignItems: "center",

@@ -33,6 +33,9 @@ export const GET_ME = gql`
         workouts {
           _id
           name
+          exercises {
+            _id
+          }
         }
         duration
         daysPerWeek
