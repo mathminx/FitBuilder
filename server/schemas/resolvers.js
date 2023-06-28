@@ -195,11 +195,9 @@ const resolvers = {
         });
         await program.save();
 
-        // get user from context
         const user = await User.findById(context.user._id);
         user.programs.push(program);
 
-        // If there is no active program, set the new one as active
         if (!user.activeProgram) {
           user.activeProgram = program._id;
         }
@@ -213,18 +211,24 @@ const resolvers = {
         );
       }
     },
-    removeProgram: async (_, { programId }, context) => {
+    removeProgram: async (_, { programId, userId }, context) => {
       try {
         if (!context.user) {
           throw new Error(
             "You must be logged in to add a workout to a program."
           );
         }
+
+        const user = await User.findById(userId);
+        if (!user) {
+          throw new Error("User not found");
+        }
+
+        await User.findByIdAndUpdate(userId, { $pull: { programs: programId } });
+        
         await Program.findByIdAndRemove(programId);
       } catch (error) {
-        throw new Error(
-          `An error occurred removing the program: ${error.message} `
-        );
+        throw new Error(`An error occurred removing the program: ${error.message} `);
       }
     },
     updateProgram: async (

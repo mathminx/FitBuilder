@@ -51,10 +51,10 @@ export const ADD_PROGRAM = gql`
 
 
 export const REMOVE_PROGRAM = gql`
-  mutation RemoveProgram($programId: ID!) {
-    RemoveProgram(programId: $programId) {
+  mutation RemoveProgram($programId: ID!, $userId: ID!) {
+    removeProgram(programId: $programId, userId: $userId) {
       _id
-      success
+      title
     }
   }
 `;

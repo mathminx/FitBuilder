@@ -4,9 +4,10 @@ import { Card, Modal, Button, Descriptions, Row, Col, Typography } from "antd";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Auth from "../../utils/auth";
-import { REMOVE_EXERCISE } from "../../utils/mutations";
+import { REMOVE_EXERCISE, REMOVE_PROGRAM } from "../../utils/mutations";
 import { REMOVE_WORKOUT } from "../../utils/mutations";
 import { ArrowLeftOutlined } from "@ant-design/icons";
+import { GET_ME } from "../../utils/queries";
 
 const { Title } = Typography;
 
@@ -52,12 +53,18 @@ const ProgramPage = () => {
     useLazyQuery(GET_WORKOUT);
   const [
     removeExercise,
-    { removeExercisedata, removeEcerciseloading, removeExerciseerror },
+    { removeExercisedata, removeExcerciseloading, removeExerciseerror },
   ] = useMutation(REMOVE_EXERCISE);
     const [
       removeWorkout,
       { removeWorkoutdata, removeWorkoutloading, removeWorkouterror },
     ] = useMutation(REMOVE_WORKOUT);
+    const [removeProgram, { removeProgramdata, removeProgramloading, removeProgramerror},] = useMutation(REMOVE_PROGRAM, {refetchQueries: [{query: GET_ME}]});
+  const {
+    loading: userLoading,
+    error: userError,
+    data: userData,
+  } = useQuery(GET_ME);
   const [selectedWorkout, setSelectedWorkout] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { programId } = useParams();
@@ -151,9 +158,42 @@ const ProgramPage = () => {
     navigate(`/createworkout/${programId}`);
   };
 
+  // const handleDeleteProgram = async () => {
+  //   console.log("Trying to delete program...");
+  //   console.log(userData.me._id);
+  //   if (programId && userData.me._id) {
+  //     try {
+  //     const { data } = await removeProgram({
+  //       variables: { programId: programId, userId: userData.me._id },
+  //     });
+
+  //     console.log("Program removed successfully: ", data);
+  //     navigate('/viewallprograms');
+  //   } catch (err) {
+  //     console.error("Error removing program: ", err);
+  //   }
+  //   }
+  //   console.log("Deleting program...");
+  // };
+
   const handleDeleteProgram = () => {
+    console.log("Trying to delete program...");
+    console.log(userData.me._id);
+    if (programId && userData.me._id) {
+      removeProgram({
+        variables: { programId: programId, userId: userData.me._id },
+      })
+        .then((data) => {
+          console.log("Program removed successfully: ", data);
+          navigate("/viewallprograms");
+        })
+        .catch((err) => {
+          console.error("Error removing program: ", err);
+        });
+    }
     console.log("Deleting program...");
   };
+
 
   return (
     <>

@@ -27,10 +27,6 @@ const ViewPrograms = () => {
      }
    };
 
-    const handleGoToDashboard = () => {
-      navigate("/dashboard"); // Redirect to dashboard.
-    };
-
    useEffect(() => {
     if (!loadingMe && dataMe) {
       setAllPrograms(dataMe.me.programs);

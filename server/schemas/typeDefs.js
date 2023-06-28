@@ -67,7 +67,7 @@ const typeDefs = gql`
       description: String
     ): Program!
 
-    removeProgram(programId: ID!): Program
+    removeProgram(programId: ID!, userId: ID!): Program
     updateProgram(
       programId: ID!
       title: String
