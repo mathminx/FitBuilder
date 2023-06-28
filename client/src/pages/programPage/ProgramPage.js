@@ -137,6 +137,7 @@ const ProgramPage = () => {
       }
     }
   };
+
   const handleDeleteWorkout = async (workoutId) => {
     console.log("Deleting workout - (workoutId): ", workoutId);
     if (workoutId && programId) {
@@ -153,9 +154,14 @@ const ProgramPage = () => {
     }
     handleCloseModal();
   };
+
   const handleAddWorkout = () => {
     console.log("Adding a new workout...");
     navigate(`/createworkout/${programId}`);
+  };
+
+  const handleActiveProgram = () => {
+    console.log("Switching to new active program!");
   };
 
   // const handleDeleteProgram = async () => {
@@ -203,7 +209,7 @@ const ProgramPage = () => {
         onClick={() => navigate("/viewallprograms")}
         style={{ marginBottom: "20px" }}
       >
-      <ArrowLeftOutlined /> Return to All Programs
+        <ArrowLeftOutlined /> Return to All Programs
       </Button>
       <Button
         type="danger"
@@ -254,6 +260,10 @@ const ProgramPage = () => {
       <br></br>
       <Button type="primary" onClick={handleAddWorkout}>
         Add New Workout
+      </Button>
+
+      <Button type="primary" onClick={handleActiveProgram}>
+        Switch Active Program
       </Button>
 
       <br></br>
