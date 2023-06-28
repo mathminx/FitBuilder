@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { useQuery, useLazyQuery, gql } from "@apollo/client";
+import { useQuery, useMutation, useLazyQuery, gql } from "@apollo/client";
 import { Card, Modal, Button, Descriptions, Row, Col, Typography } from "antd";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Auth from "../../utils/auth";
+import { REMOVE_EXERCISE, REMOVE_PROGRAM } from "../../utils/mutations";
+import { REMOVE_WORKOUT } from "../../utils/mutations";
+import { ArrowLeftOutlined } from "@ant-design/icons";
+import { GET_ME } from "../../utils/queries";
+import { UPDATE_ACTIVE_PROGRAM } from "../../utils/mutations";
 
 
 const { Title } = Typography;
@@ -48,6 +53,21 @@ const ProgramPage = () => {
   const [selectedWorkoutId, setSelectedWorkoutId] = useState(null);
   const [getWorkout, { loading: workoutLoading, data: workoutData }] =
     useLazyQuery(GET_WORKOUT);
+  const [
+    removeExercise,
+    { removeExercisedata, removeExcerciseloading, removeExerciseerror },
+  ] = useMutation(REMOVE_EXERCISE);
+    const [
+      removeWorkout,
+      { removeWorkoutdata, removeWorkoutloading, removeWorkouterror },
+    ] = useMutation(REMOVE_WORKOUT);
+    const [removeProgram, { removeProgramdata, removeProgramloading, removeProgramerror},] = useMutation(REMOVE_PROGRAM, {refetchQueries: [{query: GET_ME}]});
+  const {
+    loading: userLoading,
+    error: userError,
+    data: userData,
+  } = useQuery(GET_ME);
+  const [updateActiveProgram] = useMutation(UPDATE_ACTIVE_PROGRAM);
   const [selectedWorkout, setSelectedWorkout] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { programId } = useParams();
@@ -67,7 +87,7 @@ const ProgramPage = () => {
   //   }, []);
 
   // Fetch the program data
-  const { loading, error, data } = useQuery(GET_SINGLE_PROGRAM, {
+  const { loading, error, data, refetch } = useQuery(GET_SINGLE_PROGRAM, {
     variables: { id: programId },
   });
 
@@ -92,40 +112,131 @@ const ProgramPage = () => {
   // Replace these functions with your logic
   const handleAddExercise = () => {
     console.log("Adding a new exercise...");
-      if (selectedWorkoutId) {
-        navigate(`/addexercises/${selectedWorkoutId}`);
-      }
+    if (selectedWorkoutId) {
+      navigate(`/addexercises/${selectedWorkoutId}`);
+    }
   };
 
   const handleEditExercise = (exerciseId) => {
     console.log("Editing exercise: ", exerciseId);
   };
 
-  const handleRemoveExercise = (exerciseId) => {
+  const handleRemoveExercise = async (exerciseId) => {
     console.log("Removing exercise: ", exerciseId);
+    console.log("workoutId:", selectedWorkoutId);
+
+    if (selectedWorkoutId && exerciseId) {
+      try {
+        const { data } = await removeExercise({
+          variables: { workoutId: selectedWorkoutId, exercise: exerciseId },
+        });
+
+        console.log("Exercise removed successfully: ", data);
+
+        // After successfully removing the exercise, refetch the workout to update the data in the UI
+        getWorkout({ variables: { id: selectedWorkoutId } });
+      } catch (err) {
+        console.error("Error removing exercise: ", err);
+      }
+    }
   };
 
-  const handleDeleteWorkout = (workoutId) => {
-    console.log("Deleting workout: ", workoutId);
-    handleCloseModal(); 
+  const handleDeleteWorkout = async (workoutId) => {
+    console.log("Deleting workout - (workoutId): ", workoutId);
+    if (workoutId && programId) {
+      try {
+        const { data } = await removeWorkout({
+          variables: { workout: workoutId, programId: programId },
+        });
+
+        console.log("Workout removed successfully: ", data);
+        refetch();
+      } catch (err) {
+        console.error("Error removing workout: ", err);
+      }
+    }
+    handleCloseModal();
   };
 
   const handleAddWorkout = () => {
     console.log("Adding a new workout...");
-     navigate(`/createworkout/${programId}`);
+    navigate(`/createworkout/${programId}`);
   };
 
+  const handleActiveProgram = () => {
+    console.log("Attempting to switch to new active program!");
+    updateActiveProgram({
+      variables: {
+        userId: userData?.me._id, // Assuming you have `userData` available from your query
+        programId: programId,
+      },
+      refetchQueries: [{ query: GET_ME }], // Refetch the `me` query to get updated user data
+    })
+      .then(() => {
+        console.log("Active program updated successfully.");
+      })
+      .catch((error) => {
+        console.error("Failed to update active program:", error);
+      });
+    console.log("Switching to new active program!");
+  };
+
+  // const handleDeleteProgram = async () => {
+  //   console.log("Trying to delete program...");
+  //   console.log(userData.me._id);
+  //   if (programId && userData.me._id) {
+  //     try {
+  //     const { data } = await removeProgram({
+  //       variables: { programId: programId, userId: userData.me._id },
+  //     });
+
+  //     console.log("Program removed successfully: ", data);
+  //     navigate('/viewallprograms');
+  //   } catch (err) {
+  //     console.error("Error removing program: ", err);
+  //   }
+  //   }
+  //   console.log("Deleting program...");
+  // };
+
   const handleDeleteProgram = () => {
+    console.log("Trying to delete program...");
+    console.log(userData.me._id);
+    if (programId && userData.me._id) {
+      removeProgram({
+        variables: { programId: programId, userId: userData.me._id },
+      })
+        .then((data) => {
+          console.log("Program removed successfully: ", data);
+          navigate("/viewallprograms");
+        })
+        .catch((err) => {
+          console.error("Error removing program: ", err);
+        });
+    }
     console.log("Deleting program...");
   };
+
 
   return (
     <>
       <Title level={2}>Program Details</Title>
       <Button
+        type="primary"
+        onClick={() => navigate("/viewallprograms")}
+        style={{ marginBottom: "20px" }}
+      >
+        <ArrowLeftOutlined /> Return to All Programs
+      </Button>
+      <Button
         type="danger"
         onClick={handleDeleteProgram}
-        style={{ float: "right" }}
+        style={{
+          float: "right",
+          borderStyle: "dashed",
+          borderWidth: "1px",
+          borderColor: "#000000",
+        }}
       >
         Delete Program
       </Button>
@@ -146,16 +257,38 @@ const ProgramPage = () => {
               {/* <p>Day Number: {workout.dayNumber}</p> */}
               {/* <p>Complete: {workout.complete.toString()}</p> */}
               <Button type="primary" onClick={() => handleOpenModal(workout)}>
-                View Details
+                View Exercises
+              </Button>
+              <Button
+                type="danger"
+                onClick={() => handleDeleteWorkout(workout._id)}
+                style={{
+                  borderStyle: "dashed",
+                  borderWidth: "1px",
+                  borderColor: "#000000",
+                }}
+              >
+                Delete Workout
               </Button>
             </Card>
           </Col>
         ))}
       </Row>
-
+      <br></br>
       <Button type="primary" onClick={handleAddWorkout}>
         Add New Workout
       </Button>
+
+      <Button
+        type="primary"
+        onClick={handleActiveProgram}
+        disabled={userData?.me?.activeProgram?._id === programId}
+      >
+        Update Active Program
+      </Button>
+
+      <br></br>
+      <br></br>
 
       <Modal visible={isModalVisible} onCancel={handleCloseModal} footer={null}>
         {workoutLoading && <p>Loading workout...</p>}
@@ -206,4 +339,3 @@ const ProgramPage = () => {
 };
 
 export default ProgramPage;
-

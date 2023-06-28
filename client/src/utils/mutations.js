@@ -49,12 +49,11 @@ export const ADD_PROGRAM = gql`
   }
 `;
 
-
 export const REMOVE_PROGRAM = gql`
-  mutation RemoveProgram($programId: ID!) {
-    RemoveProgram(programId: $programId) {
+  mutation RemoveProgram($programId: ID!, $userId: ID!) {
+    removeProgram(programId: $programId, userId: $userId) {
       _id
-      success
+      title
     }
   }
 `;
@@ -88,6 +87,17 @@ export const UPDATE_PROGRAM = gql`
           muscle
           duration
         }
+      }
+    }
+  }
+`;
+
+export const UPDATE_ACTIVE_PROGRAM = gql`
+  mutation UpdateActiveProgram($userId: ID!, $programId: ID!) {
+    updateActiveProgram(userId: $userId, programId: $programId) {
+      activeProgram {
+        title
+        description
       }
     }
   }
@@ -140,10 +150,9 @@ export const ADD_WORKOUT = gql`
 `;
 
 export const REMOVE_WORKOUT = gql`
-  mutation RemoveWorkout($programId: ID!, $workoutId: ID!) {
-    RemoveWorkout(programId: $programId, workoutId: $workoutId) {
+  mutation RemoveWorkout($programId: ID!, $workout: ID!) {
+    removeWorkout(programId: $programId, workout: $workout) {
       _id
-      success
     }
   }
 `;
@@ -229,35 +238,13 @@ export const ADD_EXERCISE = gql`
 // `;
 
 export const REMOVE_EXERCISE = gql`
-  mutation UpdateExercise(
-    $workoutId: ID!
-    $exerciseId: ID!
-    $muscle: String!
-    $reps: Int
-    $sets: Int
-    $description: String!
-  ) {
-    UpdateExercise(
-      workoutId: $workoutId
-      exerciseId: $exerciseId
-      muscle: $muscle
-      reps: $reps
-      sets: $sets
-      description: $description
-    ) {
-      _id
+  mutation RemoveExercise($workoutId: ID!, $exercise: ID!) {
+    removeExercise(workoutId: $workoutId, exercise: $exercise) {
+        _id
       name
-      exercise {
+      exercises {
         _id
         name
-        equipment
-        diffculty
-        description
-        sets
-        reps
-        weight
-        muscle
-        duration
       }
     }
   }
