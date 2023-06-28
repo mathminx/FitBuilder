@@ -41,7 +41,7 @@ const exercisesAPICall = async (userOptions) => {
     url: "https://exercises-by-api-ninjas.p.rapidapi.com/v1/exercises",
     params: userOptions,
     headers: {
-        "X-RapidAPI-Key": "process.env.RAPID_API_KEY",
+        "X-RapidAPI-Key": 'c7b50e1e5cmshf6cb91f3faa5de5p144cd4jsnbc8b77af45da',
         "X-RapidAPI-Host": "exercises-by-api-ninjas.p.rapidapi.com",
     },
     };
