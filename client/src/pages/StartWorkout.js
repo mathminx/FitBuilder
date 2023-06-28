@@ -37,6 +37,7 @@ function StartWorkout() {
         let firstWorkout = dataMe.me.activeProgram.workouts[0];
         let firstExercise = firstWorkout.exercises[0];
         console.log(firstExercise);
+        setUsersCurrentExercise(firstExercise);
     }
 }, [loadingMe, dataMe]);
 
