@@ -61,20 +61,27 @@ const Dashboard = () => {
       setCurrentProgram(dataMe.me.activeProgram);
     }
   }, [loadingMe, dataMe]);
-
   const {
     token: { colorBgContainer },
   } = theme.useToken();
 
+  const styles = {
+    layoutStyle: {
+      minHeight: '88vh',
+      background: 'white',
+      padding: "0 50px",
+    }
+  }
+
   return (
-    <Layout className="layout">
+    <Layout className="layout" style={styles.layoutStyle}>
       <Content style={{ padding: "0 50px" }}>
-        <Breadcrumb style={{ margin: "16px 0" }}>
+        <Breadcrumb style={{ margin: "30px 0", color: '#193381' }}>
           {loadingMe ? (
             <Breadcrumb.Item>Loading....</Breadcrumb.Item>
           ) : (
             <Breadcrumb.Item>
-              <strong>Current Program:</strong>{" "}
+              <strong>Current Program: </strong>{" "}
               <strong>
                 {currentProgram ? currentProgram.title : " No Active Program"}
               </strong>
@@ -84,14 +91,14 @@ const Dashboard = () => {
             <Link to="/viewallprograms">
               <button
                 style={{
-                  padding: "4px 12px",
+                  padding: "4px 2px",
                   background: "none",
                   border: "none",
-                  color: "#1890ff",
+                  color: '#193381',
                   cursor: "pointer",
                   textDecoration: "underline",
                   fontSize: "inherit",
-                  fontWeight: "inherit",
+                  fontWeight: "bolder",
                 }}
               >
                 View All Programs
@@ -101,7 +108,7 @@ const Dashboard = () => {
         </Breadcrumb>
         <div
           className="site-layout-content"
-          style={{ background: colorBgContainer }}
+          style={{ background: 'white', minHeight: '60vh' }}
         >
           {!loadingMe && currentProgram && (
             <Layout>
@@ -123,8 +130,15 @@ const Dashboard = () => {
           )}
 
           {loadingMe || !currentProgram ? (
-            <Row justify="center">
-              <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+            <Row justify="center" style={{paddingTop: '7%'}}>
+              <Empty image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+                imageStyle={{ height: 300 }}
+                description={ 
+                  <div style={{color: '#193381', fontSize:'large', fontWeight: '600'}}>
+                    No programs created.<br/><br/>No time like the present...
+                    <br/><br/>
+                  </div>
+                }/>
             </Row>
           ) : (
             <>
@@ -195,19 +209,13 @@ const Dashboard = () => {
 
       <Row
         justify="center"
-        style={{
-          marginTop: "20px",
-          marginBottom: "20px",
-          paddingBottom: "50px",
-        }}
-      >
+        style={{ marginTop: "20px", marginBottom: "10%" }} >
         <Space direction="vertical">
           <Button
             type="primary"
-            size="large"
-            onClick={handleCreateProgramClick}
+            style={{ padding:'20px', lineHeight:'0px', border:'5px solid', borderStyle:'outset',  borderColor:'#fa6d35', borderRadius:'5px', background: "#193381", fontSize: '15px', fontWeight: '600' }} size="large" onClick={handleCreateProgramClick}
           >
-            Create Program!
+            Create a Program!
           </Button>
         </Space>
       </Row>
