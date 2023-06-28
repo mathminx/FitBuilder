@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Auth from "../../utils/auth";
 import { REMOVE_EXERCISE } from "../../utils/mutations";
+import { REMOVE_WORKOUT } from "../../utils/mutations";
 
 const { Title } = Typography;
 
@@ -52,6 +53,10 @@ const ProgramPage = () => {
     removeExercise,
     { removeExercisedata, removeEcerciseloading, removeExerciseerror },
   ] = useMutation(REMOVE_EXERCISE);
+    const [
+      removeWorkout,
+      { removeWorkoutdata, removeWorkoutloading, removeWorkouterror },
+    ] = useMutation(REMOVE_WORKOUT);
   const [selectedWorkout, setSelectedWorkout] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { programId } = useParams();
@@ -71,7 +76,7 @@ const ProgramPage = () => {
   //   }, []);
 
   // Fetch the program data
-  const { loading, error, data } = useQuery(GET_SINGLE_PROGRAM, {
+  const { loading, error, data, refetch } = useQuery(GET_SINGLE_PROGRAM, {
     variables: { id: programId },
   });
 
@@ -124,12 +129,22 @@ const ProgramPage = () => {
       }
     }
   };
+  const handleDeleteWorkout = async (workoutId) => {
+    console.log("Deleting workout - (workoutId): ", workoutId);
+    if (workoutId && programId) {
+      try {
+        const { data } = await removeWorkout({
+          variables: { workout: workoutId, programId: programId },
+        });
 
-  const handleDeleteWorkout = (workoutId) => {
-    console.log("Deleting workout: ", workoutId);
+        console.log("Workout removed successfully: ", data);
+        refetch();
+      } catch (err) {
+        console.error("Error removing workout: ", err);
+      }
+    }
     handleCloseModal();
   };
-
   const handleAddWorkout = () => {
     console.log("Adding a new workout...");
     navigate(`/createworkout/${programId}`);

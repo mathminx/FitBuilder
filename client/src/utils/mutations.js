@@ -140,10 +140,9 @@ export const ADD_WORKOUT = gql`
 `;
 
 export const REMOVE_WORKOUT = gql`
-  mutation RemoveWorkout($programId: ID!, $workoutId: ID!) {
-    RemoveWorkout(programId: $programId, workoutId: $workoutId) {
+  mutation RemoveWorkout($programId: ID!, $workout: ID!) {
+    removeWorkout(programId: $programId, workout: $workout) {
       _id
-      success
     }
   }
 `;
