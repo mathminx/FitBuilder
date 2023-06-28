@@ -44,14 +44,14 @@ function StartWorkout() {
 const onNextExercise = () => {
     console.log('next button clicked')
     if (Auth.loggedIn()) {
-        // Flatten exercises from all workouts into one array
+        // Flatten exercises from all the exercisinto one array
         let allExercises = dataMe.me.activeProgram.workouts.flatMap(workout => workout.exercises);
         const currentIndex = allExercises.findIndex(ex => ex.id === usersCurrentExercise.id);
         if (currentIndex !== -1 && currentIndex < allExercises.length - 1) {
             setUsersCurrentExercise(allExercises[currentIndex + 1]);
         }
         else if (currentIndex >= allExercises.length - 1) {
-            navigate('/')
+            navigate('/FinishWorkout')
         }
     }
 };
