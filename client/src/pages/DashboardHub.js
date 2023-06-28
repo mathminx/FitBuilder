@@ -118,7 +118,7 @@ const Dashboard = () => {
                 <Text>{currentProgram.title}</Text>
                 <Text strong>Duration (weeks): </Text>
                 <Text>{currentProgram.duration}</Text>
-                <Text strong>Days per week: </Text>
+                <Text strong>Workouts per week: </Text>
                 <Text>{currentProgram.daysPerWeek}</Text>
                 <Text strong>Description: </Text>
                 <Text>{currentProgram.description}</Text>
@@ -175,9 +175,6 @@ const Dashboard = () => {
                               <Space direction="horizontal">
                                 <Link to={`/startworkout/${workout._id}`}>
                                   <Button type="primary">Start</Button>
-                                </Link>
-                                <Link to="/">
-                                  <Button type="secondary">View</Button>
                                 </Link>
                               </Space>,
                             ]}

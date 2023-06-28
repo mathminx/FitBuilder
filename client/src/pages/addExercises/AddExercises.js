@@ -10,7 +10,7 @@ import { ArrowLeftOutlined } from "@ant-design/icons";
 const { Option } = Select;
 const { Meta } = Card;
 
-const ExerciseComponent = () => {
+const ModifyExerciseComponent = () => {
   const [form] = Form.useForm();
   const [exercises, setExercises] = useState([]);
   const { workoutId } = useParams();
@@ -221,19 +221,23 @@ const ExerciseComponent = () => {
         footer={null}
       >
         <Form onFinish={handleModalSubmit}>
-          <Form.Item label="Sets" name="sets" rules={[{ required: true }]}>
+          <Form.Item label="Sets" name="sets" rules={[{ required: false }]}>
             <InputNumber min={1} />
           </Form.Item>
-          <Form.Item label="Reps" name="reps" rules={[{ required: true }]}>
+          <Form.Item label="Reps" name="reps" rules={[{ required: false }]}>
             <InputNumber min={1} />
           </Form.Item>
-          <Form.Item label="Weight (lbs)" name="weight" rules={[{ required: true }]}>
+          <Form.Item
+            label="Weight (lbs)"
+            name="weight"
+            rules={[{ required: false }]}
+          >
             <InputNumber min={1} />
           </Form.Item>
           <Form.Item
             label="Duration (minutes)"
             name="duration"
-            rules={[{ required: true }]}
+            rules={[{ required: false }]}
           >
             <InputNumber min={1} />
           </Form.Item>
@@ -248,4 +252,4 @@ const ExerciseComponent = () => {
   );
 };
 
-export default ExerciseComponent;
+export default ModifyExerciseComponent;

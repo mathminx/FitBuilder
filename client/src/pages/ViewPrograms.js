@@ -53,7 +53,6 @@ const ViewPrograms = () => {
                   key={program._id}
                   style={{ width: 300 }}
                   cover={
-                    /* program picture */
                     <img
                       alt="example program"
                       src={`https://picsum.photos/seed/${program._id}/300/300`}

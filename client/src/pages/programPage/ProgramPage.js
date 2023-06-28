@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useQuery, useMutation, useLazyQuery, gql } from "@apollo/client";
 import { Card, Modal, Button, Descriptions, Row, Col, Typography } from "antd";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Auth from "../../utils/auth";
 import { REMOVE_EXERCISE, REMOVE_PROGRAM } from "../../utils/mutations";
@@ -119,6 +119,9 @@ const ProgramPage = () => {
 
   const handleEditExercise = (exerciseId) => {
     console.log("Editing exercise: ", exerciseId);
+    if ( exerciseId) {
+      navigate(`/modifyexercise/${exerciseId}`);
+    }
   };
 
   const handleRemoveExercise = async (exerciseId) => {
@@ -181,24 +184,6 @@ const ProgramPage = () => {
     console.log("Switching to new active program!");
   };
 
-  // const handleDeleteProgram = async () => {
-  //   console.log("Trying to delete program...");
-  //   console.log(userData.me._id);
-  //   if (programId && userData.me._id) {
-  //     try {
-  //     const { data } = await removeProgram({
-  //       variables: { programId: programId, userId: userData.me._id },
-  //     });
-
-  //     console.log("Program removed successfully: ", data);
-  //     navigate('/viewallprograms');
-  //   } catch (err) {
-  //     console.error("Error removing program: ", err);
-  //   }
-  //   }
-  //   console.log("Deleting program...");
-  // };
-
   const handleDeleteProgram = () => {
     console.log("Trying to delete program...");
     console.log(userData.me._id);
@@ -229,23 +214,36 @@ const ProgramPage = () => {
         <ArrowLeftOutlined /> Return to All Programs
       </Button>
       <Button
-        type="danger"
+        type="primary"
+        ghost
+        danger
         onClick={handleDeleteProgram}
         style={{
           float: "right",
           borderStyle: "dashed",
           borderWidth: "1px",
-          borderColor: "#000000",
+          borderColor: "red",
         }}
       >
         Delete Program
       </Button>
+      <Link to={`/modifyprogram/${programId}`}>
+        <Button
+          type="primary"
+          style={{
+            float: "right",
+            marginRight: "10px",
+          }}
+        >
+          Modify Program
+        </Button>
+      </Link>
       <Descriptions>
         <Descriptions.Item label="Name">{program.title}</Descriptions.Item>
         <Descriptions.Item label="Duration (weeks)">
           {program.duration}
         </Descriptions.Item>
-        <Descriptions.Item label="Days per week">
+        <Descriptions.Item label="Workouts per week">
           {program.daysPerWeek}
         </Descriptions.Item>
       </Descriptions>
@@ -260,12 +258,14 @@ const ProgramPage = () => {
                 View Exercises
               </Button>
               <Button
-                type="danger"
+                type="primary"
+                ghost
+                danger
                 onClick={() => handleDeleteWorkout(workout._id)}
                 style={{
                   borderStyle: "dashed",
                   borderWidth: "1px",
-                  borderColor: "#000000",
+                  borderColor: "red",
                 }}
               >
                 Delete Workout

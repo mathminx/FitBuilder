@@ -50,7 +50,6 @@ export const GET_ME = gql`
   }
 `;
 
-
 export const GET_ALL_PROGRAMS = gql`
   query Programs {
     programs {
@@ -68,6 +67,7 @@ export const GET_SINGLE_PROGRAM = gql`
       title
       duration
       daysPerWeek
+      description
       workouts {
         _id
         name
