@@ -58,39 +58,51 @@ export const REMOVE_PROGRAM = gql`
   }
 `;
 
+// export const UPDATE_PROGRAM = gql`
+//   mutation AddProgram(
+//     $title: String!
+//     $workouts: [ID]!
+//     $weeks: Int!
+//     $days: Int!
+//   ) {
+//     AddProgram(title: $title, workouts: $workouts, weeks: $weeks, days: $days) {
+//       title
+//       current
+//       duration
+//       daysPerWeek
+//       workouts {
+//         _id
+//           name
+//           dayNumber
+//           complete
+//         exercises {
+//           _id
+//           name
+//           equipment
+//           diffculty
+//           description
+//           sets
+//           reps
+//           weight
+//           muscle
+//           duration
+//         }
+//       }
+//     }
+//   }
+// `;
+
 export const UPDATE_PROGRAM = gql`
-  mutation AddProgram(
-    $title: String!
-    $workouts: [ID]!
-    $weeks: Int!
-    $days: Int!
-  ) {
-    AddProgram(title: $title, workouts: $workouts, weeks: $weeks, days: $days) {
+  mutation UpdateProgram($programId: ID!, $title: String, $daysPerWeek: Int, $duration: Int, $description: String) {
+    updateProgram(programId: $programId, title: $title, daysPerWeek: $daysPerWeek, duration: $duration, description: $description) {
       title
-      current
       duration
       daysPerWeek
-      workouts {
-        _id
-          name
-          dayNumber
-          complete
-        exercises {
-          _id
-          name
-          equipment
-          diffculty
-          description
-          sets
-          reps
-          weight
-          muscle
-          duration
-        }
-      }
+      description
     }
   }
 `;
+
 
 export const UPDATE_ACTIVE_PROGRAM = gql`
   mutation UpdateActiveProgram($userId: ID!, $programId: ID!) {

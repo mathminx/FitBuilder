@@ -11,6 +11,7 @@ import FitBuildLandingPage from "./pages/landingPage/LandingPage";
 import ExerciseComponent from "./pages/addExercises/AddExercises";
 import WorkoutForm from "./pages/createWorkout/WorkoutForm";
 import ProgramPage from "./pages/programPage/ProgramPage";
+import ModifyProgram from "./pages/addProgram/ModifyProgramForm";
 import CreateProgram from "./pages/addProgram/AddProgramForm";
 import Dashboard from "./pages/DashboardHub"
 import ViewPrograms from "./pages/ViewPrograms";
@@ -49,6 +50,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/viewallprograms" element={<ViewPrograms />}></Route>
           <Route path="/createprogram" element={<CreateProgram />} />
+          <Route path="/modifyprogram/:programId" element={<ModifyProgram />} />
           <Route path="/createworkout/:programId" element={<WorkoutForm />} />
           <Route path="/addexercises/:workoutId" element={<ExerciseComponent />}/>
           <Route path="/programs/:programId" element={<ProgramPage />} />
