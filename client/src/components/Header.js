@@ -1,5 +1,6 @@
 import React from 'react';
 import Navbar from './navbar/Navbar'
+import "./navbar/Navbar.css";
 
 const styles = {
   headerStyle: {
@@ -27,7 +28,7 @@ const styles = {
 
 function Header() {
   return (
-    <div style={styles.divStyle}>
+    <div style={styles.divStyle} className='headerAndNavbarContainer'>
        <header style={styles.headerStyle} className="header">
         <h1 style={styles.headingStyle}>FitBuild&nbsp;</h1>
         <img src={process.env.PUBLIC_URL + '/runner.png'} style={styles.imageStyle}/>
