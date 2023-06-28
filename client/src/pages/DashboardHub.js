@@ -235,15 +235,15 @@ const Dashboard = () => {
             <Breadcrumb.Item>Loading....</Breadcrumb.Item>
           ) : (
             <Breadcrumb.Item>
-              Current Program:{" "}
-              {currentProgram ? currentProgram.title : " No Active Program"}
+              <strong>Current Program:</strong>{" "}
+              <strong>{currentProgram ? currentProgram.title : " No Active Program"}</strong>
             </Breadcrumb.Item>
           )}
           <Breadcrumb.Item onClick={handleViewPrograms}>
             <Link to="/viewallprograms">
               <button
                 style={{
-                  padding: "8px 16px",
+                  padding: "4px 12px",
                   background: "none",
                   border: "none",
                   color: "#1890ff",
