@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Auth from "../../utils/auth"
 import { useMutation } from "@apollo/client";
 import { ADD_WORKOUT } from '../../utils/mutations';
+import { GET_SINGLE_PROGRAM } from '../../utils/queries';
 
 
 
@@ -18,7 +19,9 @@ const WorkoutForm = () => {
   }
 
   const [addWorkout] = useMutation(ADD_WORKOUT, {
-    onCompleted: () => navigate(`/programs/${programId}`), // navigate back to program page after adding workout
+    onCompleted: () => navigate(`/programs/${programId}`),
+    refetchQueries: [{ query: GET_SINGLE_PROGRAM, variables: { id: programId } },
+    ],
   });
 
   const onFinish = (values) => {

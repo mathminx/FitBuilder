@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useQuery, useLazyQuery, gql } from "@apollo/client";
+import { useQuery, useMutation, useLazyQuery, gql } from "@apollo/client";
 import { Card, Modal, Button, Descriptions, Row, Col, Typography } from "antd";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Auth from "../../utils/auth";
-
+import { REMOVE_EXERCISE } from "../../utils/mutations";
 
 const { Title } = Typography;
 
@@ -48,6 +48,10 @@ const ProgramPage = () => {
   const [selectedWorkoutId, setSelectedWorkoutId] = useState(null);
   const [getWorkout, { loading: workoutLoading, data: workoutData }] =
     useLazyQuery(GET_WORKOUT);
+  const [
+    removeExercise,
+    { removeExercisedata, removeEcerciseloading, removeExerciseerror },
+  ] = useMutation(REMOVE_EXERCISE);
   const [selectedWorkout, setSelectedWorkout] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { programId } = useParams();
@@ -92,27 +96,43 @@ const ProgramPage = () => {
   // Replace these functions with your logic
   const handleAddExercise = () => {
     console.log("Adding a new exercise...");
-      if (selectedWorkoutId) {
-        navigate(`/addexercises/${selectedWorkoutId}`);
-      }
+    if (selectedWorkoutId) {
+      navigate(`/addexercises/${selectedWorkoutId}`);
+    }
   };
 
   const handleEditExercise = (exerciseId) => {
     console.log("Editing exercise: ", exerciseId);
   };
 
-  const handleRemoveExercise = (exerciseId) => {
+  const handleRemoveExercise = async (exerciseId) => {
     console.log("Removing exercise: ", exerciseId);
+    console.log("workoutId:", selectedWorkoutId);
+
+    if (selectedWorkoutId && exerciseId) {
+      try {
+        const { data } = await removeExercise({
+          variables: { workoutId: selectedWorkoutId, exercise: exerciseId },
+        });
+
+        console.log("Exercise removed successfully: ", data);
+
+        // After successfully removing the exercise, refetch the workout to update the data in the UI
+        getWorkout({ variables: { id: selectedWorkoutId } });
+      } catch (err) {
+        console.error("Error removing exercise: ", err);
+      }
+    }
   };
 
   const handleDeleteWorkout = (workoutId) => {
     console.log("Deleting workout: ", workoutId);
-    handleCloseModal(); 
+    handleCloseModal();
   };
 
   const handleAddWorkout = () => {
     console.log("Adding a new workout...");
-     navigate(`/createworkout/${programId}`);
+    navigate(`/createworkout/${programId}`);
   };
 
   const handleDeleteProgram = () => {
@@ -125,7 +145,12 @@ const ProgramPage = () => {
       <Button
         type="danger"
         onClick={handleDeleteProgram}
-        style={{ float: "right" }}
+        style={{
+          float: "right",
+          borderStyle: "dashed",
+          borderWidth: "1px",
+          borderColor: "#000000",
+        }}
       >
         Delete Program
       </Button>
@@ -152,10 +177,13 @@ const ProgramPage = () => {
           </Col>
         ))}
       </Row>
-
+      <br></br>
       <Button type="primary" onClick={handleAddWorkout}>
         Add New Workout
       </Button>
+
+      <br></br>
+      <br></br>
 
       <Modal visible={isModalVisible} onCancel={handleCloseModal} footer={null}>
         {workoutLoading && <p>Loading workout...</p>}
@@ -206,4 +234,3 @@ const ProgramPage = () => {
 };
 
 export default ProgramPage;
-

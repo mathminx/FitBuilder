@@ -229,35 +229,13 @@ export const ADD_EXERCISE = gql`
 // `;
 
 export const REMOVE_EXERCISE = gql`
-  mutation UpdateExercise(
-    $workoutId: ID!
-    $exerciseId: ID!
-    $muscle: String!
-    $reps: Int
-    $sets: Int
-    $description: String!
-  ) {
-    UpdateExercise(
-      workoutId: $workoutId
-      exerciseId: $exerciseId
-      muscle: $muscle
-      reps: $reps
-      sets: $sets
-      description: $description
-    ) {
-      _id
+  mutation RemoveExercise($workoutId: ID!, $exercise: ID!) {
+    removeExercise(workoutId: $workoutId, exercise: $exercise) {
+        _id
       name
-      exercise {
+      exercises {
         _id
         name
-        equipment
-        diffculty
-        description
-        sets
-        reps
-        weight
-        muscle
-        duration
       }
     }
   }

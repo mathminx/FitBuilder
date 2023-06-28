@@ -68,18 +68,6 @@ export const GET_SINGLE_PROGRAM = gql`
       workouts {
         _id
         name
-        exercises {
-          _id
-          name
-          equipment
-          difficulty
-          description
-          sets
-          reps
-          weight
-          muscle
-          duration
-        }
       }
     }
   }

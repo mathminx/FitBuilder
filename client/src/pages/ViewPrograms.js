@@ -27,52 +27,65 @@ const ViewPrograms = () => {
      }
    };
 
+    const handleGoToDashboard = () => {
+      navigate("/dashboard"); // Redirect to dashboard.
+    };
+
    useEffect(() => {
     if (!loadingMe && dataMe) {
       setAllPrograms(dataMe.me.programs);
     }
   }, [loadingMe, dataMe]);
     return (
-        <>
-         <Divider orientation="left">User Programs</Divider>
-    <Row gutter={16} justify="center">
-      <Col className="gutter-row" span={6}>
-      <div style={style} >All Programs</div>
-      </Col>
-    </Row>
-    <Divider orientation="left"></Divider>
-    <Row gutter={16} justify="center">
-      <Col className="gutter-row" span={6}>
-        { loadingMe || !allPrograms ? (
-        <div>Loading Programs</div>
-        ) : (
-            allPrograms.map((program) => (
-      <Card
-      key={program._id}
-    style={{ width: 300 }}
-    cover={
-        /* program picture */
-      <img
-        alt="example"
-        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-      />
-    }
-    actions={[
-        <Button type="primary" onClick={() => handleViewSinglePrograms(program._id)}>View Program</Button>
-    ]}
-  >
-    <Meta
-      avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />}
-      title={program.title}
-      description={program.description}
-    />
-  </Card>
-            ))
-        )}
-      </Col>
-    </Row>
-  </>
-    )
+      <>
+        <Divider orientation="left">User Programs</Divider>
+        <Row gutter={16} justify="center">
+          <Col className="gutter-row" span={6}>
+            <Button type="primary" onClick={() => navigate("/dashboard")}>
+              Return to Dashboard
+            </Button>
+          </Col>
+        </Row>
+        <Divider orientation="left"></Divider>
+        <Row gutter={16} justify="center">
+          <Col className="gutter-row" span={6}>
+            {loadingMe || !allPrograms ? (
+              <div>Loading Programs</div>
+            ) : (
+              allPrograms.map((program) => (
+                <Card
+                  key={program._id}
+                  style={{ width: 300 }}
+                  cover={
+                    /* program picture */
+                    <img
+                      alt="example"
+                      src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                    />
+                  }
+                  actions={[
+                    <Button
+                      type="primary"
+                      onClick={() => handleViewSinglePrograms(program._id)}
+                    >
+                      View Program
+                    </Button>,
+                  ]}
+                >
+                  <Meta
+                    avatar={
+                      <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />
+                    }
+                    title={program.title}
+                    description={program.description}
+                  />
+                </Card>
+              ))
+            )}
+          </Col>
+        </Row>
+      </>
+    );
 }
 
 export default ViewPrograms

@@ -240,7 +240,22 @@ const Dashboard = () => {
             </Breadcrumb.Item>
           )}
           <Breadcrumb.Item onClick={handleViewPrograms}>
-            View All Programs
+            <Link to="/viewallprograms">
+              <button
+                style={{
+                  padding: "8px 16px",
+                  background: "none",
+                  border: "none",
+                  color: "#1890ff",
+                  cursor: "pointer",
+                  textDecoration: "underline",
+                  fontSize: "inherit",
+                  fontWeight: "inherit",
+                }}
+              >
+                View All Programs
+              </button>
+            </Link>
           </Breadcrumb.Item>
         </Breadcrumb>
         <div
@@ -332,7 +347,6 @@ const Dashboard = () => {
             </Space>
           </Row>
         </Row>{" "}
-       
       </Content>
 
       <Row justify="center" style={{ marginTop: "20px", marginBottom: "20px" }}>
