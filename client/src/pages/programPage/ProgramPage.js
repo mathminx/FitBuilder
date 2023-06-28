@@ -255,12 +255,14 @@ const ProgramPage = () => {
                 View Exercises
               </Button>
               <Button
-                type="danger"
+                type="primary"
+                ghost
+                danger
                 onClick={() => handleDeleteWorkout(workout._id)}
                 style={{
                   borderStyle: "dashed",
                   borderWidth: "1px",
-                  borderColor: "#000000",
+                  borderColor: "red",
                 }}
               >
                 Delete Workout
