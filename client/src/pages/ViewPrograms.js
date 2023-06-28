@@ -55,8 +55,8 @@ const ViewPrograms = () => {
                   cover={
                     /* program picture */
                     <img
-                      alt="example"
-                      src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                      alt="example program"
+                      src={`https://picsum.photos/seed/${program._id}/300/300`}
                     />
                   }
                   actions={[
