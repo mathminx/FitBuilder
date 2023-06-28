@@ -9,8 +9,19 @@ const resolvers = {
         const user = await User.findOne({
           $or: [{ _id: context.user._id }, { username: context.user.username }],
         })
-          .populate("activeProgram")
+          .populate({
+            path: "activeProgram",
+            populate: {
+              path: "workouts",
+              model: "Workout", // this should be your Workout model name
+              populate: {
+                path: "exercises",
+                model: "Exercise", // this should be your Exercise model name
+              },
+            },
+          })
           .populate("programs");
+
         if (!user) {
           throw new Error("Unable to find an associated user");
         }
@@ -116,7 +127,7 @@ const resolvers = {
         query.name = name;
       }
       try {
-        const program = await Program.findOne(query).populate('workouts');
+        const program = await Program.findOne(query).populate("workouts");
         if (!program) {
           throw new Error("No program with this id/name");
         }
@@ -177,6 +188,23 @@ const resolvers = {
       );
       return user;
     },
+    updateActiveProgram: async (_, { userId, programId }, context) => {
+      console.log(`userId: ${userId}`);
+      console.log(`programId: ${programId}`);
+      try {
+        // Find the user by ID
+        const user = await User.findOneAndUpdate(
+          { _id: userId },
+          { activeProgram: programId },
+          { new: true }
+        ).populate("activeProgram");
+
+        return user;
+      } catch (err) {
+        console.log(err);
+        throw new Error("Failed to update active program.");
+      }
+    },
     addProgram: async (
       _,
       { title, daysPerWeek, duration, description },
@@ -195,11 +223,9 @@ const resolvers = {
         });
         await program.save();
 
-        // get user from context
         const user = await User.findById(context.user._id);
         user.programs.push(program);
 
-        // If there is no active program, set the new one as active
         if (!user.activeProgram) {
           user.activeProgram = program._id;
         }
@@ -213,13 +239,23 @@ const resolvers = {
         );
       }
     },
-    removeProgram: async (_, { programId }, context) => {
+    removeProgram: async (_, { programId, userId }, context) => {
       try {
         if (!context.user) {
           throw new Error(
             "You must be logged in to add a workout to a program."
           );
         }
+
+        const user = await User.findById(userId);
+        if (!user) {
+          throw new Error("User not found");
+        }
+
+        await User.findByIdAndUpdate(userId, {
+          $pull: { programs: programId },
+        });
+
         await Program.findByIdAndRemove(programId);
       } catch (error) {
         throw new Error(
