@@ -307,7 +307,7 @@ const Dashboard = () => {
                         >
                           <Meta
                             title={`Workout ID: ${workout._id}`}
-                            description={`Number of exercises: ${workout.exercises.length}`}
+                            // description={`Number of exercises: ${workout.exercises.length}`}
                           />
                         </Card>
                       </Col>
