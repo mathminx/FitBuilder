@@ -41,6 +41,7 @@ function SaveWorkout() {
       <Row className="congratulations" justify="center">
         <h1>Great Job!</h1>
       </Row>
+      <Divider></Divider>
       <Row justify="center">
         <h2>How would you rate this workout?</h2>
       </Row>
@@ -60,8 +61,11 @@ function SaveWorkout() {
           />
         </Space>
       </Row>
+      <Divider></Divider>
       <Row justify="center">
-        <h2>Notes?</h2>
+      <h2>Notes?</h2>
+      </Row>
+      <Row justify="center" >
         <TextArea rows={4} style={{ width: "90%" }} />
       </Row>
       <br></br>
