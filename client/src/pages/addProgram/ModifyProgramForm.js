@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ADD_PROGRAM, UPDATE_PROGRAM } from "../../utils/mutations";
 import { GET_SINGLE_PROGRAM } from "../../utils/queries";
 import Auth from "../../utils/auth";
+import "../styles/updateProgramForm.css"
 
 const { TextArea } = Input;
 
@@ -29,8 +30,6 @@ const {
       setTitle(data.program.title);
       setWeeks(data.program.duration);
       setDays(data.program.daysPerWeek);
-      // Assuming you have a description field in your program data
-      // setDescription(data.program.description || "");
       setDescription(data.program.description);
     }
   }, [data]);
@@ -68,9 +67,8 @@ const {
         height: "100vh",
       }}
     >
-      <div style={{ width: "80%" }}>
+      <div className="updateProgramForm" style={{ width: "80%" }}>
         {" "}
-        {/* Added this div */}
         <Form onFinish={handleFormSubmit}>
           <h1>Update Program</h1>
 
@@ -103,7 +101,7 @@ const {
 
           <Form.Item>
             <Button
-              style={{ marginLeft: "10px" }}
+              style={{ marginRight: "10px" }}
               onClick={() => navigate(`/programs/${programId}`)}
             >
               Cancel
@@ -116,7 +114,6 @@ const {
           {error && <p>Error: {error.message}</p>}
         </Form>
       </div>{" "}
-      {/* End of added div */}
     </div>
   );
 };
