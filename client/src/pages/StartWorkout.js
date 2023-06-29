@@ -109,7 +109,7 @@ function StartWorkout() {
           <Progress percent={progressBarValue} />
         </Row>
         <br></br>
-        <Row className="exerciseDescriptionCard"  justify="center">
+        <Row className="exerciseDescriptionCard" justify="center">
           <Space direction="vertical" size={16} style={{ color: "#193381" }}>
             {loadingMe || !usersCurrentExercise ? (
               <Card
@@ -130,7 +130,11 @@ function StartWorkout() {
               <Card
                 title={usersCurrentExercise.name}
                 extra={<a href="#">More</a>}
-                style={{ maxWidth: 500, color: "#193381", borderColor: "#fa6d35" }}
+                style={{
+                  maxWidth: 500,
+                  color: "#193381",
+                  borderColor: "#fa6d35",
+                }}
               >
                 <p>{`${usersCurrentExercise.instructions}`} </p>
               </Card>
@@ -213,9 +217,13 @@ function StartWorkout() {
           type="horizontal"
           style={{ borderWidth: 3, borderColor: "#fa6d35" }}
         ></Divider>
-        {/* Next exercise button, on press sets next exercise in array to curretn state */}
         <Row justify="center">
-          <Button type="primary" size="large" onClick={onNextExercise}>
+          <Button
+            style={{ marginBottom: "150px" }}
+            type="primary"
+            size="large"
+            onClick={onNextExercise}
+          >
             Next
           </Button>
         </Row>
