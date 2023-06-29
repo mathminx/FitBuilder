@@ -33,10 +33,12 @@ function StartWorkout() {
     console.log('changed', number);
   };
 
+  const { workoutId } = useParams();
+
   useEffect(() => {
     if (!loadingMe && dataMe) {
-        let firstWorkout = dataMe.me.activeProgram.workouts[0];
-        let firstExercise = firstWorkout.exercises[0];
+        let targetWorkout = dataMe.me.activeProgram.workouts.find(workout => workout._id === workoutId);
+        let firstExercise = targetWorkout.exercises[0];
         console.log(firstExercise);
         setUsersCurrentExercise(firstExercise);
         setCurrentExerciseIndex(0)
@@ -49,27 +51,38 @@ useEffect(() => {
 
 let onNextExercise = () => {
     console.log('next button clicked')
-        // Flatten exercises from all the exercisinto one array
-        let allExercises = dataMe.me.activeProgram.workouts.flatMap(workout => workout.exercises);
-        
-        console.log('allExercises:', allExercises);
-        console.log('currentExerciseIndex:', currentExerciseIndex);
-        
-        console.log('Exercises with the same id:', allExercises.filter(ex => ex.id === usersCurrentExercise.id));
-        if (currentExerciseIndex < allExercises.length - 1) {
-            console.log(allExercises.length)
-            setUsersCurrentExercise(allExercises[currentExerciseIndex + 1]);
-            setCurrentExerciseIndex(currentExerciseIndex+1)
-            console.log('Hold UP!')
-        }
-        else if (currentExerciseIndex === allExercises.length - 1) {
-            setUsersCurrentExercise(allExercises[currentExerciseIndex + 1]);
-            console.log("AYO")
-        } else {
-            navigate('/')
-        }
-        console.log('usersCurrentExercise has changed:', usersCurrentExercise);
-} ;
+    
+    let myWorkout = dataMe.me.activeProgram.workouts.find(workout => workout._id === workoutId);
+  
+    if (!myWorkout) {
+      console.error('Workout not found');
+      return;
+    }
+  
+    let myExercises = myWorkout.exercises;
+    
+    console.log('myExercises:', myExercises);
+    console.log('currentExerciseIndex:', currentExerciseIndex);
+    console.log('Exercises with the same id:', myExercises.filter(ex => ex._id === usersCurrentExercise._id));
+  
+    if (currentExerciseIndex < myExercises.length - 1) {
+      console.log(myExercises.length);
+      setUsersCurrentExercise(myExercises[currentExerciseIndex + 1]);
+      setCurrentExerciseIndex(currentExerciseIndex + 1);
+      console.log('Hold UP!')
+    }
+    else if (currentExerciseIndex === myExercises.length - 1) {
+      // In this case, you're at the last exercise, so you can't access the next one.
+      // Therefore, you might want to navigate to 'saveworkout' directly without setting the current exercise.
+      console.log("AYO");
+      navigate(`/saveworkout/`);
+    } else {
+      // This branch will never be reached because all possible conditions are covered above.
+      // Therefore, it can be removed.
+      navigate('/home');
+    }
+    console.log('usersCurrentExercise has changed:', usersCurrentExercise);
+  };
 
   const progressBarValue = (currentExercises.findIndex(ex => ex.id === usersCurrentExercise + 1 ) /(currentExercises.length / 100))
  // still need to addtheexercise to user data
