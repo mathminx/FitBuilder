@@ -3,7 +3,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { Breadcrumb, Layout, Card, Button, Space, Row, Col, ConfigProvider, Empty } from "antd";
 import { useQuery } from "@apollo/client";
 import { GET_SINGLE_PROGRAM, GET_ME } from "../utils/queries";
-import Auth from "../utils/auth"
+import Auth from "../utils/auth";
 const { Content } = Layout;
 
 const { Meta } = Card;
@@ -14,32 +14,32 @@ const SarahDashboard = () => {
   const navigate = useNavigate();
 
   const handleCreateProgramClick = () => {
-    console.log('button clicked');
-     if (Auth.loggedIn()) {
-         navigate('/createprogram'); // Redirect to dashboard if logged in.
-     } else {
-      navigate('/')
-     }
-   };
+    console.log("button clicked");
+    if (Auth.loggedIn()) {
+      navigate("/createprogram"); // Redirect to dashboard if logged in.
+    } else {
+      navigate("/");
+    }
+  };
 
-   const handleViewPrograms = () => {
-    console.log('button clicked');
-     if (Auth.loggedIn()) {
-         navigate('/viewallprograms'); // Redirect to dashboard if logged in.
-     } else {
-      navigate('/')
-     }
-   };
+  const handleViewPrograms = () => {
+    console.log("button clicked");
+    if (Auth.loggedIn()) {
+      navigate("/viewallprograms"); // Redirect to dashboard if logged in.
+    } else {
+      navigate("/");
+    }
+  };
 
-   const handleStartWorkoutClick = (event) => {
-    console.log('button clicked');
-     if (Auth.loggedIn()) {
-      const workoutId = event.target.value
-         navigate(`/startworkout`); // Redirect to dashboard if logged in.
-     } else {
-      navigate('/')
-     }
-   };
+  const handleStartWorkoutClick = (event) => {
+    console.log("button clicked");
+    if (Auth.loggedIn()) {
+      const workoutId = event.target.value;
+      navigate(`/startworkout`); // Redirect to dashboard if logged in.
+    } else {
+      navigate("/");
+    }
+  };
 
   useEffect(() => {
     if (!loadingMe && dataMe) {

@@ -60,7 +60,9 @@ function SaveWorkout() {
       </Row>
       {/* Save Workout */}
       <Row justify="center">
+        <Link to='/dashboard'>
         <Button type="primary"> Save Workout </Button>
+        </Link>
       </Row>
     </>
   );
