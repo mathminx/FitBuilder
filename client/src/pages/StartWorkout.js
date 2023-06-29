@@ -17,6 +17,7 @@ import {
 import { useQuery } from "@apollo/client";
 import { GET_SINGLE_EXERCISE, GET_ME } from "../utils/queries";
 import Auth from "../utils/auth";
+import "./styles/startWorkout.css"
 
 const { Content } = Layout;
 
@@ -97,19 +98,15 @@ function StartWorkout() {
     (currentExercises.length / 100);
   // still need to addtheexercise to user data
   return (
-        <>
-    <Layout className="layout" style={{minHeight: '88vh', background: 'white', padding: "0 50px",}}>
+  <>
+    <Layout className="startWorkoutLayout" style={{minHeight: '88vh', background: 'white', padding: "0 50px",}}>
     {/*Progress bar*/}
-      <Row justify="center" >
+    <br></br>
+      <Row className="progressBar" justify="center" >
         <Progress percent={progressBarValue}/>
       </Row>
-
+    <br></br>
       <Row justify="center">
-        <Row justify="center">
-          <Button type="primary" size="large" onClick={onNextExercise}>
-            Next
-          </Button>
-        </Row>
         <Space direction="vertical" size={16} style={{color:'#193381'}}>
           {loadingMe || !usersCurrentExercise ? (
             <Card
@@ -123,7 +120,7 @@ function StartWorkout() {
             <Card
               title={usersCurrentExercise.name}
               extra={<a href="#">More</a>}
-              style={{ width: 500, color: '#193381'}}
+              style={{ width: 500, color: '#193381', borderColor: '#fa6d35'}}
             >
               <p>{`${usersCurrentExercise.instructions}`} </p>
             </Card>

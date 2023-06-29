@@ -16,7 +16,7 @@ import {
 import { useQuery } from "@apollo/client";
 import { GET_ME } from "../utils/queries";
 import Auth from "../utils/auth";
-import "./styles/DashboardHub.css"
+import "./styles/dashboardHub.css"
 const { Content } = Layout;
 const { Title, Text } = Typography;
 
