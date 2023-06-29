@@ -1,6 +1,6 @@
 @media screen and (max-width: 625px) {
-  .layout {
-    padding-top: 80px;
+  .mainLayout {
+    margin-top: 70px;
   }
 
     .dashboard-content {
@@ -13,7 +13,6 @@
   .dashboard-card {
     display: flex;
     justify-content: center;
-    margin-right: 50px;
   }
 
   .dashboard-pagination {

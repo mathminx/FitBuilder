@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Breadcrumb,
   Layout,
@@ -9,13 +9,12 @@ import {
   Space,
   Row,
   Col,
-  Descriptions,
   Typography,
   Pagination,
   Empty,
 } from "antd";
 import { useQuery } from "@apollo/client";
-import { GET_SINGLE_PROGRAM, GET_ME } from "../utils/queries";
+import { GET_ME } from "../utils/queries";
 import Auth from "../utils/auth";
 import "./styles/DashboardHub.css"
 const { Content } = Layout;
@@ -38,7 +37,7 @@ const Dashboard = () => {
   const handleCreateProgramClick = () => {
     console.log("button clicked");
     if (Auth.loggedIn()) {
-      navigate("/createprogram"); // Redirect to dashboard if logged in.
+      navigate("/createprogram");
     } else {
       navigate("/");
     }
@@ -47,17 +46,7 @@ const Dashboard = () => {
   const handleViewPrograms = () => {
     console.log("button clicked");
     if (Auth.loggedIn()) {
-      navigate("/viewallprograms"); // Redirect to dashboard if logged in.
-    } else {
-      navigate("/");
-    }
-  };
-
-  const handleStartWorkoutClick = (event) => {
-    console.log("button clicked");
-    if (Auth.loggedIn()) {
-      const workoutId = event.target.value;
-      navigate(`/startworkout`); // Redirect to dashboard if logged in.
+      navigate("/viewallprograms"); 
     } else {
       navigate("/");
     }
@@ -81,9 +70,9 @@ const Dashboard = () => {
   }
 
   return (
-    <Layout className="layout" style={styles.layoutStyle}>
-     <Content className="dashboard-content" style={{ padding: "0 50px" }}>
-        <Breadcrumb style={{ margin: "30px 0", color: '#193381' }}>
+    <Layout className="mainLayout" style={styles.layoutStyle}>
+      <Content className="dashboard-content" style={{ padding: "0 50px" }}>
+        <Breadcrumb style={{ margin: "30px 0", color: "#193381" }}>
           {loadingMe ? (
             <Breadcrumb.Item>Loading....</Breadcrumb.Item>
           ) : (
@@ -101,7 +90,7 @@ const Dashboard = () => {
                   padding: "4px 2px",
                   background: "none",
                   border: "none",
-                  color: '#193381',
+                  color: "#193381",
                   cursor: "pointer",
                   textDecoration: "underline",
                   fontSize: "inherit",
@@ -115,41 +104,87 @@ const Dashboard = () => {
         </Breadcrumb>
         <div
           className="site-layout-content"
-          style={{ background: 'white', minHeight: '60vh' }}
+          style={{ background: "white", minHeight: "60vh" }}
         >
           {!loadingMe && currentProgram && (
-            <Layout>
-              <Space direction="vertical">
-                <Title level={2}>Program Info</Title>
-                <Text strong>Program title: </Text>
-                <Text>{currentProgram.title}</Text>
-                <Text strong>Duration (weeks): </Text>
-                <Text>{currentProgram.duration}</Text>
-                <Text strong>Workouts per week: </Text>
-                <Text>{currentProgram.daysPerWeek}</Text>
-                <Text strong>Description: </Text>
-                <Text>{currentProgram.description}</Text>
-                <div style={{ textAlign: "center" }}>
-                  <Title level={3}>Workouts</Title>
+            <Layout style={{ backgroundColor: "#f0f2f5", padding: "30px" }}>
+              <Space direction="vertical" style={{ width: "100%" }}>
+                <Title
+                  level={2}
+                  style={{ color: "#1890ff", marginBottom: "20px" }}
+                >
+                  Program Info
+                </Title>
+                <div style={{ marginBottom: "10px" }}>
+                  <Text strong style={{ color: "#1890ff" }}>
+                    Program title:{" "}
+                  </Text>
+                  <Text style={{ color: "#323232" }}>
+                    {currentProgram.title}
+                  </Text>
+                </div>
+                <div style={{ marginBottom: "10px" }}>
+                  <Text strong style={{ color: "#1890ff" }}>
+                    Duration (weeks):{" "}
+                  </Text>
+                  <Text style={{ color: "#323232" }}>
+                    {currentProgram.duration}
+                  </Text>
+                </div>
+                <div style={{ marginBottom: "10px" }}>
+                  <Text strong style={{ color: "#1890ff" }}>
+                    Workouts per week:{" "}
+                  </Text>
+                  <Text style={{ color: "#323232" }}>
+                    {currentProgram.daysPerWeek}
+                  </Text>
+                </div>
+                <div style={{ marginBottom: "10px" }}>
+                  <Text strong style={{ color: "#1890ff" }}>
+                    Description:{" "}
+                  </Text>
+                  <Text style={{ color: "#323232" }}>
+                    {currentProgram.description}
+                  </Text>
                 </div>
               </Space>
             </Layout>
           )}
 
           {loadingMe || !currentProgram ? (
-            <Row justify="center" style={{paddingTop: '7%'}}>
-              <Empty image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+            <Row justify="center" style={{ paddingTop: "7%" }}>
+              <Empty
+                image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
                 imageStyle={{ height: 300 }}
-                description={ 
-                  <div style={{color: '#193381', fontSize:'large', fontWeight: '600'}}>
-                    No programs created.<br/><br/>No time like the present...
-                    <br/><br/>
+                description={
+                  <div
+                    style={{
+                      color: "#193381",
+                      fontSize: "large",
+                      fontWeight: "600",
+                    }}
+                  >
+                    No programs created.
+                    <br />
+                    <br />
+                    No time like the present...
+                    <br />
+                    <br />
                   </div>
-                }/>
+                }
+              />
             </Row>
           ) : (
             <>
-              <Title style={{ display: "flex", justifyContent: "center" }} level={4}>
+              <div style={{ textAlign: "center", marginTop: "30px" }}>
+                <Title level={3} style={{ color: "#1890ff" }}>
+                  Workouts
+                </Title>
+              </div>
+              <Title
+                style={{ display: "flex", justifyContent: "center" }}
+                level={4}
+              >
                 Week {currentPage}
               </Title>{" "}
               {currentProgram.workouts &&
@@ -159,14 +194,18 @@ const Dashboard = () => {
                     currentPage * currentProgram.daysPerWeek
                   )
                   .map((workout, index) => (
-                    <Card classname="dashboard-card"
+                    <Card
+                      classname="dashboard-card"
                       key={workout._id}
                       title={`Workout for Day ${index + 1}`}
                     >
                       <Row>
                         <Col
-                          xs={{ span: 5, offset: 1 }}
-                          lg={{ span: 6, offset: 2 }}
+                          xs={{ span: 24 }}
+                          sm={{ span: 16, offset: 0 }}
+                          md={{ span: 12, offset: 6 }}
+                          lg={{ span: 6, offset: 9 }}
+                          xl={{ span: 6, offset: 9 }}
                         >
                           <Card
                             title={workout.name}
@@ -174,9 +213,8 @@ const Dashboard = () => {
                             cover={
                               <img
                                 alt="example"
-                                // src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
                                 src={`https://picsum.photos/seed/${workout._id}//300`}
-                              /> /* workout image */
+                              />
                             }
                             actions={[
                               <Space direction="horizontal">
@@ -199,7 +237,8 @@ const Dashboard = () => {
                       </Row>
                     </Card>
                   ))}
-              <Pagination className="dashboard-pagination"
+              <Pagination
+                className="dashboard-pagination"
                 defaultCurrent={1}
                 current={currentPage}
                 onChange={(page) => setCurrentPage(page)}
@@ -211,13 +250,28 @@ const Dashboard = () => {
         </div>
       </Content>
 
-      <Row className="dashboard-button-row"
+      <Row
+        className="dashboard-button-row"
         justify="center"
-        style={{ marginTop: "20px", marginBottom: "10%" }} >
+        style={{ marginTop: "20px", marginBottom: "10%" }}
+      >
         <Space direction="vertical">
           <Button
             type="primary"
-            style={{ padding:'20px', lineHeight:'0px', border:'5px solid', borderStyle:'outset',  borderColor:'#fa6d35', borderRadius:'5px', background: "#193381", fontSize: '15px', fontWeight: '600' }} size="large" onClick={handleCreateProgramClick}
+            style={{
+              padding: "20px",
+              lineHeight: "0px",
+              border: "5px solid",
+              borderStyle: "outset",
+              borderColor: "#fa6d35",
+              borderRadius: "5px",
+              background: "#193381",
+              fontSize: "15px",
+              fontWeight: "600",
+              marginBottom: "10px"
+            }}
+            size="large"
+            onClick={handleCreateProgramClick}
           >
             Create a Program!
           </Button>
