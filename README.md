@@ -14,8 +14,8 @@ FitBuild application is a web application for creating and managing workout prog
 - [License](#license)
 
 ## Screenshots
-![change later1](App Screenshots/Landing Page.png
-![change later2](App Screenshots/Landing Page.png)
+![Landing Page](https://github.com/Pilotguide9897/FitBuilder/blob/e1364b0794806f28accaa00ed7b37425dc6189f4/App%20Screenshots/Landing%20Page.png)
+![Selecting Exercises](https://github.com/Pilotguide9897/FitBuilder/blob/ed1977cad6c19c4a20e412057eb8920c9f4317a8/App%20Screenshots/Exercises.png)
 
 ## Description
 
