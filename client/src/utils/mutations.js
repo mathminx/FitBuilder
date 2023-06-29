@@ -58,39 +58,51 @@ export const REMOVE_PROGRAM = gql`
   }
 `;
 
+// export const UPDATE_PROGRAM = gql`
+//   mutation AddProgram(
+//     $title: String!
+//     $workouts: [ID]!
+//     $weeks: Int!
+//     $days: Int!
+//   ) {
+//     AddProgram(title: $title, workouts: $workouts, weeks: $weeks, days: $days) {
+//       title
+//       current
+//       duration
+//       daysPerWeek
+//       workouts {
+//         _id
+//           name
+//           dayNumber
+//           complete
+//         exercises {
+//           _id
+//           name
+//           equipment
+//           diffculty
+//           description
+//           sets
+//           reps
+//           weight
+//           muscle
+//           duration
+//         }
+//       }
+//     }
+//   }
+// `;
+
 export const UPDATE_PROGRAM = gql`
-  mutation AddProgram(
-    $title: String!
-    $workouts: [ID]!
-    $weeks: Int!
-    $days: Int!
-  ) {
-    AddProgram(title: $title, workouts: $workouts, weeks: $weeks, days: $days) {
+  mutation UpdateProgram($programId: ID!, $title: String, $daysPerWeek: Int, $duration: Int, $description: String) {
+    updateProgram(programId: $programId, title: $title, daysPerWeek: $daysPerWeek, duration: $duration, description: $description) {
       title
-      current
       duration
       daysPerWeek
-      workouts {
-        _id
-          name
-          dayNumber
-          complete
-        exercises {
-          _id
-          name
-          equipment
-          diffculty
-          description
-          sets
-          reps
-          weight
-          muscle
-          duration
-        }
-      }
+      description
     }
   }
 `;
+
 
 export const UPDATE_ACTIVE_PROGRAM = gql`
   mutation UpdateActiveProgram($userId: ID!, $programId: ID!) {
@@ -236,6 +248,23 @@ export const ADD_EXERCISE = gql`
 //    }
 //   }
 // `;
+
+export const UPDATE_EXERCISE = gql`
+  mutation UpdateExercise($exerciseId: ID!, $name: String, $type: String, $equipment: String, $difficulty: String, $instructions: String, $sets: Int, $reps: Int, $weight: Float, $duration: Int ) {
+    updateExercise(exerciseId: $exerciseId, name: $name, type: $type, equipment: $equipment, difficulty: $difficulty, instructions: $instructions, sets: $sets, reps: $reps, weight: $weight, duration: $duration) {
+      _id
+      difficulty
+      duration
+      equipment
+      instructions
+      name
+      reps
+      sets
+      type
+      weight
+    }
+  }
+`;
 
 export const REMOVE_EXERCISE = gql`
   mutation RemoveExercise($workoutId: ID!, $exercise: ID!) {

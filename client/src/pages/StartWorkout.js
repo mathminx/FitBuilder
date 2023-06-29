@@ -17,6 +17,7 @@ import {
 import { useQuery } from "@apollo/client";
 import { GET_SINGLE_EXERCISE, GET_ME } from "../utils/queries";
 import Auth from "../utils/auth";
+
 const { Content } = Layout;
 
 const { Meta } = Card;
@@ -90,22 +91,25 @@ function StartWorkout() {
     (currentExercises.length / 100);
   // still need to addtheexercise to user data
   return (
-    <>
-      <Row>
-        <Progress percent={progressBarValue} />
+        <>
+    <Layout className="layout" style={{minHeight: '88vh', background: 'white', padding: "0 50px",}}>
+    {/*Progress bar*/}
+      <Row justify="center" >
+        <Progress percent={progressBarValue}/>
       </Row>
+
       <Row justify="center">
         <Row justify="center">
           <Button type="primary" size="large" onClick={onNextExercise}>
             Next
           </Button>
         </Row>
-        <Space direction="vertical" size={16}>
+        <Space direction="vertical" size={16} style={{color:'#193381'}}>
           {loadingMe || !usersCurrentExercise ? (
             <Card
               title={"loading... exercise"}
               extra={<a href="#">More</a>}
-              style={{ width: 500 }}
+              style={{ fontWeight:'600', width: 500, marginTop:'2% 0', border:'2px solid', background:'#fa6d35', borderColor:'#193381'}}
             >
               <p>loading description....</p>
             </Card>
@@ -113,17 +117,18 @@ function StartWorkout() {
             <Card
               title={usersCurrentExercise.name}
               extra={<a href="#">More</a>}
-              style={{ width: 500 }}
+              style={{ width: 500, color: '#193381'}}
             >
               <p>{`${usersCurrentExercise.instructions}`} </p>
             </Card>
           )}
         </Space>
       </Row>
-      <Divider type="horizontal"></Divider>
+      <Divider type="horizontal" style={{ borderWidth: 3, borderColor: '#fa6d35' }}></Divider>
+      <div style={{ color: '#193381', fontWeight:'600'}}>
       <Row gutter={[8, 16]} justify="center">
         <Col span={8}>
-          <div>Sets</div>
+          <div >Sets</div>
         </Col>
         <Col span={8}>
           <div>Reps</div>
@@ -132,11 +137,12 @@ function StartWorkout() {
           <div>Weight</div>
         </Col>
       </Row>
+      </div>
       {/* sets, reps, weight, table 
      creates an array through the number of sets*/}
-      <Divider type="horizontal"></Divider>
+      <Divider type="horizontal" style={{ borderWidth: 3, borderColor: '#fa6d35' }}></Divider>
       {loadingMe || !usersCurrentExercise ? (
-        <Row justify="center">
+        <Row style={{minHeight:'300px'}} justify="center">
           <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
         </Row>
       ) : (
@@ -174,18 +180,20 @@ function StartWorkout() {
         )
       )}
       <Row justify="center">
-        <Button type="secondary" size="large">
+        <Button type="secondary" size="large" style={{color:"#193381", fontWeight:'600'}}>
           add set
         </Button>
       </Row>
-      <Divider type="horizontal"></Divider>
+      <Divider type="horizontal" style={{ borderWidth: 3, borderColor: '#fa6d35' }}></Divider>
       {/* Next exercise button, on press sets next exercise in array to curretn state */}
-      {/* <Row justify="center">
+      <Row justify="center">
       <Button type="primary" size="large" onClick={onNextExercise}>
         Next
       </Button>
-      </Row> */}
+      </Row>
+      </Layout>
     </>
-  );
-}
+  )
+          }
+
 export default StartWorkout;
