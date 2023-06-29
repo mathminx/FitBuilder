@@ -26,6 +26,7 @@ function StartWorkout() {
   const { loading: loadingExercise, data: dataExercise } = useQuery(GET_SINGLE_EXERCISE);
   const [currentExercises, setCurrentExercises] = useState([]);
   const [usersCurrentExercise, setUsersCurrentExercise] = useState(null);
+  const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0)
   const navigate = useNavigate();
 
   const onChange = (number) => {
@@ -38,30 +39,37 @@ function StartWorkout() {
         let firstExercise = firstWorkout.exercises[0];
         console.log(firstExercise);
         setUsersCurrentExercise(firstExercise);
+        setCurrentExerciseIndex(0)
     }
-}, [loadingMe, dataMe]);
+}, []);
 
 useEffect(() => {
     console.log('usersCurrentExercise has changed:', usersCurrentExercise);
 }, [usersCurrentExercise]);
 
-const onNextExercise = () => {
+let onNextExercise = () => {
     console.log('next button clicked')
         // Flatten exercises from all the exercisinto one array
         let allExercises = dataMe.me.activeProgram.workouts.flatMap(workout => workout.exercises);
-        let currentIndex = allExercises.findIndex(ex => ex.id === usersCurrentExercise.id);
+        
         console.log('allExercises:', allExercises);
-        console.log('currentIndex:', currentIndex);
-        console.log('usersCurrentExercise has changed:', usersCurrentExercise);
-        if (currentIndex !== -1 && currentIndex < allExercises.length - 1) {
-            setUsersCurrentExercise(allExercises[currentIndex + 1]);
+        console.log('currentExerciseIndex:', currentExerciseIndex);
+        
+        console.log('Exercises with the same id:', allExercises.filter(ex => ex.id === usersCurrentExercise.id));
+        if (currentExerciseIndex < allExercises.length - 1) {
+            console.log(allExercises.length)
+            setUsersCurrentExercise(allExercises[currentExerciseIndex + 1]);
+            setCurrentExerciseIndex(currentExerciseIndex+1)
+            console.log('Hold UP!')
         }
-        else if (currentIndex === allExercises.length - 1) {
-            setUsersCurrentExercise(allExercises[currentIndex]);
+        else if (currentExerciseIndex === allExercises.length - 1) {
+            setUsersCurrentExercise(allExercises[currentExerciseIndex + 1]);
+            console.log("AYO")
         } else {
             navigate('/')
         }
-};
+        console.log('usersCurrentExercise has changed:', usersCurrentExercise);
+} ;
 
   const progressBarValue = (currentExercises.findIndex(ex => ex.id === usersCurrentExercise + 1 ) /(currentExercises.length / 100))
  // still need to addtheexercise to user data
