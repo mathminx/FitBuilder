@@ -11,10 +11,8 @@ import { GET_ME } from "../../utils/queries";
 import { UPDATE_ACTIVE_PROGRAM } from "../../utils/mutations";
 import "../styles/programDetails.css";
 
-
 const { Title } = Typography;
 
-// Fetch single program GraphQL Query
 const GET_SINGLE_PROGRAM = gql`
   query Program($id: ID!) {
     program(_id: $id) {
@@ -80,16 +78,14 @@ const ProgramPage = () => {
     }
   }, [navigate]);
 
-  // Fetch the program data
   const { loading, error, data, refetch } = useQuery(GET_SINGLE_PROGRAM, {
     variables: { id: programId },
   });
 
-  // Loading and error states
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error! {error.message}</p>;
 
-  const program = data?.program || {}; // If data is not yet loaded, program will be an empty object
+  const program = data?.program || {}; 
 
   const handleOpenModal = (workout) => {
     setSelectedWorkout(workout);
@@ -103,7 +99,6 @@ const ProgramPage = () => {
     setIsModalVisible(false);
   };
 
-  // Replace these functions with your logic
   const handleAddExercise = () => {
     console.log("Adding a new exercise...");
     if (selectedWorkoutId) {
@@ -130,7 +125,6 @@ const ProgramPage = () => {
 
         console.log("Exercise removed successfully: ", data);
 
-        // After successfully removing the exercise, refetch the workout to update the data in the UI
         getWorkout({ variables: { id: selectedWorkoutId } });
       } catch (err) {
         console.error("Error removing exercise: ", err);
@@ -164,10 +158,10 @@ const ProgramPage = () => {
     console.log("Attempting to switch to new active program!");
     updateActiveProgram({
       variables: {
-        userId: userData?.me._id, // Assuming you have `userData` available from your query
+        userId: userData?.me._id,
         programId: programId,
       },
-      refetchQueries: [{ query: GET_ME }], // Refetch the `me` query to get updated user data
+      refetchQueries: [{ query: GET_ME }], 
     })
       .then(() => {
         console.log("Active program updated successfully.");
@@ -196,14 +190,19 @@ const ProgramPage = () => {
     console.log("Deleting program...");
   };
 
-
   return (
     <>
-      <Title className="programDetailsTitle" level={2}>Program Details</Title>
+      <Title
+        className="programDetailsTitle"
+        level={2}
+        style={{ marginLeft: "10px" }}
+      >
+        Program Details
+      </Title>
       <Button
         type="primary"
         onClick={() => navigate("/viewallprograms")}
-        style={{ marginBottom: "20px" }}
+        style={{ marginBottom: "20px", marginLeft: "10px" }}
       >
         <ArrowLeftOutlined /> Return to All Programs
       </Button>
@@ -217,6 +216,7 @@ const ProgramPage = () => {
           borderStyle: "dashed",
           borderWidth: "1px",
           borderColor: "red",
+          marginRight: "10px",
         }}
       >
         Delete Program
@@ -237,17 +237,22 @@ const ProgramPage = () => {
         <Descriptions.Item label="Duration (weeks)">
           {program.duration}
         </Descriptions.Item>
-        <Descriptions.Item label="Workouts per week">
+        <Descriptions.Item label="Workouts Per Week">
           {program.daysPerWeek}
         </Descriptions.Item>
       </Descriptions>
 
-      <Row gutter={16}>
+      <Row gutter={[16, 24]}>
         {program.workouts?.map((workout) => (
-          <Col span={8} key={workout._id}>
-            <Card title={workout.name}>
-              {/* <p>Day Number: {workout.dayNumber}</p> */}
-              {/* <p>Complete: {workout.complete.toString()}</p> */}
+          <Col xs={24} sm={12} md={8} key={workout._id}>
+            <Card
+              title={workout.name}
+              style={{
+                marginBottom: "1px",
+                marginRight: "20px",
+                marginLeft: "20px",
+              }}
+            >
               <Button type="primary" onClick={() => handleOpenModal(workout)}>
                 View Exercises
               </Button>
@@ -260,6 +265,7 @@ const ProgramPage = () => {
                   borderStyle: "dashed",
                   borderWidth: "1px",
                   borderColor: "red",
+                  marginTop: "5px",
                 }}
               >
                 Delete Workout
@@ -269,7 +275,11 @@ const ProgramPage = () => {
         ))}
       </Row>
       <br></br>
-      <Button type="primary" onClick={handleAddWorkout}>
+      <Button
+        type="primary"
+        onClick={handleAddWorkout}
+        style={{ marginLeft: "10px", marginRight: "10px" }}
+      >
         Add New Workout
       </Button>
 
@@ -277,6 +287,7 @@ const ProgramPage = () => {
         type="primary"
         onClick={handleActiveProgram}
         disabled={userData?.me?.activeProgram?._id === programId}
+        style={{ marginBottom: "50px" }}
       >
         Update Active Program
       </Button>
