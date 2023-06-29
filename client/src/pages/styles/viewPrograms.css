@@ -1,0 +1,13 @@
+.userPrograms {
+    margin-bottom: 15px;
+}
+
+@media screen and (max-width: 625px) {
+  .userPrograms {
+    padding-top: 80px;
+  }
+
+  .programsColumn {
+    
+  }
+};

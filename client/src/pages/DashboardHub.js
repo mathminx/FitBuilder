@@ -17,6 +17,7 @@ import {
 import { useQuery } from "@apollo/client";
 import { GET_SINGLE_PROGRAM, GET_ME } from "../utils/queries";
 import Auth from "../utils/auth";
+import "./styles/DashboardHub.css"
 const { Content } = Layout;
 const { Title, Text } = Typography;
 
@@ -74,7 +75,7 @@ const Dashboard = () => {
 
   return (
     <Layout className="layout">
-      <Content style={{ padding: "0 50px" }}>
+      <Content className="dashboard-content" style={{ padding: "0 50px" }}>
         <Breadcrumb style={{ margin: "16px 0" }}>
           {loadingMe ? (
             <Breadcrumb.Item>Loading....</Breadcrumb.Item>
@@ -144,7 +145,7 @@ const Dashboard = () => {
                     currentPage * currentProgram.daysPerWeek
                   )
                   .map((workout, index) => (
-                    <Card
+                    <Card classname="dashboard-card"
                       key={workout._id}
                       title={`Workout for Day ${index + 1}`}
                     >
@@ -184,7 +185,7 @@ const Dashboard = () => {
                       </Row>
                     </Card>
                   ))}
-              <Pagination
+              <Pagination className="dashboard-pagination"
                 defaultCurrent={1}
                 current={currentPage}
                 onChange={(page) => setCurrentPage(page)}
@@ -196,7 +197,7 @@ const Dashboard = () => {
         </div>
       </Content>
 
-      <Row
+      <Row className="dashboard-button-row"
         justify="center"
         style={{
           marginTop: "20px",

@@ -5,6 +5,7 @@ import Auth from "../../utils/auth"
 import { useMutation } from "@apollo/client";
 import { ADD_WORKOUT } from '../../utils/mutations';
 import { GET_SINGLE_PROGRAM } from '../../utils/queries';
+import "../styles/workoutForm.css";
 
 
 
@@ -31,7 +32,7 @@ const WorkoutForm = () => {
   };
 
   return (
-    <div>
+    <div className='workoutForm'>
       <h1 style={{ textAlign: "center" }}>Create Workout</h1>{" "}
       <Form onFinish={onFinish}>
         <Form.Item label="Name" name="name" rules={[{ required: true }]}>
@@ -56,7 +57,11 @@ const WorkoutForm = () => {
           </Select>
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Button
+            style={{ margin: "8px" }}
+            type="primary"
+            htmlType="submit"
+          >
             Save
           </Button>
           <Button onClick={() => navigate(`/program/${programId}`)}>

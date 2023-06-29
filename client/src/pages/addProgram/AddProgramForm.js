@@ -4,6 +4,7 @@ import { useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import { ADD_PROGRAM } from "../../utils/mutations";
 import Auth from "../../utils/auth";
+import "../styles/newProgramForm.css";
 
 const { TextArea } = Input;
 
@@ -41,12 +42,11 @@ const CreateProgram = () => {
         height: "100vh",
       }}
     >
-      <div style={{ width: "80%" }}>
+      <div className="createProgramDiv" style={{ width: "80%", paddingTop: "65px" }}>
         {" "}
         {/* Added this div */}
         <Form onFinish={handleFormSubmit}>
           <h1>Create Program</h1>
-
           <Form.Item label="Title">
             <Input value={title} onChange={(e) => setTitle(e.target.value)} />
           </Form.Item>
@@ -81,7 +81,12 @@ const CreateProgram = () => {
             >
               Cancel
             </Button>
-            <Button type="primary" htmlType="submit" loading={loading}>
+            <Button
+              style={{ marginLeft: "10px" }}
+              type="primary"
+              htmlType="submit"
+              loading={loading}
+            >
               Create Program
             </Button>
           </Form.Item>

@@ -9,6 +9,7 @@ import { REMOVE_WORKOUT } from "../../utils/mutations";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { GET_ME } from "../../utils/queries";
 import { UPDATE_ACTIVE_PROGRAM } from "../../utils/mutations";
+import "../styles/programDetails.css";
 
 
 const { Title } = Typography;
@@ -198,7 +199,7 @@ const ProgramPage = () => {
 
   return (
     <>
-      <Title level={2}>Program Details</Title>
+      <Title className="programDetailsTitle" level={2}>Program Details</Title>
       <Button
         type="primary"
         onClick={() => navigate("/viewallprograms")}

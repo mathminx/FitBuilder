@@ -1,4 +1,5 @@
 import React from 'react';
+import "./Footer.css";
 
 const styles = {
   footerStyle: {
@@ -13,7 +14,7 @@ const styles = {
     background: "#193381",
     color: "gray",
     fontSize: "12px",
-    paddingLeft: "15px",
+    paddingLeft: "0px",
     margin: "0px",
   },
 };
@@ -21,7 +22,7 @@ const styles = {
 function Footer() {
   return (
     <footer style={styles.footerStyle} className="footer">
-      <p>
+      <p className='footerText'>
         © 2023 FitBuilder. All rights reserved. Powering your fitness journey,
         one workout at a time.
       </p>

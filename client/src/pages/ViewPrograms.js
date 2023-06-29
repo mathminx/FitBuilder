@@ -4,6 +4,7 @@ import { Breadcrumb, Layout, theme, Card, Button, Space, Avatar, Col, Divider, R
 import { useQuery } from "@apollo/client";
 import { GET_ME } from "../utils/queries";
 import Auth from "../utils/auth"
+import "./styles/viewPrograms.css";
 const { Content } = Layout;
 
 const { Meta } = Card;
@@ -40,8 +41,10 @@ const ViewPrograms = () => {
   }, [loadingMe, dataMe]);
     return (
       <>
-        <Divider orientation="left">User Programs</Divider>
-        <Row gutter={16} justify="center">
+        <Divider className="userPrograms" orientation="left">
+          User Programs
+        </Divider>
+        <Row gutter={16} justify="start" style={{ paddingLeft: "45px" }}>
           <Col className="gutter-row" span={6}>
             <Button type="primary" onClick={() => navigate("/dashboard")}>
               Return to Dashboard
@@ -49,8 +52,12 @@ const ViewPrograms = () => {
           </Col>
         </Row>
         <Divider orientation="left"></Divider>
-        <Row gutter={16} justify="center">
-          <Col className="gutter-row" span={6}>
+        <Row className="programRow" gutter={16} justify="center">
+          <Col
+            className="gutter-row"
+            span={6}
+            style={{ paddingBottom: "60px" }}
+          >
             {loadingMe || !allPrograms ? (
               <div>Loading Programs</div>
             ) : (
