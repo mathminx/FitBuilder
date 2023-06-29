@@ -268,7 +268,7 @@ const ModifyExerciseComponent = () => {
             <InputNumber min={1} />
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" style={{ padding:'20px', lineHeight:'0px', border:'5px solid', borderStyle:'outset',borderColor:'#fa6d35', borderRadius:'5px', background: "#193381", fontSize: '15px', fontWeight: '600', }}>
               Submit
             </Button>
           </Form.Item>
@@ -279,3 +279,5 @@ const ModifyExerciseComponent = () => {
 };
 
 export default ModifyExerciseComponent;
+
+
