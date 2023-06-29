@@ -9,11 +9,10 @@ import { REMOVE_WORKOUT } from "../../utils/mutations";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { GET_ME } from "../../utils/queries";
 import { UPDATE_ACTIVE_PROGRAM } from "../../utils/mutations";
-
+import "../styles/programDetails.css";
 
 const { Title } = Typography;
 
-// Fetch single program GraphQL Query
 const GET_SINGLE_PROGRAM = gql`
   query Program($id: ID!) {
     program(_id: $id) {
@@ -73,29 +72,20 @@ const ProgramPage = () => {
   const { programId } = useParams();
   const navigate = useNavigate();
 
-  // I am getting mixed up with this and will need to come back to it.
-  // const navigateToDashboard = () => {
-  //   if (Auth.loggedIn()) {
-  //     navigate("/dashboard"); // Redirect to dashboard if logged in.
-  //   } else {
-  //     navigate("/");
-  //   }
-  // };
+  useEffect(() => {
+    if (!Auth.loggedIn()) {
+      navigate("/");
+    }
+  }, [navigate]);
 
-  //   useEffect(() => {
-  //     navigateToDashboard();
-  //   }, []);
-
-  // Fetch the program data
   const { loading, error, data, refetch } = useQuery(GET_SINGLE_PROGRAM, {
     variables: { id: programId },
   });
 
-  // Loading and error states
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error! {error.message}</p>;
 
-  const program = data?.program || {}; // If data is not yet loaded, program will be an empty object
+  const program = data?.program || {}; 
 
   const handleOpenModal = (workout) => {
     setSelectedWorkout(workout);
@@ -109,7 +99,6 @@ const ProgramPage = () => {
     setIsModalVisible(false);
   };
 
-  // Replace these functions with your logic
   const handleAddExercise = () => {
     console.log("Adding a new exercise...");
     if (selectedWorkoutId) {
@@ -136,7 +125,6 @@ const ProgramPage = () => {
 
         console.log("Exercise removed successfully: ", data);
 
-        // After successfully removing the exercise, refetch the workout to update the data in the UI
         getWorkout({ variables: { id: selectedWorkoutId } });
       } catch (err) {
         console.error("Error removing exercise: ", err);
@@ -170,10 +158,10 @@ const ProgramPage = () => {
     console.log("Attempting to switch to new active program!");
     updateActiveProgram({
       variables: {
-        userId: userData?.me._id, // Assuming you have `userData` available from your query
+        userId: userData?.me._id,
         programId: programId,
       },
-      refetchQueries: [{ query: GET_ME }], // Refetch the `me` query to get updated user data
+      refetchQueries: [{ query: GET_ME }], 
     })
       .then(() => {
         console.log("Active program updated successfully.");
@@ -202,14 +190,19 @@ const ProgramPage = () => {
     console.log("Deleting program...");
   };
 
-
   return (
     <>
-      <Title level={2}>Program Details</Title>
+      <Title
+        className="programDetailsTitle"
+        level={2}
+        style={{ marginLeft: "10px" }}
+      >
+        Program Details
+      </Title>
       <Button
         type="primary"
         onClick={() => navigate("/viewallprograms")}
-        style={{ marginBottom: "20px" }}
+        style={{ marginBottom: "20px", marginLeft: "10px" }}
       >
         <ArrowLeftOutlined /> Return to All Programs
       </Button>
@@ -223,6 +216,7 @@ const ProgramPage = () => {
           borderStyle: "dashed",
           borderWidth: "1px",
           borderColor: "red",
+          marginRight: "10px",
         }}
       >
         Delete Program
@@ -238,22 +232,29 @@ const ProgramPage = () => {
           Modify Program
         </Button>
       </Link>
-      <Descriptions>
-        <Descriptions.Item label="Name">{program.title}</Descriptions.Item>
-        <Descriptions.Item label="Duration (weeks)">
+      <Descriptions className="programDescriptions">
+        <Descriptions.Item className="boldLabel" label="Name">
+          {program.title}
+        </Descriptions.Item>
+        <Descriptions.Item className="boldLabel" label="Duration (weeks)">
           {program.duration}
         </Descriptions.Item>
-        <Descriptions.Item label="Workouts per week">
+        <Descriptions.Item className="boldLabel" label="Workouts Per Week">
           {program.daysPerWeek}
         </Descriptions.Item>
       </Descriptions>
 
-      <Row gutter={16}>
+      <Row gutter={[16, 24]}>
         {program.workouts?.map((workout) => (
-          <Col span={8} key={workout._id}>
-            <Card title={workout.name}>
-              {/* <p>Day Number: {workout.dayNumber}</p> */}
-              {/* <p>Complete: {workout.complete.toString()}</p> */}
+          <Col xs={24} sm={12} md={8} key={workout._id}>
+            <Card
+              title={workout.name}
+              style={{
+                marginBottom: "1px",
+                marginRight: "20px",
+                marginLeft: "20px",
+              }}
+            >
               <Button type="primary" onClick={() => handleOpenModal(workout)}>
                 View Exercises
               </Button>
@@ -266,6 +267,8 @@ const ProgramPage = () => {
                   borderStyle: "dashed",
                   borderWidth: "1px",
                   borderColor: "red",
+                  marginTop: "5px",
+                  marginLeft: "1px",
                 }}
               >
                 Delete Workout
@@ -275,7 +278,11 @@ const ProgramPage = () => {
         ))}
       </Row>
       <br></br>
-      <Button type="primary" onClick={handleAddWorkout}>
+      <Button
+        type="primary"
+        onClick={handleAddWorkout}
+        style={{ marginLeft: "10px", marginRight: "10px" }}
+      >
         Add New Workout
       </Button>
 
@@ -283,6 +290,7 @@ const ProgramPage = () => {
         type="primary"
         onClick={handleActiveProgram}
         disabled={userData?.me?.activeProgram?._id === programId}
+        style={{ marginBottom: "50px" }}
       >
         Update Active Program
       </Button>
@@ -303,16 +311,21 @@ const ProgramPage = () => {
                 title={exercise.name}
                 style={{ marginBottom: "20px" }}
               >
-                <p>Type: {exercise.type}</p>
-                <p>Equipment: {exercise.equipment}</p>
-                <p>Difficulty: {exercise.difficulty}</p>
-                <p>Instructions: {exercise.instructions}</p>
-                <p>Sets: {exercise.sets}</p>
-                <p>Reps: {exercise.reps}</p>
-                <p>Weight: {exercise.weight}</p>
-                <p>Duration: {exercise.duration}</p>
+                <p><span className="boldLabel">Type:</span> {exercise.type}</p>
+                <p><span className="boldLabel">Equipment:</span> {exercise.equipment}</p>
+                <p><span className="boldLabel">Difficulty:</span> {exercise.difficulty}</p>
+                <p><span className="boldLabel">Instructions:</span>
+                   {exercise.instructions}
+                </p>
+                <p><span className="boldLabel">Sets:</span> {exercise.sets}</p>
+                <p><span className="boldLabel">Reps:</span> {exercise.reps}</p>
+                <p><span className="boldLabel">Weight:</span> {exercise.weight}</p>
+                <p><span className="boldLabel">Duration:</span> {exercise.duration}</p>
 
-                <Button onClick={() => handleEditExercise(exercise._id)}>
+                <Button
+                  style={{ marginRight: "10px" }}
+                  onClick={() => handleEditExercise(exercise._id)}
+                >
                   Edit Exercise
                 </Button>
                 <Button onClick={() => handleRemoveExercise(exercise._id)}>

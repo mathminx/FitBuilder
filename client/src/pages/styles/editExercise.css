@@ -1,0 +1,10 @@
+.editExerciseForm {
+    margin-left: 15px;
+}
+
+@media screen and (max-width: 625px) {
+  .editExerciseForm {
+    margin-top: 90px;
+  }
+};
+

@@ -1,0 +1,39 @@
+.programActions {
+  margin-bottom: 20px;
+}
+
+.programDescriptions {
+  margin-left: 20px;
+}
+
+.viewExercisesButton, .deleteWorkoutButton {
+  margin-top: 5px;
+}
+
+.deleteWorkoutButton {
+  border-style: dashed;
+  border-width: 1px;
+  border-color: red;
+}
+
+.workoutActions {
+  margin: 0 10px 50px;
+}
+
+.addWorkoutButton, .updateActiveProgramButton {
+  margin-right: 10px;
+}
+
+.workoutModal {
+  padding: 20px;
+}
+
+.boldLabel {
+  font-weight: bold;
+}
+
+@media screen and (max-width: 625px) {
+ .programDetailsTitle {
+    margin-top: 90px;
+  }
+};

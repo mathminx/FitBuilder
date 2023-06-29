@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form, Input, Select, Button, InputNumber } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
 import Auth from "../../utils/auth"
 import { useMutation } from "@apollo/client";
 import { ADD_WORKOUT } from '../../utils/mutations';
 import { GET_SINGLE_PROGRAM } from '../../utils/queries';
+import "../styles/workoutForm.css";
 
 
 
@@ -14,9 +15,11 @@ const WorkoutForm = () => {
   const navigate = useNavigate();
   const { programId } = useParams();
 
-  if (!Auth.loggedIn()) {
-    navigate("/");
-  }
+  useEffect(() => {
+    if (!Auth.loggedIn()) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   const [addWorkout] = useMutation(ADD_WORKOUT, {
     onCompleted: () => navigate(`/programs/${programId}`),
@@ -29,7 +32,7 @@ const WorkoutForm = () => {
   };
 
   return (
-    <div>
+    <div className="workoutForm">
       <h1 style={{ textAlign: "center" }}>Create Workout</h1>{" "}
       <Form onFinish={onFinish}>
         <Form.Item label="Name" name="name" rules={[{ required: true }]}>
@@ -54,13 +57,13 @@ const WorkoutForm = () => {
           </Select>
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Save
-          </Button>
-          <Button onClick={() => navigate(`/program/${programId}`)}>
+          <Button style={{ margin: "8px" }} onClick={() => navigate(`/program/${programId}`)}>
             {" "}
             {/* Navigate back to program page without adding a workout */}
             Return
+          </Button>
+          <Button type="primary" htmlType="submit">
+            Save
           </Button>
         </Form.Item>
       </Form>
