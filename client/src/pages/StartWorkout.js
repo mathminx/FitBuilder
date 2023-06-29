@@ -41,7 +41,7 @@ function StartWorkout() {
   };
 
   const { workoutId } = useParams();
-//sets teh initial workout
+
   useEffect(() => {
     if (!loadingMe && dataMe) {
       let targetWorkout = dataMe.me.activeProgram.workouts.find(
@@ -53,11 +53,11 @@ function StartWorkout() {
       setCurrentExerciseIndex(0);
     }
   }, []);
-// checking if state has changed
+
   useEffect(() => {
     console.log("usersCurrentExercise has changed:", usersCurrentExercise);
   }, [usersCurrentExercise]);
-// increases the users index so the state moves through the array therefore changing the state
+
   let onNextExercise = () => {
     console.log("next button clicked");
 
@@ -98,65 +98,83 @@ function StartWorkout() {
     (currentExercises.length / 100);
   // still need to addtheexercise to user data
   return (
-  <>
-    <Layout className="startWorkoutLayout" style={{minHeight: '88vh', background: 'white', padding: "0 50px",}}>
-    {/*Progress bar*/}
-    <br></br>
-      <Row className="progressBar" justify="center" >
-        <Progress percent={progressBarValue}/>
-      </Row>
-    <br></br>
-      <Row justify="center">
-        <Space direction="vertical" size={16} style={{color:'#193381'}}>
-          {loadingMe || !usersCurrentExercise ? (
-            <Card
-              title={"loading... exercise"}
-              extra={<a href="#">More</a>}
-              style={{ fontWeight:'600', width: 500, marginTop:'2% 0', border:'2px solid', background:'#fa6d35', borderColor:'#193381'}}
-            >
-              <p>loading description....</p>
-            </Card>
-          ) : (
-            <Card
-              title={usersCurrentExercise.name}
-              extra={<a href="#">More</a>}
-              style={{ width: 500, color: '#193381', borderColor: '#fa6d35'}}
-            >
-              <p>{`${usersCurrentExercise.instructions}`} </p>
-            </Card>
-          )}
-        </Space>
-      </Row>
-      <Divider type="horizontal" style={{ borderWidth: 3, borderColor: '#fa6d35' }}></Divider>
-      <div style={{ color: '#193381', fontWeight:'600'}}>
-      <Row gutter={[8, 16]} justify="center">
-        <Col span={8}>
-          <div >Sets</div>
-        </Col>
-        <Col span={8}>
-          <div>Reps</div>
-        </Col>
-        <Col span={8}>
-          <div>Weight</div>
-        </Col>
-      </Row>
-      </div>
-      {/* sets, reps, weight, table 
-     creates an array through the number of sets*/}
-      <Divider type="horizontal" style={{ borderWidth: 3, borderColor: '#fa6d35' }}></Divider>
-      {loadingMe || !usersCurrentExercise ? (
-        <Row style={{minHeight:'300px'}} justify="center">
-          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+    <>
+      <Layout
+        className="startWorkoutLayout"
+        style={{ minHeight: "88vh", background: "white", padding: "0 50px" }}
+      >
+        {/*Progress bar*/}
+        <br></br>
+        <Row className="progressBar" justify="center">
+          <Progress percent={progressBarValue} />
         </Row>
-      ) : (
-        Array.from({ length: usersCurrentExercise.sets }, (_, i) => i + 1).map(
-          (setNumber) => (
-            <Row key={setNumber} gutter={[8, 16]} justify="center">
-              <Col span={6}>
+        <br></br>
+        <Row className="exerciseDescriptionCard"  justify="center">
+          <Space direction="vertical" size={16} style={{ color: "#193381" }}>
+            {loadingMe || !usersCurrentExercise ? (
+              <Card
+                title={"loading... exercise"}
+                extra={<a href="#">More</a>}
+                style={{
+                  fontWeight: "600",
+                  maxWidth: 500,
+                  marginTop: "2% 0",
+                  border: "2px solid",
+                  background: "#fa6d35",
+                  borderColor: "#193381",
+                }}
+              >
+                <p>loading description....</p>
+              </Card>
+            ) : (
+              <Card
+                title={usersCurrentExercise.name}
+                extra={<a href="#">More</a>}
+                style={{ maxWidth: 500, color: "#193381", borderColor: "#fa6d35" }}
+              >
+                <p>{`${usersCurrentExercise.instructions}`} </p>
+              </Card>
+            )}
+          </Space>
+        </Row>
+        <Divider
+          type="horizontal"
+          style={{ borderWidth: 3, borderColor: "#fa6d35" }}
+        ></Divider>
+        <div style={{ color: "#193381", fontWeight: "600" }}>
+          <Row gutter={[16, 16]} justify="center">
+            <Col span={8}>
+              <div>Sets</div>
+            </Col>
+            <Col span={8}>
+              <div>Reps</div>
+            </Col>
+            <Col span={8}>
+              <div>Weight</div>
+            </Col>
+          </Row>
+        </div>
+        {/* sets, reps, weight, table 
+     creates an array through the number of sets*/}
+        <Divider
+          type="horizontal"
+          style={{ borderWidth: 3, borderColor: "#fa6d35" }}
+        ></Divider>
+        {loadingMe || !usersCurrentExercise ? (
+          <Row style={{ minHeight: "300px" }} justify="center">
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          </Row>
+        ) : (
+          Array.from(
+            { length: usersCurrentExercise.sets },
+            (_, i) => i + 1
+          ).map((setNumber) => (
+            <Row key={setNumber} gutter={[16, 16]} justify="center">
+              <Col span={8}>
                 <div key={setNumber}>{setNumber}</div>
                 <div justify="center"></div>
               </Col>
-              <Col span={4}>
+              <Col span={8}>
                 <Space>
                   <InputNumber
                     size="large"
@@ -179,24 +197,31 @@ function StartWorkout() {
                 </Space>
               </Col>
             </Row>
-          )
-        )
-      )}
-      <Row justify="center">
-        <Button type="secondary" size="large" style={{color:"#193381", fontWeight:'600'}}>
-          add set
-        </Button>
-      </Row>
-      <Divider type="horizontal" style={{ borderWidth: 3, borderColor: '#fa6d35' }}></Divider>
-      {/* Next exercise button, on press sets next exercise in array to curretn state */}
-      <Row justify="center">
-      <Button type="primary" size="large" onClick={onNextExercise}>
-        Next
-      </Button>
-      </Row>
+          ))
+        )}
+        <br></br>
+        <Row justify="center">
+          <Button
+            type="secondary"
+            size="large"
+            style={{ color: "#193381", fontWeight: "600" }}
+          >
+            Add Set
+          </Button>
+        </Row>
+        <Divider
+          type="horizontal"
+          style={{ borderWidth: 3, borderColor: "#fa6d35" }}
+        ></Divider>
+        {/* Next exercise button, on press sets next exercise in array to curretn state */}
+        <Row justify="center">
+          <Button type="primary" size="large" onClick={onNextExercise}>
+            Next
+          </Button>
+        </Row>
       </Layout>
     </>
-  )
+  );
           }
 
 export default StartWorkout;
