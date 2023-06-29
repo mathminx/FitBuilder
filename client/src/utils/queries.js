@@ -35,6 +35,11 @@ export const GET_ME = gql`
           name
           exercises {
             _id
+            name
+            instructions
+            name
+          reps
+          sets
           }
         }
         duration
