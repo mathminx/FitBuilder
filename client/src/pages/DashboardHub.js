@@ -202,10 +202,10 @@ const Dashboard = () => {
                       <Row>
                         <Col
                           xs={{ span: 24 }}
-                          sm={{ span: 16, offset: 0 }}
-                          md={{ span: 12, offset: 6 }}
-                          lg={{ span: 6, offset: 9 }}
-                          xl={{ span: 6, offset: 9 }}
+                          sm={{ span: 16, offset: 3 }}
+                          md={{ span: 12, offset: 7 }}
+                          lg={{ span: 6, offset: 8 }}
+                          xl={{ span: 6, offset: 2 }}
                         >
                           <Card
                             title={workout.name}

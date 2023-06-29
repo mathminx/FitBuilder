@@ -2,25 +2,25 @@
   .exerciseDescriptionCard .ant-card {
     width: 500px;
   }
-}
+};
 
 @media screen and (max-width: 625px) {
   .exerciseDescriptionCard .ant-card {
     width: 450px;
   }
-}
+};
 
 @media screen and (max-width: 510px) {
   .exerciseDescriptionCard .ant-card {
     width: 400px;
   }
-}
+};
 
 @media screen and (max-width: 425px) {
   .exerciseDescriptionCard .ant-card {
     width: 300px;
   }
-}
+};
 
 @media screen and (max-width: 625px) {
   .startWorkoutLayout {
@@ -31,7 +31,6 @@
     margin-top: 3px;
     margin-bottom: 15px;
   }
-
 };
 
 
