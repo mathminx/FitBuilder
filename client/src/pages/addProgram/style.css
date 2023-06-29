@@ -1,0 +1,41 @@
+.numWeeks.ant-form-item-row {
+  display: inline;
+  width: 50%;
+}
+
+.numDays {
+  display: inline;
+}
+
+.ant-input-number-in-form-item {
+  width: 20%;
+  size: large;
+  border: 2px solid #193381;
+  border-radius: 4px;
+  cursor: pointer;
+  float:left;
+  margin-bottom: 2px;
+}
+
+.ant-input {
+  border: 2px solid #193381;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.ant-form-horizontal {
+  display: inline;
+}
+
+.ant-form-item-row {
+  display: inline;
+}
+
+.ant-form-item-label {
+  color: #193381;
+  font-weight: 600;
+}
+
+span {
+  width: 50%;
+}
