@@ -14,8 +14,8 @@ FitBuild application is a web application for creating and managing workout prog
 - [License](#license)
 
 ## Screenshots
-![change later1]()
-![change later2]()
+![change later1](App Screenshots/Landing Page.png
+![change later2](App Screenshots/Landing Page.png)
 
 ## Description
 
@@ -38,7 +38,7 @@ The code consists of multiple components and pages, including:
 
 The code also includes Apollo Client configuration for connecting to the GraphQL server. It sets up the necessary HTTP link and handles authentication using a token stored in local storage.
 
-The deployed application can be visited [here]().
+The deployed application can be visited [here](https://fit-build-03ae366fc163.herokuapp.com/).
 
 ## Installation
 
