@@ -232,12 +232,14 @@ const ProgramPage = () => {
           Modify Program
         </Button>
       </Link>
-      <Descriptions>
-        <Descriptions.Item label="Name">{program.title}</Descriptions.Item>
-        <Descriptions.Item label="Duration (weeks)">
+      <Descriptions className="programDescriptions">
+        <Descriptions.Item className="boldLabel" label="Name">
+          {program.title}
+        </Descriptions.Item>
+        <Descriptions.Item className="boldLabel" label="Duration (weeks)">
           {program.duration}
         </Descriptions.Item>
-        <Descriptions.Item label="Workouts Per Week">
+        <Descriptions.Item className="boldLabel" label="Workouts Per Week">
           {program.daysPerWeek}
         </Descriptions.Item>
       </Descriptions>
@@ -266,6 +268,7 @@ const ProgramPage = () => {
                   borderWidth: "1px",
                   borderColor: "red",
                   marginTop: "5px",
+                  marginLeft: "1px",
                 }}
               >
                 Delete Workout
@@ -308,16 +311,21 @@ const ProgramPage = () => {
                 title={exercise.name}
                 style={{ marginBottom: "20px" }}
               >
-                <p>Type: {exercise.type}</p>
-                <p>Equipment: {exercise.equipment}</p>
-                <p>Difficulty: {exercise.difficulty}</p>
-                <p>Instructions: {exercise.instructions}</p>
-                <p>Sets: {exercise.sets}</p>
-                <p>Reps: {exercise.reps}</p>
-                <p>Weight: {exercise.weight}</p>
-                <p>Duration: {exercise.duration}</p>
+                <p><span className="boldLabel">Type:</span> {exercise.type}</p>
+                <p><span className="boldLabel">Equipment:</span> {exercise.equipment}</p>
+                <p><span className="boldLabel">Difficulty:</span> {exercise.difficulty}</p>
+                <p><span className="boldLabel">Instructions:</span>
+                   {exercise.instructions}
+                </p>
+                <p><span className="boldLabel">Sets:</span> {exercise.sets}</p>
+                <p><span className="boldLabel">Reps:</span> {exercise.reps}</p>
+                <p><span className="boldLabel">Weight:</span> {exercise.weight}</p>
+                <p><span className="boldLabel">Duration:</span> {exercise.duration}</p>
 
-                <Button onClick={() => handleEditExercise(exercise._id)}>
+                <Button
+                  style={{ marginRight: "10px" }}
+                  onClick={() => handleEditExercise(exercise._id)}
+                >
                   Edit Exercise
                 </Button>
                 <Button onClick={() => handleRemoveExercise(exercise._id)}>

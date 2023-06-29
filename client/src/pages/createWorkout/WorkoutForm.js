@@ -32,7 +32,7 @@ const WorkoutForm = () => {
   };
 
   return (
-    <div className='workoutForm'>
+    <div className="workoutForm">
       <h1 style={{ textAlign: "center" }}>Create Workout</h1>{" "}
       <Form onFinish={onFinish}>
         <Form.Item label="Name" name="name" rules={[{ required: true }]}>
@@ -57,17 +57,13 @@ const WorkoutForm = () => {
           </Select>
         </Form.Item>
         <Form.Item>
-          <Button
-            style={{ margin: "8px" }}
-            type="primary"
-            htmlType="submit"
-          >
-            Save
-          </Button>
-          <Button onClick={() => navigate(`/program/${programId}`)}>
+          <Button style={{ margin: "8px" }} onClick={() => navigate(`/program/${programId}`)}>
             {" "}
             {/* Navigate back to program page without adding a workout */}
             Return
+          </Button>
+          <Button type="primary" htmlType="submit">
+            Save
           </Button>
         </Form.Item>
       </Form>

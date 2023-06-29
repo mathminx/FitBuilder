@@ -28,7 +28,7 @@ const ViewPrograms = () => {
   const handleViewSinglePrograms = (programId) => {
     console.log('button clicked');
      if (Auth.loggedIn()) {
-         navigate(`/programs/${programId}`); // Redirect to dashboard if not logged in.
+         navigate(`/programs/${programId}`); 
      } else {
       navigate('/')
      }
