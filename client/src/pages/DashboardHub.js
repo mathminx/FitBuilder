@@ -117,7 +117,7 @@ const Dashboard = () => {
                 </Title>
                 <div style={{ marginBottom: "10px" }}>
                   <Text strong style={{ color: "#193381", fontWeight: '600', fontSize: '20px' }}>
-                    Program title:&nbsp;{" "}
+                    Program title:{" "}
                   </Text>
                   <Text style={{ color: "#193381", fontSize: '20px' }}>
                     {currentProgram.title}
@@ -125,7 +125,7 @@ const Dashboard = () => {
                 </div>
                 <div style={{ marginBottom: "10px" }}>
                   <Text strong style={{ color: "#193381", fontWeight: '600', fontSize: '20px' }}>
-                    Duration (weeks):&nbsp{" "}
+                    Duration (weeks):{" "}
                   </Text>
                   <Text style={{ color: "#193381", fontSize: '20px' }}>
                     {currentProgram.duration}
@@ -133,7 +133,7 @@ const Dashboard = () => {
                 </div>
                 <div style={{ marginBottom: "10px" }}>
                   <Text strong style={{ color: "#193381", fontWeight: '600', fontSize: '20px' }}>
-                    Workouts per week:&nbsp{" "}
+                    Workouts per week:{" "}
                   </Text>
                   <Text style={{ color: "#193381", fontSize: '20px' }}>
                     {currentProgram.daysPerWeek}
@@ -141,7 +141,7 @@ const Dashboard = () => {
                 </div>
                 <div style={{ marginBottom: "10px" }}>
                   <Text strong style={{ color: "#193381", fontSize: '20px' }}>
-                    Description:&nbsp{" "}
+                    Description:{" "}
                   </Text>
                   <Text style={{ color: "#193381", fontSize: '20px' }}>
                     {currentProgram.description}
