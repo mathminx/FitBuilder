@@ -20,7 +20,8 @@
     "eject": "react-scripts eject",
     "install": "cd server && npm i && cd ../client && npm i",
     "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
-    "lint": "eslint ./"
+    "lint": "eslint ./", 
+    "heroku-postbuild": "npm --prefix client install && npm --prefix client run build"
   },
   "eslintConfig": {
     "extends": [
