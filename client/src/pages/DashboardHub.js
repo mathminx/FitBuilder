@@ -16,7 +16,7 @@ import {
 import { useQuery } from "@apollo/client";
 import { GET_ME } from "../utils/queries";
 import Auth from "../utils/auth";
-import "./styles/dashboardHub.css"
+import "./styles/DashboardHub.css"
 const { Content } = Layout;
 const { Title, Text } = Typography;
 
@@ -72,7 +72,7 @@ const Dashboard = () => {
   return (
     <Layout className="mainLayout" style={styles.layoutStyle}>
       <Content className="dashboard-content" style={{ padding: "0 50px" }}>
-        <Breadcrumb style={{ margin: "30px 0", color: "#193381" }}>
+        <Breadcrumb style={{ margin: "30px 0", color: "#193381",  }}>
           {loadingMe ? (
             <Breadcrumb.Item>Loading....</Breadcrumb.Item>
           ) : (
@@ -107,43 +107,43 @@ const Dashboard = () => {
           style={{ background: "white", minHeight: "60vh" }}
         >
           {!loadingMe && currentProgram && (
-            <Layout style={{ backgroundColor: "#f0f2f5", padding: "30px" }}>
+            <Layout style={{ background: "white", padding: "30px", border:'solid 2px #fa6d35'}}>
               <Space direction="vertical" style={{ width: "100%" }}>
                 <Title
                   level={2}
-                  style={{ color: "#1890ff", marginBottom: "20px" }}
+                  style={{ color: "#193381", marginBottom: "20px", marginTop:'0px', fontWeight: '600' }}
                 >
                   Program Info
                 </Title>
                 <div style={{ marginBottom: "10px" }}>
-                  <Text strong style={{ color: "#1890ff" }}>
-                    Program title:{" "}
+                  <Text strong style={{ color: "#193381", fontWeight: '600', fontSize: '20px' }}>
+                    Program title:&nbsp;{" "}
                   </Text>
-                  <Text style={{ color: "#323232" }}>
+                  <Text style={{ color: "#193381", fontSize: '20px' }}>
                     {currentProgram.title}
                   </Text>
                 </div>
                 <div style={{ marginBottom: "10px" }}>
-                  <Text strong style={{ color: "#1890ff" }}>
-                    Duration (weeks):{" "}
+                  <Text strong style={{ color: "#193381", fontWeight: '600', fontSize: '20px' }}>
+                    Duration (weeks):&nbsp{" "}
                   </Text>
-                  <Text style={{ color: "#323232" }}>
+                  <Text style={{ color: "#193381", fontSize: '20px' }}>
                     {currentProgram.duration}
                   </Text>
                 </div>
                 <div style={{ marginBottom: "10px" }}>
-                  <Text strong style={{ color: "#1890ff" }}>
-                    Workouts per week:{" "}
+                  <Text strong style={{ color: "#193381", fontWeight: '600', fontSize: '20px' }}>
+                    Workouts per week:&nbsp{" "}
                   </Text>
-                  <Text style={{ color: "#323232" }}>
+                  <Text style={{ color: "#193381", fontSize: '20px' }}>
                     {currentProgram.daysPerWeek}
                   </Text>
                 </div>
                 <div style={{ marginBottom: "10px" }}>
-                  <Text strong style={{ color: "#1890ff" }}>
-                    Description:{" "}
+                  <Text strong style={{ color: "#193381", fontSize: '20px' }}>
+                    Description:&nbsp{" "}
                   </Text>
-                  <Text style={{ color: "#323232" }}>
+                  <Text style={{ color: "#193381", fontSize: '20px' }}>
                     {currentProgram.description}
                   </Text>
                 </div>
@@ -177,12 +177,12 @@ const Dashboard = () => {
           ) : (
             <>
               <div style={{ textAlign: "center", marginTop: "30px" }}>
-                <Title level={3} style={{ color: "#1890ff" }}>
+                <Title level={3} style={{ color: "#193381" }}>
                   Workouts
                 </Title>
               </div>
-              <Title
-                style={{ display: "flex", justifyContent: "center" }}
+              <Title 
+                style={{ display: "flex", justifyContent: "center", color: "#193381" }}
                 level={4}
               >
                 Week {currentPage}

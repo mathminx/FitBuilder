@@ -192,46 +192,81 @@ const ProgramPage = () => {
 
   return (
     <>
-      <Title
+      <Title 
         className="programDetailsTitle"
-        level={2}
-        style={{ marginLeft: "10px" }}
+        level={2} 
       >
         Program Details
       </Title>
+
       <Button
         type="primary"
         onClick={() => navigate("/viewallprograms")}
-        style={{ marginBottom: "20px", marginLeft: "10px" }}
+        style={{ paddingTop:'13px', paddingBottom:'26px',lineHeight:'0px', border:'5px solid', 
+        borderStyle:'outset',  borderColor:'#fa6d35', borderRadius:'5px', 
+        background: "#193381", fontSize: '15px', fontWeight: '600', marginLeft: "5%", marginRight: "5%" }}
       >
         <ArrowLeftOutlined /> Return to All Programs
       </Button>
+
+      <Button
+        type="primary"
+        onClick={handleAddWorkout}
+        style={{ padding:'20px', lineHeight:'0px', 
+        border:'5px solid', borderStyle:'outset',  
+        borderColor:'#fa6d35', borderRadius:'5px', 
+        background: "#193381", fontSize: '15px', fontWeight: '600', marginRight: "5%" }}      >
+        Add New Workout
+      </Button>
+
+      <Button
+        type="primary"
+        onClick={handleActiveProgram}
+        disabled={userData?.me?.activeProgram?._id === programId}
+        style={{ padding:'20px', lineHeight:'0px', 
+        border:'5px solid', borderStyle:'outset',  
+        borderColor:'#fa6d35', borderRadius:'5px', 
+        background: "#193381", fontSize: '15px', fontWeight: '600', marginBottom: "50px", color:'white' }} 
+      >
+        Update Active Program
+      </Button>
+
+      <Link to={`/modifyprogram/${programId}`}>
+        <Button
+          type="primary"
+          style={{
+            
+            
+            marginLeft: "5%",
+            padding:'20px', 
+            lineHeight:'0px', 
+            border:'5px solid', 
+            borderStyle:'outset',  
+            borderColor:'#fa6d35', borderRadius:'5px', background: "#193381", fontSize: '15px', fontWeight: '600', 
+          }}
+        >
+          Modify Program
+        </Button>
+      </Link>
+
       <Button
         type="primary"
         ghost
         danger
         onClick={handleDeleteProgram}
         style={{
-          float: "right",
+          marginLeft: "8%",
           borderStyle: "dashed",
           borderWidth: "1px",
           borderColor: "red",
-          marginRight: "10px",
+          marginRight: "50px",
+          marginTop: '10px'
         }}
       >
         Delete Program
-      </Button>
-      <Link to={`/modifyprogram/${programId}`}>
-        <Button
-          type="primary"
-          style={{
-            float: "right",
-            marginRight: "10px",
-          }}
-        >
-          Modify Program
-        </Button>
-      </Link>
+      </Button >
+      
+      
       <Descriptions className="programDescriptions">
         <Descriptions.Item className="boldLabel" label="Name">
           {program.title}
@@ -255,7 +290,10 @@ const ProgramPage = () => {
                 marginLeft: "20px",
               }}
             >
-              <Button type="primary" onClick={() => handleOpenModal(workout)}>
+              <Button type="primary" style={{ padding:'20px', lineHeight:'0px', border:'5px solid', 
+                borderStyle:'outset',  borderColor:'#fa6d35', borderRadius:'5px', background: "#193381", 
+                fontSize: '15px', fontWeight: '600', marginBottom: "50px" }} 
+                onClick={() => handleOpenModal(workout)}>
                 View Exercises
               </Button>
               <Button
@@ -278,22 +316,7 @@ const ProgramPage = () => {
         ))}
       </Row>
       <br></br>
-      <Button
-        type="primary"
-        onClick={handleAddWorkout}
-        style={{ marginLeft: "10px", marginRight: "10px" }}
-      >
-        Add New Workout
-      </Button>
-
-      <Button
-        type="primary"
-        onClick={handleActiveProgram}
-        disabled={userData?.me?.activeProgram?._id === programId}
-        style={{ marginBottom: "50px" }}
-      >
-        Update Active Program
-      </Button>
+      
 
       <br></br>
       <br></br>

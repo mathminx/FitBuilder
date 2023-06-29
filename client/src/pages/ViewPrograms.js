@@ -41,23 +41,26 @@ const ViewPrograms = () => {
   }, [loadingMe, dataMe]);
     return (
       <>
-        <Divider className="userPrograms" orientation="left">
+        <Divider style={{fontSize:'30px', color:'#193381', marginBottom: '0' }} className="userPrograms" >
           User Programs
         </Divider>
-        <Row gutter={16} justify="start" style={{ paddingLeft: "45px" }}>
+        <Row gutter={16} justify="start" style={{ paddingLeft: "60px" }}>
           <Col className="gutter-row" span={6}>
-            <Button type="primary" onClick={() => navigate("/dashboard")}>
+            <Button type="primary" style={{ padding:'20px', 
+              lineHeight:'0px', border:'5px solid', borderStyle:'outset',  
+              borderColor:'#fa6d35', borderRadius:'5px', background: "#193381", 
+              fontSize: '15px', fontWeight: '600', marginBottom: "0px" }} onClick={() => navigate("/dashboard")}>
               Return to Dashboard
             </Button>
           </Col>
         </Row>
-        <Divider orientation="left"></Divider>
+        <Divider orientation="left" ></Divider>
         <div className="containerClass">
           <Row className="programRow" gutter={16} justify="center">
             <Col
               className="gutter-row"
               span={6}
-              style={{ paddingBottom: "60px" }}
+              style={{ paddingBottom: "10px" }}
             >
               {loadingMe || !allPrograms ? (
                 <div>Loading Programs</div>
@@ -65,9 +68,9 @@ const ViewPrograms = () => {
                 allPrograms.map((program) => (
                   <Card
                     key={program._id}
-                    style={{ width: 300 }}
+                    style={{ width: 300, border:'#fa6d35 solid 3px' }}
                     cover={
-                      <img
+                      <img style={{width:'99%', border:'#fa6d35 solid 2px', borderBottom:'#fa6d35 solid 3px' }}
                         alt="example program"
                         src={`https://picsum.photos/seed/${program._id}/300/300`}
                       />
@@ -75,7 +78,9 @@ const ViewPrograms = () => {
                     actions={[
                       <Button
                         type="primary"
-                        onClick={() => handleViewSinglePrograms(program._id)}
+                        onClick={() => handleViewSinglePrograms(program._id)} style={{ padding:'20px', 
+                          lineHeight:'0px', border:'5px solid', borderStyle:'outset',  borderColor:'#fa6d35', 
+                          borderRadius:'5px', background: "#193381", fontSize: '15px', fontWeight: '600', margin: "5px" }}
                       >
                         View Program
                       </Button>,
