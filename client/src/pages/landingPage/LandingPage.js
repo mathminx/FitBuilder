@@ -2,6 +2,7 @@ import React from "react";
 import "./LandingPage.css";
 import { useNavigate } from "react-router-dom";
 import Auth from "../../utils/auth"
+import { message } from "antd";
 
 const FitBuildLandingPage = () => {
   const navigate = useNavigate();
@@ -10,6 +11,8 @@ const FitBuildLandingPage = () => {
    console.log('button clicked');
     if (Auth.loggedIn()) {
         navigate('/dashboard'); // Redirect to dashboard if logged in.
+    } else {
+      message.warning(`You must be logged in to get started. Please login or signup to proceed!`);
     }
   };
 

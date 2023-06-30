@@ -35,6 +35,11 @@ export const GET_ME = gql`
           name
           exercises {
             _id
+            name
+            instructions
+            name
+          reps
+          sets
           }
         }
         duration
@@ -49,7 +54,6 @@ export const GET_ME = gql`
     }
   }
 `;
-
 
 export const GET_ALL_PROGRAMS = gql`
   query Programs {
@@ -68,6 +72,7 @@ export const GET_SINGLE_PROGRAM = gql`
       title
       duration
       daysPerWeek
+      description
       workouts {
         _id
         name

@@ -1,34 +1,59 @@
 import React, { useState, useEffect } from "react";
 import { Form, Input, InputNumber, Button } from "antd";
-import { useMutation } from "@apollo/client";
-import { useNavigate } from "react-router-dom";
-import { ADD_PROGRAM } from "../../utils/mutations";
+import { useMutation, useQuery } from "@apollo/client";
+import { useNavigate, useParams } from "react-router-dom";
+import { ADD_PROGRAM, UPDATE_PROGRAM } from "../../utils/mutations";
+import { GET_SINGLE_PROGRAM } from "../../utils/queries";
 import Auth from "../../utils/auth";
-import "../styles/newProgramForm.css";
+import "../styles/updateProgramForm.css"
 
 const { TextArea } = Input;
 
-const CreateProgram = () => {
+const ModifyProgram = () => {
+
+const { programId } = useParams();
+
+const {
+  loading: queryLoading,
+  error: queryError,
+  data,
+} = useQuery(GET_SINGLE_PROGRAM, { variables: { id: programId } });
+
+
   const [title, setTitle] = useState("");
   const [weeks, setWeeks] = useState(1);
   const [days, setDays] = useState(1);
   const [description, setDescription] = useState("");
 
-  const [addProgram, { loading, error }] = useMutation(ADD_PROGRAM);
+  useEffect(() => {
+    if (data?.program) {
+      setTitle(data.program.title);
+      setWeeks(data.program.duration);
+      setDays(data.program.daysPerWeek);
+      setDescription(data.program.description);
+    }
+  }, [data]);
+
+  const [updateProgram, { loading, error }] = useMutation(UPDATE_PROGRAM);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!Auth.loggedIn()) {
-      navigate("/");
-    }
-  }, [navigate]);
+    useEffect(() => {
+      if (!Auth.loggedIn()) {
+        navigate("/");
+      }
+    }, [navigate]);
+
+    if (queryLoading) return <p>Loading...</p>;
+    if (queryError) return <p>Error! {queryError.message}</p>;
 
     const handleFormSubmit = async () => {
     try {
-        await addProgram({
-        variables: { title, daysPerWeek: days, duration: weeks, description },
+        await updateProgram({
+        variables: { programId: programId, title, daysPerWeek: days, duration: weeks, description },
         });
-        navigate("/viewallprograms");
+        console.log(`programID: ${programId}`);
+        console.log(`Description: ${description}`);
+        navigate(`/programs/${programId}`);
     } catch (error) {
         console.error("Error occurred during the mutation:", error);
     }
@@ -42,11 +67,11 @@ const CreateProgram = () => {
         height: "100vh",
       }}
     >
-      <div className="createProgramDiv" style={{ width: "80%", paddingTop: "65px" }}>
+      <div className="updateProgramForm" style={{ width: "80%" }}>
         {" "}
-        {/* Added this div */}
         <Form onFinish={handleFormSubmit}>
-          <h1>Create Program</h1>
+          <h1>Update Program</h1>
+
           <Form.Item label="Title">
             <Input value={title} onChange={(e) => setTitle(e.target.value)} />
           </Form.Item>
@@ -59,7 +84,7 @@ const CreateProgram = () => {
             />
           </Form.Item>
 
-          <Form.Item label="Days per Week">
+          <Form.Item label="Workouts per Week">
             <InputNumber
               min={1}
               value={days}
@@ -76,27 +101,21 @@ const CreateProgram = () => {
 
           <Form.Item>
             <Button
-              style={{ marginLeft: "10px" }}
-              onClick={() => navigate("/viewallprograms")}
+              style={{ marginRight: "10px" }}
+              onClick={() => navigate(`/programs/${programId}`)}
             >
               Cancel
             </Button>
-            <Button
-              style={{ marginLeft: "10px" }}
-              type="primary"
-              htmlType="submit"
-              loading={loading}
-            >
-              Create Program
+            <Button type="primary" htmlType="submit" loading={loading}>
+              Submit
             </Button>
           </Form.Item>
 
           {error && <p>Error: {error.message}</p>}
         </Form>
       </div>{" "}
-      {/* End of added div */}
     </div>
   );
 };
 
-export default CreateProgram;
+export default ModifyProgram;

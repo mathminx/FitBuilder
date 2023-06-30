@@ -1,0 +1,61 @@
+h2.ant-typography.programDetailsTitle {
+  height: 10%;
+  display: flex;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  justify-content: center;
+}
+
+h2.ant-typography {
+  color: #193381;
+}
+
+.ant-descriptions {
+  display:flex;
+  justify-content:center;
+  width: 90%;
+  margin:auto;
+  color:#193381;
+}
+
+.ant-descriptions-view {
+  display:flex;
+  justify-content:center;
+  width: 90%;
+  margin:auto;
+  color:#193381;
+}
+
+.buttons {
+  width: 100vh;
+} 
+
+.programActions {
+  margin-bottom: 20px;
+}
+
+.viewExercisesButton, .deleteWorkoutButton {
+  margin-top: 5px;
+}
+
+.workoutActions {
+  margin: 0 10px 50px;
+}
+
+.addWorkoutButton, .updateActiveProgramButton {
+  margin-right: 10px;
+}
+
+.workoutModal {
+  padding: 20px;
+}
+
+.boldLabel {
+  font-weight: bold;
+}
+
+@media screen and (max-width: 625px) {
+ .programDetailsTitle {
+    margin-top: 90px;
+  }
+};

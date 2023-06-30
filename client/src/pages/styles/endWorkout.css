@@ -1,0 +1,9 @@
+.howLong {
+    margin-left: 10px;
+}
+
+@media screen and (max-width: 625px) {
+  .congratulations {
+    padding-top: 75px;
+  }
+};

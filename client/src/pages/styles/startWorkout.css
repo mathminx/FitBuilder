@@ -1,0 +1,12 @@
+@media screen and (max-width: 625px) {
+  .startWorkoutLayout {
+    margin-top: 90px;
+  }
+
+  .nextExerciseBtn {
+    margin-top: 3px;
+    margin-bottom: 100px;
+  }
+};
+
+

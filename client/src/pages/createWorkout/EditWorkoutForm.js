@@ -2,8 +2,17 @@ import React from "react";
 import { Form, Input, Select, Button, InputNumber } from "antd";
 import { useQuery, gql } from "@apollo/client";
 import { GET_WORKOUT } from "../../utils/queries";
+import { useNavigate } from "react-router-dom";
 
 const EditWorkoutForm = ({ workoutId }) => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+      if (!Auth.loggedIn()) {
+        navigate("/");
+      }
+    }, [navigate]);
+    
   const { loading, error, data } = useQuery(GET_WORKOUT, {
     variables: { id: workoutId },
   });

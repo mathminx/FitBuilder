@@ -265,7 +265,7 @@ const resolvers = {
     },
     updateProgram: async (
       _,
-      { programId, title, current, daysPerWeek, duration, workouts },
+      { programId, title, daysPerWeek, duration, description},
       context
     ) => {
       try {
@@ -276,7 +276,7 @@ const resolvers = {
         }
         const updatedProgram = await Program.findByIdAndUpdate(
           programId,
-          { title, current, daysPerWeek, duration, workouts },
+          { title, daysPerWeek, duration, description },
           { new: true }
         );
         if (!updatedProgram) {

@@ -11,12 +11,15 @@ import FitBuildLandingPage from "./pages/landingPage/LandingPage";
 import ExerciseComponent from "./pages/addExercises/AddExercises";
 import WorkoutForm from "./pages/createWorkout/WorkoutForm";
 import ProgramPage from "./pages/programPage/ProgramPage";
+import ModifyProgram from "./pages/addProgram/ModifyProgramForm";
 import CreateProgram from "./pages/addProgram/AddProgramForm";
 import Dashboard from "./pages/DashboardHub"
 import ViewPrograms from "./pages/ViewPrograms";
 import StartWorkout from "./pages/StartWorkout";
 import SaveWorkout from "./pages/FinishWorkout";
 import SarahDashboard from "./pages/SarahDashboard";
+// import ModifyExerciseComponent from "./pages/addExercises/AddExercises";
+import EditExercise from "./pages/addExercises/EditExercise";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -49,10 +52,12 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/viewallprograms" element={<ViewPrograms />}></Route>
           <Route path="/createprogram" element={<CreateProgram />} />
+          <Route path="/modifyprogram/:programId" element={<ModifyProgram />} />
           <Route path="/createworkout/:programId" element={<WorkoutForm />} />
           <Route path="/addexercises/:workoutId" element={<ExerciseComponent />}/>
+          <Route path="/modifyexercise/:exerciseId" element={<EditExercise />}/>
           <Route path="/programs/:programId" element={<ProgramPage />} />
-          <Route path="/startworkout" element={<StartWorkout />}></Route>
+          <Route path="/startworkout/:workoutId" element={<StartWorkout />}></Route>
           <Route path="/saveworkout" element={<SaveWorkout />}></Route>
           <Route path="/sarahdashboard" element={<SarahDashboard />}></Route>
         </Routes>

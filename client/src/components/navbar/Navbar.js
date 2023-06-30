@@ -68,7 +68,7 @@ const takeToDashboard = () => {
   return (
     <>
       {showWarning && <WarningComponent />}
-      <Menu mode="horizontal" style={styles.menuStyle}>
+      <Menu className="fbNavbar" mode="horizontal" style={styles.menuStyle}>
         <Menu.Item key="home" icon={<HomeOutlined />} onClick={takeHome}>
           Home
         </Menu.Item>
