@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Form, Input, InputNumber, Button } from "antd";
 import { useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import { ADD_PROGRAM } from "../../utils/mutations";
 import Auth from "../../utils/auth";
-import "../styles/newProgramForm.css";
 
 const { TextArea } = Input;
 
@@ -17,11 +16,9 @@ const CreateProgram = () => {
   const [addProgram, { loading, error }] = useMutation(ADD_PROGRAM);
   const navigate = useNavigate();
 
-  useEffect(() => {
     if (!Auth.loggedIn()) {
       navigate("/");
     }
-  }, [navigate]);
 
     const handleFormSubmit = async () => {
     try {
@@ -42,11 +39,12 @@ const CreateProgram = () => {
         height: "100vh",
       }}
     >
-      <div className="createProgramDiv" style={{ width: "80%", paddingTop: "65px" }}>
+      <div style={{ width: "80%" }}>
         {" "}
         {/* Added this div */}
         <Form onFinish={handleFormSubmit}>
           <h1>Create Program</h1>
+
           <Form.Item label="Title">
             <Input value={title} onChange={(e) => setTitle(e.target.value)} />
           </Form.Item>
@@ -81,12 +79,7 @@ const CreateProgram = () => {
             >
               Cancel
             </Button>
-            <Button
-              style={{ marginLeft: "10px" }}
-              type="primary"
-              htmlType="submit"
-              loading={loading}
-            >
+            <Button type="primary" htmlType="submit" loading={loading}>
               Create Program
             </Button>
           </Form.Item>

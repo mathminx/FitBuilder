@@ -1,7 +1,7 @@
 const db = require("../config/connection");
 const User = require("../models/User");
 
-const faker = require('faker')
+const faker = require("faker");
 
 const seedPrograms = Array.from({ length: 10 }).map(() => ({
   title: faker.lorem.words(3),
