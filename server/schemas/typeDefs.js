@@ -71,9 +71,10 @@ const typeDefs = gql`
     updateProgram(
       programId: ID!
       title: String
+      current: Boolean!
       daysPerWeek: Int
       duration: Int
-      description: String
+      workouts: [ID]
     ): Program
     updateActiveProgram(userId: ID!, programId: ID!): User
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useQuery, useMutation, useLazyQuery, gql } from "@apollo/client";
 import { Card, Modal, Button, Descriptions, Row, Col, Typography } from "antd";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Auth from "../../utils/auth";
 import { REMOVE_EXERCISE, REMOVE_PROGRAM } from "../../utils/mutations";
@@ -9,10 +9,11 @@ import { REMOVE_WORKOUT } from "../../utils/mutations";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { GET_ME } from "../../utils/queries";
 import { UPDATE_ACTIVE_PROGRAM } from "../../utils/mutations";
-import "../styles/programDetails.css";
+
 
 const { Title } = Typography;
 
+// Fetch single program GraphQL Query
 const GET_SINGLE_PROGRAM = gql`
   query Program($id: ID!) {
     program(_id: $id) {
@@ -72,20 +73,29 @@ const ProgramPage = () => {
   const { programId } = useParams();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!Auth.loggedIn()) {
-      navigate("/");
-    }
-  }, [navigate]);
+  // I am getting mixed up with this and will need to come back to it.
+  // const navigateToDashboard = () => {
+  //   if (Auth.loggedIn()) {
+  //     navigate("/dashboard"); // Redirect to dashboard if logged in.
+  //   } else {
+  //     navigate("/");
+  //   }
+  // };
 
+  //   useEffect(() => {
+  //     navigateToDashboard();
+  //   }, []);
+
+  // Fetch the program data
   const { loading, error, data, refetch } = useQuery(GET_SINGLE_PROGRAM, {
     variables: { id: programId },
   });
 
+  // Loading and error states
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error! {error.message}</p>;
 
-  const program = data?.program || {}; 
+  const program = data?.program || {}; // If data is not yet loaded, program will be an empty object
 
   const handleOpenModal = (workout) => {
     setSelectedWorkout(workout);
@@ -99,6 +109,7 @@ const ProgramPage = () => {
     setIsModalVisible(false);
   };
 
+  // Replace these functions with your logic
   const handleAddExercise = () => {
     console.log("Adding a new exercise...");
     if (selectedWorkoutId) {
@@ -108,9 +119,6 @@ const ProgramPage = () => {
 
   const handleEditExercise = (exerciseId) => {
     console.log("Editing exercise: ", exerciseId);
-    if ( exerciseId) {
-      navigate(`/modifyexercise/${exerciseId}`);
-    }
   };
 
   const handleRemoveExercise = async (exerciseId) => {
@@ -125,6 +133,7 @@ const ProgramPage = () => {
 
         console.log("Exercise removed successfully: ", data);
 
+        // After successfully removing the exercise, refetch the workout to update the data in the UI
         getWorkout({ variables: { id: selectedWorkoutId } });
       } catch (err) {
         console.error("Error removing exercise: ", err);
@@ -158,10 +167,10 @@ const ProgramPage = () => {
     console.log("Attempting to switch to new active program!");
     updateActiveProgram({
       variables: {
-        userId: userData?.me._id,
+        userId: userData?.me._id, // Assuming you have `userData` available from your query
         programId: programId,
       },
-      refetchQueries: [{ query: GET_ME }], 
+      refetchQueries: [{ query: GET_ME }], // Refetch the `me` query to get updated user data
     })
       .then(() => {
         console.log("Active program updated successfully.");
@@ -171,6 +180,24 @@ const ProgramPage = () => {
       });
     console.log("Switching to new active program!");
   };
+
+  // const handleDeleteProgram = async () => {
+  //   console.log("Trying to delete program...");
+  //   console.log(userData.me._id);
+  //   if (programId && userData.me._id) {
+  //     try {
+  //     const { data } = await removeProgram({
+  //       variables: { programId: programId, userId: userData.me._id },
+  //     });
+
+  //     console.log("Program removed successfully: ", data);
+  //     navigate('/viewallprograms');
+  //   } catch (err) {
+  //     console.error("Error removing program: ", err);
+  //   }
+  //   }
+  //   console.log("Deleting program...");
+  // };
 
   const handleDeleteProgram = () => {
     console.log("Trying to delete program...");
@@ -190,123 +217,55 @@ const ProgramPage = () => {
     console.log("Deleting program...");
   };
 
+
   return (
     <>
-      <Title 
-        className="programDetailsTitle"
-        level={2} 
-      >
-        Program Details
-      </Title>
-
+      <Title level={2}>Program Details</Title>
       <Button
         type="primary"
         onClick={() => navigate("/viewallprograms")}
-        style={{ paddingTop:'13px', paddingBottom:'26px',lineHeight:'0px', border:'5px solid', 
-        borderStyle:'outset',  borderColor:'#fa6d35', borderRadius:'5px', 
-        background: "#193381", fontSize: '15px', fontWeight: '600', marginLeft: "5%", marginRight: "5%" }}
+        style={{ marginBottom: "20px" }}
       >
         <ArrowLeftOutlined /> Return to All Programs
       </Button>
-
       <Button
-        type="primary"
-        onClick={handleAddWorkout}
-        style={{ padding:'20px', lineHeight:'0px', 
-        border:'5px solid', borderStyle:'outset',  
-        borderColor:'#fa6d35', borderRadius:'5px', 
-        background: "#193381", fontSize: '15px', fontWeight: '600', marginRight: "5%" }}      >
-        Add New Workout
-      </Button>
-
-      <Button
-        type="primary"
-        onClick={handleActiveProgram}
-        disabled={userData?.me?.activeProgram?._id === programId}
-        style={{ padding:'20px', lineHeight:'0px', 
-        border:'5px solid', borderStyle:'outset',  
-        borderColor:'#fa6d35', borderRadius:'5px', 
-        background: "#193381", fontSize: '15px', fontWeight: '600', marginBottom: "50px", color:'white' }} 
-      >
-        Update Active Program
-      </Button>
-
-      <Link to={`/modifyprogram/${programId}`}>
-        <Button
-          type="primary"
-          style={{
-            
-            
-            marginLeft: "5%",
-            padding:'20px', 
-            lineHeight:'0px', 
-            border:'5px solid', 
-            borderStyle:'outset',  
-            borderColor:'#fa6d35', borderRadius:'5px', background: "#193381", fontSize: '15px', fontWeight: '600', 
-          }}
-        >
-          Modify Program
-        </Button>
-      </Link>
-
-      <Button
-        type="primary"
-        ghost
-        danger
+        type="danger"
         onClick={handleDeleteProgram}
         style={{
-          marginLeft: "8%",
+          float: "right",
           borderStyle: "dashed",
           borderWidth: "1px",
-          borderColor: "red",
-          marginRight: "50px",
-          marginTop: '10px'
+          borderColor: "#000000",
         }}
       >
         Delete Program
-      </Button >
-      
-      
-      <Descriptions className="programDescriptions">
-        <Descriptions.Item className="boldLabel" label="Name">
-          {program.title}
-        </Descriptions.Item>
-        <Descriptions.Item className="boldLabel" label="Duration (weeks)">
+      </Button>
+      <Descriptions>
+        <Descriptions.Item label="Name">{program.title}</Descriptions.Item>
+        <Descriptions.Item label="Duration (weeks)">
           {program.duration}
         </Descriptions.Item>
-        <Descriptions.Item className="boldLabel" label="Workouts Per Week">
+        <Descriptions.Item label="Days per week">
           {program.daysPerWeek}
         </Descriptions.Item>
       </Descriptions>
 
-      <Row gutter={[16, 24]}>
+      <Row gutter={16}>
         {program.workouts?.map((workout) => (
-          <Col xs={24} sm={12} md={8} key={workout._id}>
-            <Card
-              title={workout.name}
-              style={{
-                marginBottom: "1px",
-                marginRight: "20px",
-                marginLeft: "20px",
-              }}
-            >
-              <Button type="primary" style={{ padding:'20px', lineHeight:'0px', border:'5px solid', 
-                borderStyle:'outset',  borderColor:'#fa6d35', borderRadius:'5px', background: "#193381", 
-                fontSize: '15px', fontWeight: '600', marginBottom: "50px" }} 
-                onClick={() => handleOpenModal(workout)}>
+          <Col span={8} key={workout._id}>
+            <Card title={workout.name}>
+              {/* <p>Day Number: {workout.dayNumber}</p> */}
+              {/* <p>Complete: {workout.complete.toString()}</p> */}
+              <Button type="primary" onClick={() => handleOpenModal(workout)}>
                 View Exercises
               </Button>
               <Button
-                type="primary"
-                ghost
-                danger
+                type="danger"
                 onClick={() => handleDeleteWorkout(workout._id)}
                 style={{
                   borderStyle: "dashed",
                   borderWidth: "1px",
-                  borderColor: "red",
-                  marginTop: "5px",
-                  marginLeft: "1px",
+                  borderColor: "#000000",
                 }}
               >
                 Delete Workout
@@ -316,7 +275,17 @@ const ProgramPage = () => {
         ))}
       </Row>
       <br></br>
-      
+      <Button type="primary" onClick={handleAddWorkout}>
+        Add New Workout
+      </Button>
+
+      <Button
+        type="primary"
+        onClick={handleActiveProgram}
+        disabled={userData?.me?.activeProgram?._id === programId}
+      >
+        Update Active Program
+      </Button>
 
       <br></br>
       <br></br>
@@ -334,21 +303,16 @@ const ProgramPage = () => {
                 title={exercise.name}
                 style={{ marginBottom: "20px" }}
               >
-                <p><span className="boldLabel">Type:</span> {exercise.type}</p>
-                <p><span className="boldLabel">Equipment:</span> {exercise.equipment}</p>
-                <p><span className="boldLabel">Difficulty:</span> {exercise.difficulty}</p>
-                <p><span className="boldLabel">Instructions:</span>
-                   {exercise.instructions}
-                </p>
-                <p><span className="boldLabel">Sets:</span> {exercise.sets}</p>
-                <p><span className="boldLabel">Reps:</span> {exercise.reps}</p>
-                <p><span className="boldLabel">Weight:</span> {exercise.weight}</p>
-                <p><span className="boldLabel">Duration:</span> {exercise.duration}</p>
+                <p>Type: {exercise.type}</p>
+                <p>Equipment: {exercise.equipment}</p>
+                <p>Difficulty: {exercise.difficulty}</p>
+                <p>Instructions: {exercise.instructions}</p>
+                <p>Sets: {exercise.sets}</p>
+                <p>Reps: {exercise.reps}</p>
+                <p>Weight: {exercise.weight}</p>
+                <p>Duration: {exercise.duration}</p>
 
-                <Button
-                  style={{ marginRight: "10px" }}
-                  onClick={() => handleEditExercise(exercise._id)}
-                >
+                <Button onClick={() => handleEditExercise(exercise._id)}>
                   Edit Exercise
                 </Button>
                 <Button onClick={() => handleRemoveExercise(exercise._id)}>

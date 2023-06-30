@@ -18,61 +18,49 @@ import {
 import { useQuery } from "@apollo/client";
 import { GET_SINGLE_PROGRAM, GET_ME } from "../utils/queries";
 import Auth from "../utils/auth";
-import "./styles/endWorkout.css";
 const { Content } = Layout;
 const { TextArea } = Input;
 
 const { Meta } = Card;
 
 function SaveWorkout() {
-    const navigate = useNavigate();
-
-    useEffect(() => {
-      if (!Auth.loggedIn()) {
-        navigate("/");
-      }
-    }, [navigate]);
-
   const onChange = (value) => {
     console.log("changed", value);
   };
   return (
     <>
-      <Row className="congratulations" justify="center">
-        <h1>Great Job!</h1>
+      <Row justify="center">
+        <h1>Good Job!!</h1>
       </Row>
-      <Divider></Divider>
+      {/* Rate input */}
       <Row justify="center">
         <h2>How would you rate this workout?</h2>
       </Row>
       <Row justify="center">
         <Rate />
       </Row>
+      {/* Time input */}
       <Row justify="center">
         <h2>How many minutes did your workout take?</h2>
-        <Space className="howLong">
+        <Space>
           <InputNumber
-            defaultValue={60}
+            defaultValue={100}
             min={0}
-            max={1440}
-            formatter={(value) => `${value}`}
+            max={100}
+            formatter={(value) => `${value}%`}
             parser={(value) => value.replace("%", "")}
             onChange={onChange}
           />
         </Space>
       </Row>
-      <Divider></Divider>
+      {/* Notes section */}
       <Row justify="center">
-      <h2>Notes?</h2>
+        <h2>Notes?</h2>
+        <TextArea rows={4} />
       </Row>
-      <Row justify="center" >
-        <TextArea rows={4} style={{ width: "90%" }} />
-      </Row>
-      <br></br>
+      {/* Save Workout */}
       <Row justify="center">
-        <Link to="/dashboard">
-          <Button type="primary"> Save Workout </Button>
-        </Link>
+        <Button type="primary"> Save Workout </Button>
       </Row>
     </>
   );
